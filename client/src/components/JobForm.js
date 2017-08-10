@@ -72,19 +72,9 @@ class JobForm extends Component {
 	}
 
 
-	autocomplete(e) {
-		// if(!input) return;
-		const dropdown = new window.google.maps.places.Autocomplete(e.target.value);
-		// dropdown.addListener('place_changed', () => {
-		// 	const place = dropdown.getPlace();
-		// 	latInput.value = place.geometry.location.lat();
-		// 	lngInput.value = place.geometry.location.lng();
-		// });
-
-
-		// input.addEventListener('keydown', (e) => {
-		// 	if(e.keyCode === 13) e.preventDefault();
-		// })
+	autocomplete(input) {
+		if(!input) return;
+		const dropdown = new window.google.maps.places.Autocomplete(input);
 	}
 
 
@@ -95,7 +85,7 @@ class JobForm extends Component {
 	        <h2>Post a Job</h2><br/>
 	        <input type="text" onChange={e => this.setSalary('position', e)} name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input type="text" name="company" className="input" placeholder="Company" onChange={e => this.setSalary('company', e)} /><br/><br/>
-	        <input type="text" name="location" className="input" placeholder="Location" onChange={e => this.setSalary('location', e)} /><br/><br/>
+	        <input type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
 	        <textarea name="description" className="input" placeholder="Description" onChange={e => this.setSalary('description', e)}></textarea><br/><br/>
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onChange={e => this.setSalary('salary', e)}>
