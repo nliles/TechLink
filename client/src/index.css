@@ -99,8 +99,12 @@ textarea {
   border-right: 1px solid gray;
 }
 
-.job {
+.jobs {
   border-bottom: 1px solid gray;	
+}
+
+.job {
+  border-bottom: 1px solid gray;  
 }
 
 .radioDiv {

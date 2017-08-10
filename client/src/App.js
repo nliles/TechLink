@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className='rowC'>
         <div className="jobForm"><JobForm/></div>
-        <JobList position="Junior Web Developer" company="Google" location="nyc" description="lorem ipsum" salary="30k-60k"/>
+        <JobList/>
       </div>
     )
   }
