@@ -1,5 +1,117 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'News Cycle', sans-serif;
+}
+
+.rowC {
+  display:flex; 
+  flex-direction:row;
+}
+
+.jobList {
+  margin-top: 25px;
+  margin-left: 100px;
+}
+
+.form {
+  margin-top: 25px;
+  background: white;
+  padding: 2rem;
+}
+
+.form + .form {
+    margin-top: 4rem; }
+
+.form h2 {
+    margin: 0;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e6e6e6; 
+}
+
+.activity{
+    border-bottom: 1px solid #e6e6e6; 
+}
+
+.radio {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	text-align: center; 
+}
+
+.nav {
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  height: 70px;
+  margin: 0;
+  padding: 0;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background: white; 
+  border-bottom: 1px solid #5E5E5E;
+  z-index: 9999;
+  background: #fafafa;
+}
+
+
+input:focus, textarea:focus {
+  outline: none;
+}
+
+.input {
+    border: 1px solid #e6e6e6;
+    width: 300px;
+    height: 20px;
+    margin-bottom:14px;
+}
+
+
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e6e6e6; }
+  input.input--error, textarea.input--error {
+    border-color: red; }
+
+label {
+  padding: 10px 0;
+  display: block; 
+}
+
+textarea {
+   height: 40px;
+}
+
+.button {
+  border: 0;
+  width: 300px;
+  height: 40px;
+  background: #696969;
+  color: #fff;
+  font-weight: 600; 
+}
+
+.jobForm {
+  border-right: 1px solid gray;
+}
+
+.job {
+  border-bottom: 1px solid gray;	
+}
+
+.radioDiv {
+  margin: 0 1.81em 0 0;
+}
+
+.salaryOptions {
+	border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	break-before: always;
+	margin: 0 0 3em 0;
 }

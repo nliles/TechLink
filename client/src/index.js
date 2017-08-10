@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import './index.css';
+import NavBar from './components/NavBar';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('main'));
-
+render(<NavBar/>, document.querySelector('#nav'));
+render(<App/>, document.querySelector('#main'));

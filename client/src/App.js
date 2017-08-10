@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import JobForm from './components/JobForm';
+import JobList from './components/JobList';
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className='rowC'>
+        <div className="jobForm"><JobForm/></div>
+        <JobList position="Junior Web Developer" company="Google" location="nyc" description="super awesome job" salary="30k-60k"/>
       </div>
-    );
+    )
   }
 }
 
