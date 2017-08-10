@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 class JobList extends Component {
+	   // $.ajax({
+	   //    url: '/jobs',
+	   //    dataType: 'json',
+	   //    type: 'GET',
+	   //    data: {jobs: jobs},
+	   //    success: function(data) {
+	   //      this.setState({data: job});
+	   //    }.bind(this),
+	   //    error: function(xhr, status, err) {
+	   //      this.setState({data: job});
+	   //     console.error(this.props.url, status, err.toString());
+	   //    }.bind(this)
+	   //  })
+
 	render() {
 		return(
 	      <div className="jobList">
@@ -15,6 +29,7 @@ class JobList extends Component {
 	      </div>
       ) 
 	}
+
 }
 
 export default JobList;
