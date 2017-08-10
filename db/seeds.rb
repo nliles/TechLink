@@ -1,7 +1,7 @@
 
 require('faker')
 
-100.times do 
+10.times do 
 	Job.create(
 	  position: Faker::Company.profession,
 	  company: Faker::Company.name,

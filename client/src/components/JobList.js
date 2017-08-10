@@ -3,16 +3,21 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 
 class JobList extends Component {
+	constructor() {
+		super();
+		this.state = {
+			jobs: []
+		}
+	}
+
 	componentDidMount() {
-		console.log('test')
 		const self = this;
 	   $.ajax({
 	      url: '/jobs',
 	      dataType: 'json',
 	      type: 'GET',
 	      success: (data) => {
-	        this.setState({data: data});
-	        console.log(data);
+	        this.setState({jobs: data});
 	      },
 	      error: (xhr, status, err) => {
 	        this.setState({data: err});
@@ -22,15 +27,27 @@ class JobList extends Component {
 	}
 
 	render() {
+		var json = this.state.jobs
+		console.log(json)
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>
-	        	<div className="job">
-			      	<h3>{this.props.position}</h3>
-			      	<span>{this.props.company} - {this.props.location}</span>
-			      	<p>{this.props.description}</p>
-			      	<p>{this.props.salary}</p>
+
+	        	<div className="jobs">
+	        		{this.state.jobs.map((value, key) => {
+	        			return (
+	        				<span key={key}>
+	        				<div className="job">
+		        				<h3>{value.position}</h3>
+		        				<span>{value.company} - {value.location}</span>
+		        				<p>{value.description}</p>
+		        				<p>{value.salary}</p>
+		        			</div>
+	        				</span>
+	        			)
+	        		})}
 		      	</div>
+
 	      </div>
       ) 
 	}
