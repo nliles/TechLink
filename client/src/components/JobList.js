@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import $ from 'jquery';
 
 class JobList extends Component {
-	   // $.ajax({
-	   //    url: '/jobs',
-	   //    dataType: 'json',
-	   //    type: 'GET',
-	   //    data: {jobs: jobs},
-	   //    success: function(data) {
-	   //      this.setState({data: job});
-	   //    }.bind(this),
-	   //    error: function(xhr, status, err) {
-	   //      this.setState({data: job});
-	   //     console.error(this.props.url, status, err.toString());
-	   //    }.bind(this)
-	   //  })
+	componentDidMount() {
+		console.log('test')
+		const self = this;
+	   $.ajax({
+	      url: '/jobs',
+	      dataType: 'json',
+	      type: 'GET',
+	      success: (data) => {
+	        this.setState({data: data});
+	        console.log(data);
+	      },
+	      error: (xhr, status, err) => {
+	        this.setState({data: err});
+	       console.error(self.props.url, status, err.toString());
+	      }
+	    });
+	}
 
 	render() {
 		return(
