@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
+import { moment } from 'moment'
 
 class JobForm extends Component {
 	constructor() {
@@ -38,7 +39,7 @@ class JobForm extends Component {
 	      url: '/jobs',
 	      dataType: 'json',
 	      type: 'POST',
-	      data: {position: position, company: company, location: location, description:description, salary: salary},
+	      data: (position, company, location, description, salary),
 	      success: function(data) {
 	        this.setState({data});
 	      }.bind(this),
@@ -67,7 +68,7 @@ class JobForm extends Component {
 	        <h2>Post a Job</h2><br/>
 	        <input ref={(input) => this.position=input} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input ref={(input) => this.company=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
+	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
 	        <textarea ref={(input) => this.description=input} name="description" className="input" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onChange={e => this.setSalary(e)}>

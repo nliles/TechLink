@@ -99,7 +99,8 @@ textarea {
   border-right: 1px solid gray;
 }
 
-.jobs {
+.activity {
+  margin-top: 25px;
   border-bottom: 1px solid gray;	
 }
 
