@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { moment } from 'moment'
+import moment from 'moment'
 
 class JobForm extends Component {
 	constructor() {
@@ -29,6 +29,8 @@ class JobForm extends Component {
 		var location = this.location.value;
 		var description = this.description.value;
 		var salary = this.state.salary;
+		var data = {position, company, location, description, salary}
+		console.log(data)
 
 		this.setState({position})
 		this.setState({company})
@@ -36,10 +38,11 @@ class JobForm extends Component {
 		this.setState({description})
 
 	   $.ajax({
-	      url: '/jobs',
+	      url: '/jobs.json',
 	      dataType: 'json',
+	      contentType: 'application/json',
 	      type: 'POST',
-	      data: (position, company, location, description, salary),
+	      data: JSON.stringify({job: data}),
 	      success: function(data) {
 	        this.setState({data});
 	      }.bind(this),
@@ -73,16 +76,16 @@ class JobForm extends Component {
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onChange={e => this.setSalary(e)}>
 		        <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="0-30k"/> "0-30k"
+				    <input type="radio" name="salary" className="radio" value="0-$30,000"/> "0-$30k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="31-60k"/> "31-60k"
+				    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="61-100k"/> "61-100k"
+				    <input type="radio" name="salary" className="radio" value="$61,000-$99,000"/> "$61-$100k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="101k+"/> "101k+"
+				    <input type="radio" name="salary" className="radio" value="$100,000+"/> "$101k+"
 			    </div><br/> 
 		    </div> 
 
