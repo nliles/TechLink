@@ -11,6 +11,7 @@ body {
 
 .jobList {
   margin-top: 25px;
+  padding: 2rem;
   margin-left: 100px;
 }
 
@@ -28,8 +29,10 @@ body {
 }
 
 .activity{
+    margin: 0;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
     border-bottom: 1px solid #e6e6e6; 
-    width: 100%;
 }
 
 .radio {
@@ -98,7 +101,6 @@ textarea {
 }
 
 .activity {
-  margin-top: 25px;
   border-bottom: 1px solid #e6e6e6;	
 }
 

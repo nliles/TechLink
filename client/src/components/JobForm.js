@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import $ from 'jquery';
 import moment from 'moment'
 
 class JobForm extends Component {
@@ -37,21 +36,15 @@ class JobForm extends Component {
 		this.setState({location})
 		this.setState({description})
 
-	   $.ajax({
-	      url: '/jobs.json',
-	      dataType: 'json',
-	      contentType: 'application/json',
-	      type: 'POST',
-	      data: JSON.stringify({job: data}),
-	      success: function(data) {
-	        this.setState({data});
-	      }.bind(this),
-	      error: function(xhr, status, err) {
-	        this.setState({data: err});
-	       console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-	    });
-
+		fetch('/jobs.json', {  
+		  method: 'POST',
+		  headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({ job: {position, company, location, description, salary, data}
+		  })
+		})
 	}
 
 

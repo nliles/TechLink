@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import $ from 'jquery';
 import moment from 'moment'
 
 class JobList extends Component {
@@ -12,7 +11,6 @@ class JobList extends Component {
 	}
 
 	componentDidMount() {
-		const self = this;
 			fetch('/jobs.json', {
 			  method: 'GET',
 			  headers: {
