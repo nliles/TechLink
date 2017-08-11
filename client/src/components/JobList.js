@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
+import moment from 'moment'
 
 class JobList extends Component {
 	constructor() {
@@ -27,8 +28,6 @@ class JobList extends Component {
 	}
 
 	render() {
-		var json = this.state.jobs
-		console.log(json)
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>
@@ -38,10 +37,11 @@ class JobList extends Component {
 	        			return (
 	        				<span key={key}>
 	        				<div className="job">
-		        				<h3>{value.position}</h3>
+		        				<h3>{value.position.toUpperCase()}</h3>
 		        				<span>{value.company} - {value.location}</span>
-		        				<p>{value.description}</p>
+		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
+		        				<p>{moment(value.created_at, "YYYYMMDD").fromNow()}</p>
 		        			</div>
 	        				</span>
 	        			)

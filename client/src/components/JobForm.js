@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
+import moment from 'moment'
 
 class JobForm extends Component {
 	constructor() {
@@ -14,60 +15,42 @@ class JobForm extends Component {
 		}
 	}
 
-	setSalary(category, e) {
+	setSalary(e) {
 		const {value} = e.target;
-		switch(category) {
-			case 'position':
-				this.setState({
-					position: value
-				});
-				break;
-			case 'company':
-				this.setState({
-					company: value
-				});
-				break;
-			case 'location':
-				this.setState({
-					location: value
-				});
-				break;
-			case 'description':
-				this.setState({
-					description: value
-				});
-				break;
-			case 'salary':
-				this.setState({
-					salary: value
-				});
-			break;
-			default:
-				return;
-		}
-	  
+		this.setState({
+			salary: value
+		});
 	}
 
 	addJob(e) {
 		e.preventDefault();
-		var position = {position: this.state.position}
-		var description = {description: this.state.description}
-		console.log(position)
-		console.log(description)
+		var position = this.position.value; 
+		var company = this.company.value;
+		var location = this.location.value;
+		var description = this.description.value;
+		var salary = this.state.salary;
+		var data = {position, company, location, description, salary}
+		console.log(data)
 
-	   // $.ajax({
-	   //    url: '/jobs',
-	   //    dataType: 'json',
-	   //    type: 'POST',
-	   //    data: job,
-	   //    success: function(data) {
-	   //      this.setState({data: job});
-	   //    }.bind(this),
-	   //    error: function(xhr, status, err) {
-	   //      this.setState({data: job});
-	   //     console.error(this.props.url, status, err.toString());
-	   //    }.bind(this)
-	   //  });
+		this.setState({position})
+		this.setState({company})
+		this.setState({location})
+		this.setState({description})
+
+	   $.ajax({
+	      url: '/jobs.json',
+	      dataType: 'json',
+	      contentType: 'application/json',
+	      type: 'POST',
+	      data: JSON.stringify({job: data}),
+	      success: function(data) {
+	        this.setState({data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        this.setState({data: err});
+	       console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
 
 	}
 
@@ -75,6 +58,9 @@ class JobForm extends Component {
 	autocomplete(input) {
 		if(!input) return;
 		const dropdown = new window.google.maps.places.Autocomplete(input);
+		input.addEventListener('keydown', (e) => {
+			if(e.keyCode === 13) e.preventDefault();
+		})
 	}
 
 
@@ -83,23 +69,23 @@ class JobForm extends Component {
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>
-	        <input type="text" onChange={e => this.setSalary('position', e)} name="position" className="input" placeholder="Position" /><br/><br/>
-	        <input type="text" name="company" className="input" placeholder="Company" onChange={e => this.setSalary('company', e)} /><br/><br/>
-	        <input type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
-	        <textarea name="description" className="input" placeholder="Description" onChange={e => this.setSalary('description', e)}></textarea><br/><br/>
+	        <input ref={(input) => this.position=input} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
+	        <input ref={(input) => this.company=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
+	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+	        <textarea ref={(input) => this.description=input} name="description" className="input" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
-			<div className="salaryOptions" onChange={e => this.setSalary('salary', e)}>
+			<div className="salaryOptions" onChange={e => this.setSalary(e)}>
 		        <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="0-30k"/> "0-30k"
+				    <input type="radio" name="salary" className="radio" value="0-$30,000"/> "0-$30k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="31-60k"/> "31-60k"
+				    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="61-100k"/> "61-100k"
+				    <input type="radio" name="salary" className="radio" value="$61,000-$99,000"/> "$61-$100k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="101k+"/> "101k+"
+				    <input type="radio" name="salary" className="radio" value="$100,000+"/> "$101k+"
 			    </div><br/> 
 		    </div> 
 

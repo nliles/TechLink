@@ -20,9 +20,6 @@ body {
   padding: 2rem;
 }
 
-.form + .form {
-    margin-top: 4rem; }
-
 .form h2 {
     margin: 0;
     padding-bottom: 2rem;
@@ -32,6 +29,7 @@ body {
 
 .activity{
     border-bottom: 1px solid #e6e6e6; 
+    width: 100%;
 }
 
 .radio {
@@ -51,7 +49,7 @@ body {
   -ms-flex-pack: justify;
   justify-content: space-between;
   background: white; 
-  border-bottom: 1px solid #5E5E5E;
+  border-bottom: 1px solid #e6e6e6;
   z-index: 9999;
   background: #fafafa;
 }
@@ -96,17 +94,22 @@ textarea {
 }
 
 .jobForm {
-  border-right: 1px solid gray;
+  border-right: 1px solid #e6e6e6;
 }
 
-.jobs {
-  border-bottom: 1px solid gray;	
+.activity {
+  margin-top: 25px;
+  border-bottom: 1px solid #e6e6e6;	
 }
 
 .job {
-  border-bottom: 1px solid gray;  
+  padding: 0;
+  border-bottom: 1px solid #e6e6e6;  
 }
 
+.description {
+  font-size: 15px;
+}
 .radioDiv {
   margin: 0 1.81em 0 0;
 }
