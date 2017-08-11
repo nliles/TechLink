@@ -19,30 +19,34 @@ class JobForm extends Component {
 		this.setState({
 			salary: value
 		});
-	  console.log(this.state.salary)
 	}
 
 	addJob(e) {
 		e.preventDefault();
-		var position = this.name.value;
-		var company = this.name.value;
-		var location = this.name.value;
-		var description = this.name.value;
+		var position = this.position.value; 
+		var company = this.company.value;
+		var location = this.location.value;
+		var description = this.description.value;
 		var salary = this.state.salary;
 
-	   // $.ajax({
-	   //    url: '/jobs',
-	   //    dataType: 'json',
-	   //    type: 'POST',
-	   //    data: job,
-	   //    success: function(data) {
-	   //      this.setState({data: job});
-	   //    }.bind(this),
-	   //    error: function(xhr, status, err) {
-	   //      this.setState({data: job});
-	   //     console.error(this.props.url, status, err.toString());
-	   //    }.bind(this)
-	   //  });
+		this.setState({position})
+		this.setState({company})
+		this.setState({location})
+		this.setState({description})
+
+	   $.ajax({
+	      url: '/jobs',
+	      dataType: 'json',
+	      type: 'POST',
+	      data: {position: position, company: company, location: location, description:description, salary: salary},
+	      success: function(data) {
+	        this.setState({data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        this.setState({data: err});
+	       console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
 
 	}
 
@@ -50,6 +54,9 @@ class JobForm extends Component {
 	autocomplete(input) {
 		if(!input) return;
 		const dropdown = new window.google.maps.places.Autocomplete(input);
+		input.addEventListener('keydown', (e) => {
+			if(e.keyCode === 13) e.preventDefault();
+		})
 	}
 
 
@@ -58,10 +65,10 @@ class JobForm extends Component {
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>
-	        <input ref={(input) => this.name=input} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
-	        <input ref={(input) => this.name=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <input ref={(input) => this.name=input} type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
-	        <textarea ref={(input) => this.name=input} name="description" className="input" placeholder="Description" ></textarea><br/><br/>
+	        <input ref={(input) => this.position=input} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
+	        <input ref={(input) => this.company=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
+	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
+	        <textarea ref={(input) => this.description=input} name="description" className="input" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onChange={e => this.setSalary(e)}>
 		        <div className="radioDiv">
