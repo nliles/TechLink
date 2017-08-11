@@ -14,46 +14,21 @@ class JobForm extends Component {
 		}
 	}
 
-	setSalary(category, e) {
+	setSalary(e) {
 		const {value} = e.target;
-		switch(category) {
-			case 'position':
-				this.setState({
-					position: value
-				});
-				break;
-			case 'company':
-				this.setState({
-					company: value
-				});
-				break;
-			case 'location':
-				this.setState({
-					location: value
-				});
-				break;
-			case 'description':
-				this.setState({
-					description: value
-				});
-				break;
-			case 'salary':
-				this.setState({
-					salary: value
-				});
-			break;
-			default:
-				return;
-		}
-	  
+		this.setState({
+			salary: value
+		});
+	  console.log(this.state.salary)
 	}
 
 	addJob(e) {
 		e.preventDefault();
-		var position = {position: this.state.position}
-		var description = {description: this.state.description}
-		console.log(position)
-		console.log(description)
+		var position = this.name.value;
+		var company = this.name.value;
+		var location = this.name.value;
+		var description = this.name.value;
+		var salary = this.state.salary;
 
 	   // $.ajax({
 	   //    url: '/jobs',
@@ -83,12 +58,12 @@ class JobForm extends Component {
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>
-	        <input type="text" onChange={e => this.setSalary('position', e)} name="position" className="input" placeholder="Position" /><br/><br/>
-	        <input type="text" name="company" className="input" placeholder="Company" onChange={e => this.setSalary('company', e)} /><br/><br/>
-	        <input type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
-	        <textarea name="description" className="input" placeholder="Description" onChange={e => this.setSalary('description', e)}></textarea><br/><br/>
+	        <input ref={(input) => this.name=input} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
+	        <input ref={(input) => this.name=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
+	        <input ref={(input) => this.name=input} type="text" name="location" className="input" placeholder="Location" onChange={e => this.autocomplete(e.target)} /><br/><br/>
+	        <textarea ref={(input) => this.name=input} name="description" className="input" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
-			<div className="salaryOptions" onChange={e => this.setSalary('salary', e)}>
+			<div className="salaryOptions" onChange={e => this.setSalary(e)}>
 		        <div className="radioDiv">
 				    <input type="radio" name="salary" className="radio" value="0-30k"/> "0-30k"
 			    </div>
