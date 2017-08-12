@@ -27,6 +27,14 @@ class JobList extends Component {
 			});
 	}
 
+	deleteJob(e, id) {
+		fetch(`/jobs/${id}.json`, {
+		  method: 'DELETE'
+		},
+		).then(response => response.json());
+	}
+
+
 	render() {
 		return(
 	      <div className="jobList">
@@ -41,8 +49,8 @@ class JobList extends Component {
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
 		        				<p>{moment(value.created_at, "YYYYMMDD").fromNow()}</p>
-		        				<a class="edit" href='#'>Edit</a>
-					            <a class="delete" href='#'>Delete</a>
+		        				<a className="edit" href='#'>Edit</a>&nbsp;&nbsp;
+					            <a className="delete" href='#' onClick={e => this.deleteJob(e, value.id)}>Delete</a>
 		        			</div>
 	        				</span>
 	        			)
