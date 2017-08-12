@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment'
 
+
 class JobList extends Component {
 	constructor() {
 		super();
@@ -40,6 +41,8 @@ class JobList extends Component {
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
 		        				<p>{moment(value.created_at, "YYYYMMDD").fromNow()}</p>
+		        				<a class="edit" href='#'>Edit</a>
+					            <a class="delete" href='#'>Delete</a>
 		        			</div>
 	        				</span>
 	        			)

@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 class NavBar extends Component {
 	render() {
 		return(
-	      <nav className="nav">Job Board</nav>
+	      <nav className="nav">TechLink</nav>
       ) 
 	}
 }

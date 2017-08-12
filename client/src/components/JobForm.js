@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment'
 
+
 class JobForm extends Component {
 	constructor() {
 		super();
@@ -28,8 +29,6 @@ class JobForm extends Component {
 		var location = this.location.value;
 		var description = this.description.value;
 		var salary = this.state.salary;
-		var data = {position, company, location, description, salary}
-		console.log(data)
 
 		this.setState({position})
 		this.setState({company})
@@ -42,8 +41,7 @@ class JobForm extends Component {
 		    'Accept': 'application/json',
 		    'Content-Type': 'application/json',
 		  },
-		  body: JSON.stringify({ job: {position, company, location, description, salary, data}
-		  })
+		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
 	}
 
