@@ -12,6 +12,7 @@ body {
 .jobList {
   margin-top: 25px;
   padding: 2rem;
+  padding-left: 5px;
   margin-left: 100px;
 }
 
@@ -57,7 +58,6 @@ body {
   background: #fafafa;
 }
 
-
 input:focus, textarea:focus {
   outline: none;
 }
@@ -70,13 +70,12 @@ input:focus, textarea:focus {
 }
 
 
-
 input, textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #e6e6e6; }
-  input.input--error, textarea.input--error {
-    border-color: red; }
+  border: 1px solid #e6e6e6; 
+}
+
 
 label {
   padding: 10px 0;
@@ -96,17 +95,20 @@ textarea {
   font-weight: 600; 
 }
 
-.jobForm {
+.jobForm, .activity {
   border-right: 1px solid #e6e6e6;
 }
 
-.activity {
-  border-bottom: 1px solid #e6e6e6;	
+
+.jobs {
+  margin-top: 0px;
 }
 
+
 .job {
-  padding: 0;
+  margin-top: 0px;
   border-bottom: 1px solid #e6e6e6;  
+  margin-bottom: 20px;
 }
 
 .description {
