@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
-import moment from 'moment';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
@@ -22,29 +21,36 @@ class JobForm extends Component {
 	  removeJob: PropTypes.func.isRequired,
 	}
 
-	constructor() {
-		super();
-		this.state = {
-			salary: "0-$30,000"
-		}
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+    	position: '',
+    	company: '',
+    	location: '',
+    	description: '',
+    	salary: ''
+    };
+  }
 
 	setSalary(e) {
 		const salary = e.target.value;
-		this.setState({
-			salary
-		});
+		this.setState({ salary });
+	}
+
+	setPosition(e) {
+		const position = e.target.value;
+		this.setState({ position });
 	}
 
 	addJob(e) {
 		// e.preventDefault();
-		var position = this.position.value; 
+		var position = this.state.position; 
 		var company = this.company.value;
 		var location = this.location.value;
 		var description = this.description.value;
 		var salary = this.state.salary;
 
-		fetch('http://localhost:3001/jobs.json', {  
+		fetch('/jobs.json', {  
 		  method: 'POST',
 		  credentials: 'same-origin',
 		  headers: {
@@ -53,11 +59,20 @@ class JobForm extends Component {
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
-	}
+		.then(function(response) {
+						if(!response.ok) {
+							console.log('server gave error response', response)
+						}
+				        console.log("ok");
+						return response
+				    }).catch(function(error) {
+				        console.log('connection error', error);
+				    });
+			}
 
 	autocomplete(input) {
 		if(!input) return;
-		const dropdown = new window.google.maps.places.Autocomplete(input);
+		new window.google.maps.places.Autocomplete(input);
 		input.addEventListener('keydown', (e) => {
 			if(e.keyCode === 13) e.preventDefault();
 		})
@@ -68,7 +83,7 @@ class JobForm extends Component {
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>
-	        <input ref={(input) => this.position=input} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
+	        <input onChange={e => this.setPosition(e)}type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input ref={(input) => this.company=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
 	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
 	        <textarea ref={(input) => this.description=input} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>

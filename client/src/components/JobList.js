@@ -24,6 +24,14 @@ class JobList extends Component {
 	  removeJob: PropTypes.func.isRequired,
 	}
 
+	state = {}
+
+	constructor(props) {
+		super(props);
+
+		this.deleteJob = this.deleteJob.bind(this);
+	}
+
 	componentDidMount() {
 		fetch('http://localhost:3001/jobs.json', {
 		  credentials: 'same-origin',
@@ -40,15 +48,10 @@ class JobList extends Component {
 		})
 	}
 
-	removeJob(e, id, i) {
-		e.preventDefault()
-		this.props.removeJob(id, i)
-		this.deleteJob(id)
-	}
-
-	deleteJob(id) {
+	deleteJob(e, id, i) {
 		console.log(id)
-		fetch(`http://localhost:3001/jobs/${id}.json`, {
+		const { removeJob } = this.props;
+		fetch(`/jobs/${id}.json`, {
 		  method: 'DELETE',
 		  credentials: 'same-origin',
             mode: 'cors',
@@ -57,19 +60,27 @@ class JobList extends Component {
 			    'Content-Type': 'application/json',
 			    'Access-Control-Allow-Origin': '*'
 			  }
-			})
+			}).then(function(response) {
+				if(!response.ok) {
+					console.log('server gave error response', response)
+				}
+		        console.log("ok");
+				removeJob(id, i)
+		    }).catch(function(error) {
+		        console.log('connection error', error);
+		    });
 	}
 
 		getTimeDiff(time) {
 			var duration = moment.duration(moment(moment().format()).diff(time));
 			if (duration.days()) {
-				return 'Posted' + ' ' + duration.days() + ' ' + (duration.days() > 1 ? 'Days Ago' : 'Day Ago')
+				return 'Posted ' + duration.days() + ' ' + (duration.days() > 1 ? 'Days Ago' : 'Day Ago')
 			} else if (duration.hours()) {
-				return 'Posted' + ' ' + duration.hours() + ' ' + (duration.hours() > 1 ? 'Hours Ago' : 'Hour Ago')
+				return 'Posted ' + duration.hours() + ' ' + (duration.hours() > 1 ? 'Hours Ago' : 'Hour Ago')
 			} else if (duration.minutes()) {
-				return 'Posted' + ' ' + duration.minutes() + ' ' + (duration.minutes() > 1 ? 'Minutes Ago' : 'Minute Ago')
+				return 'Posted ' + duration.minutes() + ' ' + (duration.minutes() > 1 ? 'Minutes Ago' : 'Minute Ago')
 			} else if (duration.seconds()) {
-				return 'Posted' + ' ' + duration.seconds() + ' ' + (duration.seconds() > 1 ? 'Seconds Ago' : 'Second Ago')
+				return 'Posted ' + duration.seconds() + ' ' + (duration.seconds() > 1 ? 'Seconds Ago' : 'Second Ago')
 			}
 		}
 
@@ -88,8 +99,8 @@ class JobList extends Component {
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
 		        				<p>{this.getTimeDiff(value.created_at)}</p>
-		        				<a className="edit" href='#'>Edit</a>&nbsp;&nbsp;
-					            <a className="delete" href='#' onClick={e => this.removeJob(e, value.id, key)}>Delete</a>
+		        				<button className="edit" onClick={this.openModal}>Edit</button>&nbsp;&nbsp;
+					            <button className="delete" onClick={e => this.deleteJob(e, value.id, key)}>Delete</button>
 		        			</div>
 	        				</span>
 	        			)

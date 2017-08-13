@@ -8,7 +8,7 @@ export const addJob = job => ({
 
 export function removeJob(id, i){
   return {
-    type: 'REMOVE_JOB',
+    type: REMOVE_JOB,
     id,
     i
   };
@@ -24,12 +24,13 @@ export default function reducer(state = initialState, action) {
       return {
         jobs: state.jobs.concat(action.job)
       }
-
     case REMOVE_JOB:
-      return [
-        ...state.slice(0, action.i),
-        ...state.slice(action.i + 1)
-      ];
+     // debugger
+     let newArray = state.jobs.slice();
+     newArray.splice(action.i, 1)
+     return {
+      jobs: newArray
+     }
     default:
       return state
   }

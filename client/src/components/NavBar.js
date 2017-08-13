@@ -10,7 +10,7 @@ class NavBar extends Component {
 		      <a className="navbar-brand" href="#">TechLink</a>
 		    </div>
 		    <ul className="nav navbar-nav">
-		      <li className="active"><a href="#">Jobs</a></li>
+		      <li className="active"><a href="/">Jobs</a></li>
 		    </ul>
 		    <ul className="nav navbar-nav navbar-right">
 		      <li><a href="#"><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
