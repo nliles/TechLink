@@ -1,5 +1,4 @@
 export const ADD_JOB = 'techlink/jobs/ADD_JOB'
-export const ADD_FORM_JOB = 'techlink/jobs/ADD_FORM_JOB'
 export const REMOVE_JOB = 'techlink/jobs/REMOVE_JOB'
 
 export const addJob = job => ({
@@ -7,15 +6,13 @@ export const addJob = job => ({
   job
 })
 
-export const addFormJob = job => ({
-  type: ADD_FORM_JOB,
-  job
-})
-
-export const removeJob = id => ({
-  type: REMOVE_JOB,
-  id
-})
+export function removeJob(id, i){
+  return {
+    type: 'REMOVE_JOB',
+    id,
+    i
+  };
+}
 
 const initialState = {
   jobs: []
@@ -27,14 +24,12 @@ export default function reducer(state = initialState, action) {
       return {
         jobs: state.jobs.concat(action.job)
       }
-    case ADD_FORM_JOB:
-      return {
-        jobs: state.jobs.unshift(action.job)
-      }
+
     case REMOVE_JOB:
-      return {
-        jobs: state.jobs.filter(id => action.id !== id)
-      }
+      return [
+        ...state.slice(0, action.i),
+        ...state.slice(action.i + 1)
+      ];
     default:
       return state
   }
