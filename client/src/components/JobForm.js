@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { render } from 'react-dom';
-import moment from 'moment'
+import moment from 'moment';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { addJob, addFormJob, removeJob } from '../redux/jobs' 
 
+const mapStateToProps = state => ({
+  jobs: state.jobs.jobs
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addJob, 
+  addFormJob,
+  removeJob
+}, dispatch)
 
 class JobForm extends Component {
+	static propTypes = {
+	  jobs: PropTypes.array.isRequired,
+	  addJob: PropTypes.func.isRequired,
+	  addFormJob: PropTypes.func.isRequired,
+	  removeJob: PropTypes.func.isRequired,
+	}
+
 	constructor() {
 		super();
 		this.state = {
-			position: '',
-			company: '',
-			location: '',
-			description: '',
 			salary: ''
 		}
 	}
@@ -30,21 +46,16 @@ class JobForm extends Component {
 		var description = this.description.value;
 		var salary = this.state.salary;
 
-		this.setState({position})
-		this.setState({company})
-		this.setState({location})
-		this.setState({description})
-
-		fetch('/jobs.json', {  
+		fetch('http://localhost:3001/jobs.json', {  
 		  method: 'POST',
+		  credentials: 'same-origin',
 		  headers: {
-		    'Accept': 'application/json',
+		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
 	}
-
 
 	autocomplete(input) {
 		if(!input) return;
@@ -56,7 +67,7 @@ class JobForm extends Component {
 
 
 	render() {
-		console.log(this.state)
+		console.log(this.props)
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>
@@ -86,4 +97,7 @@ class JobForm extends Component {
 	}
 }
 
-export default JobForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(JobForm)

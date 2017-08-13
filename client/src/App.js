@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import JobForm from './components/JobForm';
-import JobList from './components/JobList';
+import { default as JobList } from './components/JobList';
 
 
 class App extends Component {
@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className='rowC'>
         <div className="jobForm"><JobForm/></div>
-        <JobList/>
+        <JobList jobs={[]}/>
       </div>
     )
   }

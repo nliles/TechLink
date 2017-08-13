@@ -52,10 +52,9 @@ body {
   padding: 0;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  background: white; 
   border-bottom: 1px solid #e6e6e6;
   z-index: 9999;
-  background: #fafafa;
+  background: #30BCED;
 }
 
 input:focus, textarea:focus {

@@ -1,46 +1,69 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { render } from 'react-dom';
-import moment from 'moment'
+import moment from 'moment';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { addJob, addFormJob, removeJob } from '../redux/jobs' 
 
+
+const mapStateToProps = state => ({
+  jobs: state.jobs.jobs
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addJob, 
+  addFormJob,
+  removeJob
+}, dispatch)
 
 class JobList extends Component {
-	constructor() {
-		super();
-		this.state = {
-			jobs: []
-		}
+
+	static propTypes = {
+	  jobs: PropTypes.array.isRequired,
+	  addJob: PropTypes.func.isRequired,
+	  addFormJob: PropTypes.func.isRequired,
+	  removeJob: PropTypes.func.isRequired,
 	}
 
 	componentDidMount() {
-			fetch('/jobs.json', {
-			  method: 'GET',
-			  headers: {
-			    Accept: 'application/json',
-			  },
-			},
-			).then(response => {
-			  if (response.ok) {
-			    response.json().then(json => {
-			      this.setState({jobs: json});
-			    });
-			  }
-			});
+		fetch('http://localhost:3001/jobs.json', {
+		  credentials: 'same-origin',
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json'
+		  }
+		})
+		.then(response => response.json())
+		.then(json => {
+		  json.forEach(job => {
+		    this.props.addJob(job)
+		  })
+		})
 	}
 
 	deleteJob(e, id) {
-		fetch(`/jobs/${id}.json`, {
-		  method: 'DELETE'
-		},
-		).then(response => response.json());
+		fetch(`http://localhost:3001/jobs/${id}.json`, {
+		  method: 'DELETE',
+		  credentials: 'same-origin',
+            credentials: 'include',
+            mode: 'cors',
+			  headers: {
+			    'Access-Control-Allow-Origin': '*',
+			    Accept: 'application/json',
+			    'Content-Type': 'application/json'
+			  }
+			}).then(response => response.json());
 	}
 
 
 	render() {
+		console.log(this.props)
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>
 	        	<div className="jobs">
-	        		{this.state.jobs.map((value, key) => {
+	        		{this.props.jobs.map((value, key) => {
 	        			return (
 	        				<span key={key}>
 	        				<div className="job">
@@ -63,4 +86,7 @@ class JobList extends Component {
 
 }
 
-export default JobList;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(JobList)
