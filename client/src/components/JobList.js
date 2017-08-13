@@ -42,19 +42,30 @@ class JobList extends Component {
 		})
 	}
 
-	deleteJob(e, id) {
-		fetch(`http://localhost:3001/jobs/${id}.json`, {
-		  method: 'DELETE',
-		  credentials: 'same-origin',
-            credentials: 'include',
-            mode: 'cors',
-			  headers: {
-			    Accept: 'application/json',
-			    'Content-Type': 'application/json'
-			  }
-			}).then(response => response.json());
-	}
+	// deleteJob(e, id) {
+	// 	fetch(`http://localhost:3001/jobs/${id}.json`, {
+	// 	  method: 'DELETE',
+	// 	  credentials: 'same-origin',
+ //            credentials: 'include',
+ //            mode: 'cors',
+	// 		  headers: {
+	// 		    Accept: 'application/json',
+	// 		    'Content-Type': 'application/json'
+	// 		  }
+	// 		}).then(response => response.json());
 
+		getTimeDiff(time) {
+			var duration = moment.duration(moment(moment().format()).diff(time));
+			if (duration.days()) {
+				return 'Posted' + ' ' + duration.days() + ' Days Ago'
+			} else if (duration.hours()) {
+				return 'Posted' + ' ' + duration.hours() + ' Hours Ago'
+			} else if (duration.minutes()) {
+				return 'Posted' + ' ' + duration.minutes() + ' Minutes Ago'
+			} else if (duration.seconds()) {
+				return 'Posted' + ' ' + duration.seconds() + ' Seconds Ago'
+			}
+		}
 
 	render() {
 		console.log(this.props)
@@ -70,7 +81,7 @@ class JobList extends Component {
 		        				<span>{value.company} - {value.location}</span>
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
-		        				<p>{moment(value.created_at, "YYYYMMDD").fromNow()}</p>
+		        				<p>{this.getTimeDiff(value.created_at)}</p>
 		        				<a className="edit" href='#'>Edit</a>&nbsp;&nbsp;
 					            <a className="delete" href='#' onClick={e => this.deleteJob(e, value.id)}>Delete</a>
 		        			</div>

@@ -13,7 +13,7 @@ body {
   margin-top: 25px;
   padding: 2rem;
   padding-left: 5px;
-  margin-left: 100px;
+  margin-left: 80px;
 }
 
 .form {
@@ -36,6 +36,11 @@ body {
     border-bottom: 1px solid #e6e6e6; 
 }
 
+a {
+  color: black;
+  underline: none;
+
+}
 
 .radio {
 	display: inline-block;
@@ -78,7 +83,7 @@ textarea {
 
 .button {
   border: 0;
-  width: 300px;
+  width: 330px;
   height: 40px;
   background: #696969;
   color: #fff;
@@ -87,6 +92,7 @@ textarea {
 
 .jobForm {
   border-right: 1px solid #e6e6e6;
+  padding-right:20px;
 }
 
 
@@ -96,7 +102,7 @@ textarea {
 
 
 .job {
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   border-bottom: 1px solid #e6e6e6;  
 }
 
@@ -114,4 +120,5 @@ textarea {
 	justify-content: flex-start;
 	break-before: always;
 	margin: 0 0 3em 0;
+  width: 330px;
 }
