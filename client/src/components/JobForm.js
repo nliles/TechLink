@@ -67,7 +67,6 @@ class JobForm extends Component {
 
 
 	render() {
-		console.log(this.props)
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>

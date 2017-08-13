@@ -49,7 +49,6 @@ class JobList extends Component {
             credentials: 'include',
             mode: 'cors',
 			  headers: {
-			    'Access-Control-Allow-Origin': '*',
 			    Accept: 'application/json',
 			    'Content-Type': 'application/json'
 			  }

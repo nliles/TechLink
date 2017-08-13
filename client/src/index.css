@@ -32,9 +32,10 @@ body {
 .activity{
     margin: 0;
     padding-bottom: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: -5px;
     border-bottom: 1px solid #e6e6e6; 
 }
+
 
 .radio {
 	display: inline-block;
@@ -43,26 +44,6 @@ body {
 	text-align: center; 
 }
 
-/*.nav {
-  display: -ms-flexbox;
-  display: flex;
-  list-style: none;
-  height: 70px;
-  margin: 0;
-  padding: 0;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  border-bottom: 1px solid #e6e6e6;
-  z-index: 9999;
-  background: #30BCED;
-}*/
-
-
-
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-    background-color: #111;
-}
 
 input:focus, textarea:focus {
   outline: none;
@@ -70,7 +51,7 @@ input:focus, textarea:focus {
 
 .input {
     border: 1px solid #e6e6e6;
-    width: 300px;
+    width: 330px;
     height: 50px;
     margin-bottom:14px;
 }
@@ -81,7 +62,6 @@ input:focus, textarea:focus {
 
 
 input, textarea {
-  width: 100%;
   padding: 10px;
   border: 1px solid #e6e6e6; 
 }
@@ -105,7 +85,7 @@ textarea {
   font-weight: 600; 
 }
 
-.jobForm, .activity {
+.jobForm {
   border-right: 1px solid #e6e6e6;
 }
 
@@ -116,9 +96,8 @@ textarea {
 
 
 .job {
-  margin-top: 0px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #e6e6e6;  
-  margin-bottom: 20px;
 }
 
 .description {
