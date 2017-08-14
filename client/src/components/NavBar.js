@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
+
 class NavBar extends Component {
 	render() {
 		return(
@@ -14,7 +15,7 @@ class NavBar extends Component {
 		    </ul>
 		    <ul className="nav navbar-nav navbar-right">
 		      <li><a href="#"><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
-		      <li><a href="#"><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
+		      <li><a href="#"><span className="glyphicon glyphicon-log-in"></span>Login</a></li>
 		    </ul>
 		  </div>
 		</nav>

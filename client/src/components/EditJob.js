@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeJob
 }, dispatch)
 
-class JobForm extends Component {
+class EditJob extends Component {
 	static propTypes = {
 	  jobs: PropTypes.array.isRequired,
 	  addJob: PropTypes.func.isRequired,
@@ -50,8 +50,8 @@ class JobForm extends Component {
 		var description = this.description.value;
 		var salary = this.state.salary;
 
-		fetch('/jobs.json', {  
-		  method: 'POST',
+		fetch(`/jobs`, {  
+		  method: 'PUT',
 		  credentials: 'same-origin',
 		  headers: {
 		    Accept: 'application/json',
@@ -102,7 +102,4 @@ class JobForm extends Component {
 	}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(JobForm)
+export default EditJob;
