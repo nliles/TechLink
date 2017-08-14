@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import moment from 'moment';
-import 'bootstrap/dist/css/bootstrap.css';
-// import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
@@ -100,10 +99,11 @@ class JobList extends Component {
 	        				<div className="job">
 		        				<h3>{value.position.toUpperCase()}</h3>
 		        				<span>{value.company} - {value.location}</span>
+		        				<br/>
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
 		        				<p>{this.getTimeDiff(value.created_at)}</p>
-		        				<button className="edit">Edit</button>&nbsp;&nbsp;
+		        				<Link to={'/jobs/${this.props.id}/edit'}>Edit</Link>&nbsp;&nbsp;
 					            <button className="delete" onClick={e => this.deleteJob(e, value.id, key)}>Delete</button>
 		        			</div>
 	        				</span>

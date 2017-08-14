@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-class UserRegistration extends Component {
+class LoginForm extends Component {
 
   constructor(props) {
     super(props);
@@ -34,14 +34,13 @@ class UserRegistration extends Component {
 	render() {
 		return(
 	      <form className="form" onSubmit={(e) => this.addUser(e)}> 
-	        <h2>Post a Job</h2><br/>
-	        <input type="text" name="position" className="input" placeholder="Position" /><br/><br/>
-	        <input type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <button type="submit" className="button">Submit → </button>
+	        <h2>Login</h2><br/>
+	        <input type="text" name="email" className="input" placeholder="Email" /><br/><br/>
+	        <input type="text" name="password" className="input" placeholder="Password"/><br/><br/>
+	        <button type="submit" className="button">Login → </button>
 	      </form>
       ) 
 	}
 }
 
-export default UserRegistration;
-
+export default LoginForm;

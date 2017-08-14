@@ -1,34 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
 
-const mapStateToProps = state => ({
-  jobs: state.jobs.jobs
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  addJob, 
-  removeJob
-}, dispatch)
-
-class EditJob extends Component {
-	static propTypes = {
-	  jobs: PropTypes.array.isRequired,
-	  addJob: PropTypes.func.isRequired,
-	  removeJob: PropTypes.func.isRequired,
-	}
+class EditJobForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    	position: '',
-    	company: '',
-    	location: '',
-    	description: '',
-    	salary: ''
+    	position: this.props.position,
+    	company: this.props.company,
+    	location: this.props.location,
+    	description: this.props.description,
+    	salary: this.props.salary
     };
   }
 
@@ -42,25 +27,27 @@ class EditJob extends Component {
 		this.setState({ position });
 	}
 
-	addJob(e) {
-		// e.preventDefault();
-		var position = this.state.position; 
-		var company = this.company.value;
-		var location = this.location.value;
-		var description = this.description.value;
-		var salary = this.state.salary;
+	editJob(e) {
+		e.preventDefault();
+		console.log("hi")
+		console.log(this.state.id)
+		// var position = this.state.position; 
+		// var company = this.company.value;
+		// var location = this.location.value;
+		// var description = this.description.value;
+		// var salary = this.state.salary;
 
-		fetch(`/jobs`, {  
-		  method: 'PUT',
-		  credentials: 'same-origin',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({ job: {position, company, location, description, salary} })
-		})
-      .then(() => this.setState({ success: 'Successfully created!' }))
-      .catch(() => this.setState({ error: 'Something went wrong' }))
+		// fetch(`/jobs/${id}.json`, {  
+		//   method: 'PUT',
+		//   credentials: 'same-origin',
+		//   headers: {
+		//     Accept: 'application/json',
+		//     'Content-Type': 'application/json',
+		//   },
+		//   body: JSON.stringify({ job: {position, company, location, description, salary} })
+		// })
+  //     .then(() => this.setState({ success: 'Successfully created!' }))
+  //     .catch(() => this.setState({ error: 'Something went wrong' }))
 	  }
 
 	autocomplete(input) {
@@ -74,8 +61,8 @@ class EditJob extends Component {
 
 	render() {
 		return(
-	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
-	        <h2>Post a Job</h2><br/>
+	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
+	        <h2>Edit Job</h2><br/>
 	        <input onChange={e => this.setPosition(e)}type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input ref={(input) => this.company=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
 	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
@@ -102,4 +89,4 @@ class EditJob extends Component {
 	}
 }
 
-export default EditJob;
+export default EditJobForm;
