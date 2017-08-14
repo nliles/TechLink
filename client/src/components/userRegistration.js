@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-class userRegistration extends Component {
+class UserRegistration extends Component {
 
   constructor(props) {
     super(props);
@@ -23,19 +23,13 @@ class userRegistration extends Component {
 		  },
 		  body: JSON.stringify({ user: {email, password} })
 		})
-      .then(() => this.setState({ success: 'Successfully created new user!' }))
-      .catch(() => this.setState({ error: 'Something went wrong' }))
-	  }
-
-   $.ajax({
-       url: 'http://stocked-back.herokuapp.com/api/users',
-       method: 'POST',
-       data: $(event.target).serialize()
-    }).done(function(token) {
-      localStorage.setItem("token", token.auth_token)
-      localStorage.setItem("user_id", token.id)
-    }.bind(this));
-  }
+		.then(function(token) {
+	      localStorage.setItem("token", token.auth_token)
+	      localStorage.setItem("user_id", token.id)		
+		}).catch(function(err) {
+		    console.log('Error ocurred', err);
+		});
+	}
 
 	render() {
 		return(
@@ -49,5 +43,5 @@ class userRegistration extends Component {
 	}
 }
 
-export default userRegistration;
+export default UserRegistration;
 

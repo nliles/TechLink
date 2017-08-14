@@ -84,7 +84,7 @@ class JobList extends Component {
 		} else if (duration.minutes()) {
 			return 'Posted ' + duration.minutes() + ' ' + (duration.minutes() > 1 ? 'Minutes Ago' : 'Minute Ago')
 		} else {
-			return 'Posted ' + duration.seconds() + ' ' + (duration.seconds() > 1 ? 'Seconds Ago' : 'Second Ago')
+			return 'Posted ' + duration.seconds() + ' ' + (duration.seconds() === 1 ? 'Second Ago' : 'Seconds Ago')
 		}
 	}
 
