@@ -59,16 +59,9 @@ class JobForm extends Component {
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
-		.then(function(response) {
-						if(!response.ok) {
-							console.log('server gave error response', response)
-						}
-				        console.log("ok");
-						return response
-				    }).catch(function(error) {
-				        console.log('connection error', error);
-				    });
-			}
+      .then(() => this.setState({ success: 'Successfully created!' }))
+      .catch(() => this.setState({ error: 'Something went wrong' }))
+	  }
 
 	autocomplete(input) {
 		if(!input) return;
