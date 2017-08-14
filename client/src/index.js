@@ -1,19 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { BrowserRouter, Route } from 'react-router-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './redux'
 
 import './index.css';
 
-import NavBar from './components/NavBar';
-import EditJob from './components/EditJob';
+import EditJobForm from './components/EditJobForm';
+import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
 import App from './App';
-
-render(<NavBar/>, document.querySelector('#nav'));
-
 
 //Add dev tools
 const initDevTools = () => (
@@ -27,24 +24,18 @@ const store = createStore(
   preloadedState, initDevTools()
 )
 
-const Root = () => {
-  return (
-	<BrowserRouter>
-		  <div>
-		    <Route path='/' component={App} />
-		    <Route path='/jobs/:id/edit' component={EditJob} />
-		  </div>
-	</BrowserRouter>
-  )
-}
-
-
-
-
 render(
   <Provider store={store}>
-    <App />
+	 <BrowserRouter>
+		  <div>
+		    <Route path='/' component={App}/>
+		    <Route exact path='/jobs/:id/edit' component={EditJobForm}/>
+		    <Route exact path='/login' component={LoginForm}/>
+		    <Route exact path='/users/new' component={RegisterForm}/>
+		  </div>
+	</BrowserRouter>
   </Provider>,
   document.getElementById('main')
 )
 
+ 

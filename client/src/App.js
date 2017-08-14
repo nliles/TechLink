@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import JobForm from './components/JobForm';
+import EditJobForm from './components/EditJobForm';
 import { default as JobList } from './components/JobList';
-import userRegistration from './components/userRegistration';
+import JobForm from './components/JobForm';
+import RegisterForm from './components/RegisterForm';
+import NavBar from './components/NavBar';
 
 class App extends Component {
   constructor(props) {
@@ -19,14 +21,18 @@ class App extends Component {
 
   render() {
     return (    
+    <div>
+        <NavBar/>
 	      <div className='rowC'>
 	        <div className="jobForm">
             <JobForm/>
           </div>
           <JobList jobs={[]}/>
 	      </div>
+    </div>
     )
   }
 }
 
 export default App;
+
