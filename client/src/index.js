@@ -29,7 +29,7 @@ render(
 	 <BrowserRouter>
 		  <div>
 		    <Route path='/' component={App}/>
-		    <Route exact path='/jobs/:id/edit' component={EditJobForm}/>
+		    <Route exact path='/jobs/:id/:position/:company/:location/:description/:salary/edit' component={EditJobForm}/>
 		    <Route exact path='/login' component={LoginForm}/>
 		    <Route exact path='/users/new' component={RegisterForm}/>
 		  </div>

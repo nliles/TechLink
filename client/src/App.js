@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import EditJobForm from './components/EditJobForm';
+// import EditJobForm from './components/EditJobForm';
 import { default as JobList } from './components/JobList';
 import JobForm from './components/JobForm';
-import RegisterForm from './components/RegisterForm';
+// import RegisterForm from './components/RegisterForm';
 import NavBar from './components/NavBar';
 
 class App extends Component {

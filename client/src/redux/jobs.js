@@ -1,5 +1,6 @@
 export const ADD_JOB = 'techlink/jobs/ADD_JOB'
 export const REMOVE_JOB = 'techlink/jobs/REMOVE_JOB'
+export const EDIT_JOB = 'techlink/jobs/EDIT_JOB'
 
 export const addJob = job => ({
   type: ADD_JOB,
@@ -14,6 +15,14 @@ export function removeJob(id, i){
   };
 }
 
+export function editJob(job){
+  return {
+    type: EDIT_JOB,
+    job
+  };
+}
+
+
 const initialState = {
   jobs: []
 }
@@ -21,17 +30,21 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_JOB:
-      let newArray2 = state.jobs.concat(action.job)
-      console.log(newArray2)
       return {
-        jobs: newArray2
+        jobs: state.jobs.concat(action.job)
       }
     case REMOVE_JOB:
-     // debugger
-     let newArray = state.jobs.slice();
-     newArray.splice(action.i, 1)
+     let removeJobArray = state.jobs.slice();
+     removeJobArray.splice(action.i, 1)
      return {
-      jobs: newArray
+      jobs: removeJobArray
+     }
+    case EDIT_JOB:
+      let editJobArray = state.jobs.slice();
+      let find = editJobArray.find(job => job.id == action.job.id)
+      editJobArray[editJobArray.indexOf(find)] = action.job
+     return {
+      jobs: editJobArray
      }
     default:
       return state
