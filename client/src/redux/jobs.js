@@ -23,7 +23,6 @@ export function editJob(job){
 }
 
 
-
 const initialState = {
   jobs: []
 }
@@ -43,7 +42,6 @@ export default function reducer(state = initialState, action) {
     case EDIT_JOB:
       let editJobArray = state.jobs.slice();
       let find = editJobArray.find(job => job.id == action.job.id)
-      // let index = editJobArray.indexOf(find)
       editJobArray[editJobArray.indexOf(find)] = action.job
      return {
       jobs: editJobArray

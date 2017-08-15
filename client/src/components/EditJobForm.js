@@ -23,17 +23,17 @@ class EditJobForm extends Component {
 	  jobs: PropTypes.array.isRequired,
 	  addJob: PropTypes.func.isRequired,
 	  removeJob: PropTypes.func.isRequired,
-	  editJob: PropTypes.func.isRequired,
+	  editJob: PropTypes.func.isRequired
 	}
 
   constructor(props) {
     super(props);
     this.state = {
-    	position: '',
-    	company: '',
-    	location: '',
-    	description: '',
-    	salary: ''
+    	position: this.props.match.params.position,
+    	company: this.props.match.params.company,
+    	location: this.props.match.params.location,
+    	description: this.props.match.params.description,
+    	salary: this.props.match.params.salary,
     };
   }
 
@@ -71,6 +71,7 @@ class EditJobForm extends Component {
 
 
 	render() {
+		console.log(this.props.match.params)
 		return(
 	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
 	        <h2>Edit Job</h2><br/>
