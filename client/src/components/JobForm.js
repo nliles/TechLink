@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addJob, removeJob } from '../redux/jobs' 
+import { addJob, removeJob, editJob } from '../redux/jobs' 
 
 const mapStateToProps = state => ({
   jobs: state.jobs.jobs
@@ -11,14 +11,15 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
-  removeJob
+  removeJob,
+  editJob
 }, dispatch)
 
 class JobForm extends Component {
 	static propTypes = {
 	  jobs: PropTypes.array.isRequired,
 	  addJob: PropTypes.func.isRequired,
-	  removeJob: PropTypes.func.isRequired,
+	  removeJob: PropTypes.func.isRequired
 	}
 
   constructor(props) {

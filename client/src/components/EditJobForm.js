@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addJob, removeJob } from '../redux/jobs' 
+import { addJob, removeJob, editJob } from '../redux/jobs' 
+
+const mapStateToProps = state => ({
+  jobs: state.jobs.jobs
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addJob, 
+  removeJob,
+  editJob
+}, dispatch)
+
 
 
 class EditJobForm extends Component {
 
+	static propTypes = {
+	  jobs: PropTypes.array.isRequired,
+	  addJob: PropTypes.func.isRequired,
+	  removeJob: PropTypes.func.isRequired,
+	  editJob: PropTypes.func.isRequired,
+	}
+
   constructor(props) {
     super(props);
     this.state = {
-    	position: this.props.match.params.position,
+    	position: '',
     	company: '',
     	location: '',
     	description: '',
@@ -20,7 +39,6 @@ class EditJobForm extends Component {
 
 	editJob(e, id) {
 		e.preventDefault();
-		console.log("hi")
 
 		var position = this.state.position; 
 		var company = this.state.company;
@@ -38,7 +56,8 @@ class EditJobForm extends Component {
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
-      .then(() => this.setState({ success: 'Successfully created!' }))
+      .then((response) => response.json())
+      .then((json) => this.props.editJob(json))
       .catch(() => this.setState({ error: 'Something went wrong' }))
 	  }
 
@@ -52,7 +71,6 @@ class EditJobForm extends Component {
 
 
 	render() {
-		console.log(this.props.match.params.position)
 		return(
 	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
 	        <h2>Edit Job</h2><br/>
@@ -82,4 +100,7 @@ class EditJobForm extends Component {
 	}
 }
 
-export default EditJobForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditJobForm)
