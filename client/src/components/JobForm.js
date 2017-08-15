@@ -40,9 +40,6 @@ class JobForm extends Component {
 		var description = this.state.description;
 		var salary = this.state.salary;
 
-		// var details = this.refs.details
-		//   details.value = ""; // Unset the value
-
 		fetch('/jobs.json', {  
 		  method: 'POST',
 		  credentials: 'same-origin',
@@ -52,9 +49,9 @@ class JobForm extends Component {
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
-
       .then((response) => response.json())
-      .then((json) => this.props.addJob(json))
+      .then((json) => this.props.addJob(json),
+      this.state = { position: '', company: '', location: '', description: '', salary: ''})
       .catch(() => this.setState({ error: 'Something went wrong' }))
 	  }
 
@@ -70,7 +67,7 @@ class JobForm extends Component {
 		return(
 	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
 	        <h2>Post a Job</h2><br/>
-	        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
+	        <input onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
 	        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
 	        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>

@@ -61,17 +61,14 @@ class JobList extends Component {
 			    'Content-Type': 'application/json',
 			    'Access-Control-Allow-Origin': '*'
 			  }
-			}).then(function(response) {
+			}).then((response) =>  {
 				if(!response.ok) {
 					console.log('server gave error response', response)
 				}
 		        console.log("ok");
 				removeJob(id, i)
-		    }).catch(function(error) {
-		        console.log('connection error', error);
-		    });
+		    }).catch((err) => console.log(err))
 	}
-
 
 
 	getTimeDiff(time) {
