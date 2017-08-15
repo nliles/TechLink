@@ -15,10 +15,7 @@ class RegisterForm extends Component {
 		var email = this.email.value; 
 		var password = this.password.value;
 		var passwordConfirmation = this.passwordConfirmation.value;
-		console.log(email)
-		console.log(password)
-		console.log(passwordConfirmation)
-
+		
 		fetch('/auth', {  
 		  method: 'POST',
 		  credentials: 'same-origin',
