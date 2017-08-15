@@ -9,11 +9,11 @@ class EditJobForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	position: this.props.position,
-    	company: this.props.company,
-    	location: this.props.location,
-    	description: this.props.description,
-    	salary: this.props.salary
+    	position: '',
+    	company: '',
+    	location: '',
+    	description: '',
+    	salary: ''
     };
   }
 
@@ -21,16 +21,11 @@ class EditJobForm extends Component {
 		const salary = e.target.value;
 		this.setState({ salary });
 	}
-
-	setPosition(e) {
-		const position = e.target.value;
-		this.setState({ position });
-	}
-
-	editJob(e) {
+	
+	editJob(e, id) {
 		e.preventDefault();
 		console.log("hi")
-		console.log(this.state.id)
+		console.log(this.props.id)
 		// var position = this.state.position; 
 		// var company = this.company.value;
 		// var location = this.location.value;
@@ -63,10 +58,10 @@ class EditJobForm extends Component {
 		return(
 	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
 	        <h2>Edit Job</h2><br/>
-	        <input onChange={e => this.setPosition(e)}type="text" name="position" className="input" placeholder="Position" /><br/><br/>
-	        <input ref={(input) => this.company=input} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <input ref={(input) => this.location=input} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
-	        <textarea ref={(input) => this.description=input} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>
+	        <input ref={(input) => this.position=input} value={this.state.position}  type="text" name="position" className="input" placeholder="Position" /><br/><br/>
+	        <input ref={(input) => this.company=input} value={this.state.company}  type="text" name="company" className="input" placeholder="Company"/><br/><br/>
+	        <input ref={(input) => this.location=input} value={this.state.location} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+	        <textarea ref={(input) => this.description=input} value={this.state.description} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onClick={e => this.setSalary(e)}>
 		        <div className="radioDiv">
