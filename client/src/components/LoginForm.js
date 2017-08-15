@@ -13,6 +13,7 @@ class LoginForm extends Component {
 	addUser(e) {
 		var email = this.state.email; 
 		var password = this.state.password;
+		var password = this.state.passwordConfirmation;
 
 		fetch('/users/sign_up', {  
 		  method: 'POST',
@@ -36,7 +37,8 @@ class LoginForm extends Component {
 	      <form className="form" onSubmit={(e) => this.addUser(e)}> 
 	        <h2>Login</h2><br/>
 	        <input type="text" name="email" className="input" placeholder="Email" /><br/><br/>
-	        <input type="text" name="password" className="input" placeholder="Password"/><br/><br/>
+	        <input type="password" name="password" className="input" placeholder="Password"/><br/><br/>
+	        <input type="password" name="passwordConfirmation" className="input" placeholder="Password"/><br/><br/>	
 	        <button type="submit" className="button">Login → </button>
 	      </form>
       ) 

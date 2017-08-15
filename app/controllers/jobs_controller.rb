@@ -28,8 +28,8 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       if @job.save
-        format.json { render json: @job }
-        # respond_with(@job)
+        format.json { respond_with(@job) }
+        
       else
         format.json { render json: @job.errors, status: :unprocessable_entity }
       end

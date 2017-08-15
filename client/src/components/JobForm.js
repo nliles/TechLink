@@ -43,7 +43,7 @@ class JobForm extends Component {
 	}
 
 	addJob(e) {
-		// e.preventDefault();
+		e.preventDefault();
 		var position = this.state.position; 
 		var company = this.company.value;
 		var location = this.location.value;
@@ -59,7 +59,10 @@ class JobForm extends Component {
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
-      .then(() => this.setState({ success: 'Successfully created!' }))
+
+      .then((response) => response.json())
+      .then((json) => this.props.addJob(json))
+
       .catch(() => this.setState({ error: 'Something went wrong' }))
 	  }
 
