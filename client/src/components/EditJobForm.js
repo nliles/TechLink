@@ -4,12 +4,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
 
+
 class EditJobForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    	position: '',
+    	position: this.props.match.params.position,
     	company: '',
     	location: '',
     	description: '',
@@ -20,24 +21,25 @@ class EditJobForm extends Component {
 	editJob(e, id) {
 		e.preventDefault();
 		console.log("hi")
-		console.log(this.props.id)
-		// var position = this.state.position; 
-		// var company = this.state.company;
-		// var location = this.state.location;
-		// var description = this.state.description;
-		// var salary = this.state.salary;
 
-		// fetch(`/jobs/${id}.json`, {  
-		//   method: 'PUT',
-		//   credentials: 'same-origin',
-		//   headers: {
-		//     Accept: 'application/json',
-		//     'Content-Type': 'application/json',
-		//   },
-		//   body: JSON.stringify({ job: {position, company, location, description, salary} })
-		// })
-  //     .then(() => this.setState({ success: 'Successfully created!' }))
-  //     .catch(() => this.setState({ error: 'Something went wrong' }))
+		var position = this.state.position; 
+		var company = this.state.company;
+		var location = this.state.location;
+		var description = this.state.description;
+		var salary = this.state.salary;
+		var id = this.props.match.params.id
+
+		fetch(`/jobs/${id}.json`, {  
+		  method: 'PUT',
+		  credentials: 'same-origin',
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({ job: {position, company, location, description, salary} })
+		})
+      .then(() => this.setState({ success: 'Successfully created!' }))
+      .catch(() => this.setState({ error: 'Something went wrong' }))
 	  }
 
 	autocomplete(input) {
@@ -50,9 +52,10 @@ class EditJobForm extends Component {
 
 
 	render() {
+		console.log(this.props.match.params.position)
 		return(
-	      <form className="form" onSubmit={(e) => this.addJob(e)}> 
-	        <h2>Post a Job</h2><br/>
+	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
+	        <h2>Edit Job</h2><br/>
 	        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
 	        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>

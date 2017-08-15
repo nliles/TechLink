@@ -14,6 +14,8 @@ export function removeJob(id, i){
   };
 }
 
+
+
 const initialState = {
   jobs: []
 }
@@ -27,7 +29,6 @@ export default function reducer(state = initialState, action) {
         jobs: newArray2
       }
     case REMOVE_JOB:
-     // debugger
      let newArray = state.jobs.slice();
      newArray.splice(action.i, 1)
      return {
