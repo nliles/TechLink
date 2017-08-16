@@ -18,9 +18,9 @@ class JobsController < ApplicationController
     @job = Job.new(job_params)
 
       if @job.save
-        render json: @drink, status: :created, location: @drink
+        render json: @job, status: :created, location: @job
       else
-        render json: @drink.errors, status: :unprocessable_entity
+        render json: @job.errors, status: :unprocessable_entity
       end
   end
 
