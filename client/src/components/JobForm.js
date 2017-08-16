@@ -69,7 +69,7 @@ class JobForm extends Component {
 	        <h2>Post a Job</h2><br/>
 	        <input onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+	        <input onClick={e => this.autocomplete(e.target)} onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" placeholder="Location"  /><br/><br/>
 	        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
