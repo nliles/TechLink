@@ -47,7 +47,7 @@ class EditJobForm extends Component {
 		var salary = this.state.salary;
 		var id = this.props.match.params.id
 
-		fetch(`/jobs/${id}.json`, {  
+		fetch(`/jobs/${id}`, {  
 		  method: 'PUT',
 		  credentials: 'same-origin',
 		  headers: {
@@ -57,8 +57,9 @@ class EditJobForm extends Component {
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
       .then((response) => response.json())
-      .then((json) => this.props.editJob(json))
-      .catch(() => this.setState({ error: 'Something went wrong' }))
+      .then((json) => this.props.editJob(json),
+      	this.state = { position: '', company: '', location: '', description: '', salary: ''})
+      .catch((err) => console.log(err))
 	  }
 
 	autocomplete(input) {
@@ -71,7 +72,6 @@ class EditJobForm extends Component {
 
 
 	render() {
-		console.log(this.props.match.params)
 		return(
 	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
 	        <h2>Edit Job</h2><br/>

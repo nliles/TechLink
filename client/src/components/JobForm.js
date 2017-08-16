@@ -41,7 +41,7 @@ class JobForm extends Component {
 		var description = this.state.description;
 		var salary = this.state.salary;
 
-		fetch('/jobs.json', {  
+		fetch('/jobs', {  
 		  method: 'POST',
 		  credentials: 'same-origin',
 		  headers: {
@@ -50,10 +50,10 @@ class JobForm extends Component {
 		  },
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
-      .then((response) => response.json())
-      .then((json) => this.props.addJob(json),
-      this.state = { position: '', company: '', location: '', description: '', salary: ''})
-      .catch(() => this.setState({ error: 'Something went wrong' }))
+      .then(response => response.json())
+      .then(json => this.props.addJob(json))
+      // this.state = { position: '', company: '', location: '', description: '', salary: ''}
+      // .catch(() => this.setState({ error: 'Something went wrong' }))
 	  }
 
 	autocomplete(input) {
