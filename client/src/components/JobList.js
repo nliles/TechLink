@@ -35,24 +35,20 @@ class JobList extends Component {
 	}
 
 	componentDidMount() {
-		fetch('/jobs.json', {
+		fetch('/jobs', {
 		  credentials: 'same-origin',
 		  headers: {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json'
 		  }
 		})
-		.then(response => response.json())
-		.then(json => {
-		  json.forEach(job => {
-		    this.props.addJob(job)
-		  })
-		})
-	}
+      .then((response) => response.json())
+      .then((json) => this.props.addJob(json))
+    }
 
 	deleteJob(e, id, i) {
 		const { removeJob } = this.props;
-		fetch(`/jobs/${id}.json`, {
+		fetch(`/jobs/${id}`, {
 		  method: 'DELETE',
 		  credentials: 'same-origin',
             mode: 'cors',

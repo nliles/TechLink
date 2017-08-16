@@ -30,6 +30,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_JOB:
+    console.log(action.job)
       return {
         jobs: state.jobs.concat(action.job)
       }
@@ -41,7 +42,7 @@ export default function reducer(state = initialState, action) {
      }
     case EDIT_JOB:
       let editJobArray = state.jobs.slice();
-      let find = editJobArray.find(job => job.id == action.job.id)
+      let find = editJobArray.find(job => job.id === action.job.id)
       editJobArray[editJobArray.indexOf(find)] = action.job
      return {
       jobs: editJobArray

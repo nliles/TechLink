@@ -23,15 +23,12 @@ class RegisterForm extends Component {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
 		  },
-		  body: JSON.stringify({ user: {email, password, passwordConfirmation} })
+		  body: JSON.stringify({ email, password, passwordConfirmation})
 		})
-		.then(function(token) {
-		  console.log(token)
-	      localStorage.setItem("token", token.auth_token)
-	      localStorage.setItem("user_id", token.id)		
-		}).catch(function(err) {
-		    console.log('Error ocurred', err);
-		});
+      .then(token => console.log(token))
+	      // localStorage.setItem("token", token.auth_token)
+	      // localStorage.setItem("user_id", token.id)		
+      .catch((err) => console.log(err))
 	}
 
 	render() {
