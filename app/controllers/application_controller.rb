@@ -1,8 +1,20 @@
 class ApplicationController < ActionController::API
-  # protect_from_forgery with: :null_session
   include DeviseTokenAuth::Concerns::SetUserByToken
   
   respond_to :json
 
-  include Authenticable
+ before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+
+ def configure_permitted_parameters
+ debugger
+  devise_parameter_sanitizer.permit(:sign_in) do |user_params|
+  	debugger
+    user_params.permit(:username, :email)
+   end
+ end
+
+  # include Authenticable
 end

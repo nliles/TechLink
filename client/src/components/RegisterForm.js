@@ -3,13 +3,6 @@ import { render } from 'react-dom';
 
 class RegisterForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-		user: {}
-    };
-  }
-
 	addUser(e) {
 		e.preventDefault()
 		var email = this.email.value; 
@@ -25,10 +18,11 @@ class RegisterForm extends Component {
 		  },
 		  body: JSON.stringify({ email, password, passwordConfirmation})
 		})
-      .then(token => console.log(token))
+       .then(response => response.json())
+       .then(json => console.log(json))
 	      // localStorage.setItem("token", token.auth_token)
 	      // localStorage.setItem("user_id", token.id)		
-      .catch((err) => console.log(err))
+       .catch((err) => console.log(err))
 	}
 
 	render() {

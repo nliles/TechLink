@@ -17,7 +17,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-gem "devise_token_auth", ">= 0.1.32.beta9"
+gem "devise_token_auth", ">= 0.1.42"
 
 gem 'responders'
 # See https://github.com/rails/execjs#readme for more supported runtimes

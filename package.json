@@ -4,6 +4,7 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "prop-types": "^15.5.10",
-    "react-router": "^4.1.2"
+    "react-router": "^4.1.2",
+    "redux-auth": "0.0.5-beta5"
   }
 }

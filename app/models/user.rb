@@ -17,7 +17,3 @@ class User < ActiveRecord::Base
 end
 
 
-# new_auth_header = @resource.create_new_auth_token(client_id)
-
-# # update response with the header that will be required by the next request
-# response.headers.merge!(new_auth_header)

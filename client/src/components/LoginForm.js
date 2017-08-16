@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
+
 class LoginForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-		user: {}
-    };
-  }
-
 	addUser(e) {
-		var email = this.state.email; 
-		var password = this.state.password;
+		var email = this.email.value; 
+		var password = this.password.value;
 
 		fetch('/auth/sign_in', {  
 		  method: 'POST',
@@ -21,24 +15,25 @@ class LoginForm extends Component {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
 		  },
-		  body: JSON.stringify({ user: {email, password} })
+		  body: JSON.stringify({ session: { email, password } })
 		})
-		.then(function(token) {
-	      localStorage.setItem("token", token.auth_token)
-	      localStorage.setItem("user_id", token.id)		
-		}).catch(function(err) {
-		    console.log('Error ocurred', err);
-		});
+	       .then(response => response.json())
+	       .then(json => console.log(json))
+		      // localStorage.setItem("token", token.auth_token)
+		      // localStorage.setItem("user_id", token.id)		
+	      .catch((err) => console.log(err))
 	}
 
 	render() {
 		return(
+		<div>
 	      <form className="form" onSubmit={(e) => this.addUser(e)}> 
 	        <h2>Login</h2><br/>
-	        <input type="text" name="email" className="input" placeholder="Email" /><br/><br/>
-	        <input type="password" name="password" className="input" placeholder="Password"/><br/><br/>
+	        <input ref={(input) => this.email=input}  type="text" name="email" className="input" placeholder="Email" /><br/><br/>
+	        <input ref={(input) => this.password=input} type="password" name="password" className="input" placeholder="Password"/><br/><br/>
 	        <button type="submit" className="button">Login → </button>
 	      </form>
+	    </div>
       ) 
 	}
 }
