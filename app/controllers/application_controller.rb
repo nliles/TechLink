@@ -9,9 +9,7 @@ class ApplicationController < ActionController::API
 
 
  def configure_permitted_parameters
- debugger
   devise_parameter_sanitizer.permit(:sign_in) do |user_params|
-  	debugger
     user_params.permit(:username, :email)
    end
  end
