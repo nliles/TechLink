@@ -122,5 +122,10 @@ textarea {
   width: 330px;
 }
 
+.centerForm {
+  display:table;
+  margin: auto;
+}
+
 
 

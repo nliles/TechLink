@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import { bindActionCreators } from 'redux'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import GoogleMaps from './GoogleMaps';
 
 const mapStateToProps = state => ({
   jobs: state.jobs.jobs
@@ -14,7 +17,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeJob,
   editJob
 }, dispatch)
-
 
 
 class EditJobForm extends Component {
@@ -28,14 +30,41 @@ class EditJobForm extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props)
     this.state = {
-    	position: this.props.match.params.position,
-    	company: this.props.match.params.company,
-    	location: this.props.match.params.location,
-    	description: this.props.match.params.description,
-    	salary: this.props.match.params.salary,
+    	position: '',
+    	company: '',
+    	location: '',
+    	description: '',
+    	salary: '',
+    	redirectToNewPage: false
     };
   }
+
+  initialize(props){
+	if (props.jobs.length>0){
+	  	let job = props.jobs.find((j)=>{
+	  		return j.id == this.props.match.params.id
+	})
+
+	this.setState({
+	    	position: job.position,
+	    	company: job.company,
+	    	location: job.location,
+	    	description: job.description
+	  	})
+  	}  	
+  }
+
+  componentDidMount(){
+  	this.initialize(this.props)
+  }
+
+
+  componentWillReceiveProps(nextProps){	
+  	this.initialize(nextProps)
+  }
+
 
 	editJob(e, id) {
 		e.preventDefault();
@@ -49,7 +78,6 @@ class EditJobForm extends Component {
 
 		fetch(`/jobs/${id}`, {  
 		  method: 'PUT',
-		  credentials: 'same-origin',
 		  headers: {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
@@ -57,8 +85,7 @@ class EditJobForm extends Component {
 		  body: JSON.stringify({ job: {position, company, location, description, salary} })
 		})
       .then((response) => response.json())
-      .then((json) => this.props.editJob(json),
-      	this.state = { position: '', company: '', location: '', description: '', salary: ''})
+      .then((json) => this.props.editJob(json), this.setState({ redirectToNewPage: true }))
       .catch((err) => console.log(err))
 	  }
 
@@ -69,34 +96,44 @@ class EditJobForm extends Component {
 			if(e.keyCode === 13) e.preventDefault();
 		})
 	}
+	updateMap(data){
 
+	}
 
 	render() {
+		   if (this.state.redirectToNewPage) {
+		     return (
+		     <Redirect to="/"/>
+		     )
+		   }
 		return(
-	      <form className="form" onSubmit={(e) => this.editJob(e)}> 
-	        <h2>Edit Job</h2><br/>
-	        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
-	        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" placeholder="Location" onClick={e => this.autocomplete(e.target)} /><br/><br/>
-	        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>
-	        <label>Salary:</label><br/>
-			<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
-		        <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
-			    </div>
-			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
-			    </div>
-			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="$61,000-$99,000"/> "$61-$100k"
-			    </div>
-			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="$100,000+"/> "$100k+"
-			    </div><br/> 
-		    </div> 
+			<div>
+					<form className="form" className="centerForm" onSubmit={(e) => this.editJob(e)}> 
+				        <h2>Edit Job </h2><br/>
+				        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input"/><br/><br/>
+				        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" /><br/><br/>
+				        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+				        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
+				        <label>Salary:</label><br/>
+						<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
+					        <div className="radioDiv">
+							    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
+						    </div>
+						    <div className="radioDiv">
+							    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
+						    </div>
+						    <div className="radioDiv">
+							    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" /> "$61-$100k"
+						    </div>
+						    <div className="radioDiv">
+							    <input type="radio" name="salary" className="radio" value="$100,000+" /> "$100k+"
+						    </div><br/> 
+					    </div> 
 
-	        <button type="submit" className="button">Submit → </button>
-	      </form>
+				        <button type="submit" className="button">Submit → </button>
+				      </form>
+			</div>
+	      
       ) 
 	}
 }

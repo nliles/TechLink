@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Link, params } from 'react-router-dom'
+import { Link, history, params } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
@@ -16,6 +16,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
   removeJob
 }, dispatch)
+
+// const preloadedState = {}
+// const store = createStore(
+//   reducers,
+//   preloadedState, initDevTools()
+// )
 
 
 class JobList extends Component {
@@ -35,28 +41,22 @@ class JobList extends Component {
 	}
 
 	componentDidMount() {
-		fetch('/jobs', {
-		  credentials: 'same-origin',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json'
-		  }
-		})
-      .then((response) => response.json())
-      .then((json) => this.props.addJob(json))
+	// 	fetch('/jobs', {
+	// 			  credentials: 'same-origin',
+	// 			  headers: {
+	// 			    Accept: 'application/json',
+	// 			    'Content-Type': 'application/json'
+	// 			  }
+	// 			})
+	// 	      .then((response) => response.json())
+	// 	      .then((json) => {store.dispatch(addJob(json));
+ // })
     }
 
 	deleteJob(e, id, i) {
 		const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
-		  method: 'DELETE',
-		  credentials: 'same-origin',
-            mode: 'cors',
-			  headers: {
-			    Accept: 'application/json',
-			    'Content-Type': 'application/json',
-			    'Access-Control-Allow-Origin': '*'
-			  }
+		  method: 'DELETE'
 			}).then((response) =>  {
 				if(!response.ok) {
 					console.log('server gave error response', response)
@@ -90,13 +90,11 @@ class JobList extends Component {
 	        			return (
 	        				<span key={key}>
 	        				<div className="job">
-		        				<h3>{value.position.toUpperCase()}</h3>
-		        				<span>{value.company} - {value.location}</span>
-		        				<br/>
+	        				    <Link to={`/jobs/${value.id}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
+		        				<p>{value.company} - {value.location}</p>
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
 		        				<p>{this.getTimeDiff(value.created_at)}</p>
-		        				<Link to={`/jobs/${value.id}/${value.position}/${value.company}/${value.location}/${value.description}/${value.salary}/edit`}>Edit</Link>&nbsp;&nbsp;
 					            <button className="delete" onClick={e => this.deleteJob(e, value.id, key)}>Delete</button>
 		        			</div>
 	        				</span>

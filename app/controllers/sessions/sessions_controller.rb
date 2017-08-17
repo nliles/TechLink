@@ -21,7 +21,6 @@ class Sessions::SessionsController < Devise::SessionsController
   end
 
   def configure_sign_in_params
-    debugger
     devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   end
 
@@ -31,9 +30,8 @@ class Sessions::SessionsController < Devise::SessionsController
 
   private
 
-  def sign_up_params
-    debugger
-    params.require(:user).permit(:name, :company_name, :phone_number, :designation, :is_agency, :email, :password, :password_confirmation)
+  def sign_in_params
+    params.require(:sessions).permit(:email, :password)
   end
 
   def account_update_params

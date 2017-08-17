@@ -30,7 +30,6 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_JOB:
-    console.log(action.job)
       return {
         jobs: state.jobs.concat(action.job)
       }
