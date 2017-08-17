@@ -16,6 +16,7 @@ import App from './App';
 import NavBar from './components/NavBar';
 import { addJob, removeJob } from './redux/jobs'
 
+
 const preloadedState = {}
 const store = createStore(
   reducers,

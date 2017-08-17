@@ -6,6 +6,7 @@ import { Link, history, params } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
+import {store} from '../index.js';
 
 
 const mapStateToProps = state => ({
@@ -16,13 +17,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
   removeJob
 }, dispatch)
-
-// const preloadedState = {}
-// const store = createStore(
-//   reducers,
-//   preloadedState, initDevTools()
-// )
-
 
 class JobList extends Component {
 
@@ -41,16 +35,10 @@ class JobList extends Component {
 	}
 
 	componentDidMount() {
-	// 	fetch('/jobs', {
-	// 			  credentials: 'same-origin',
-	// 			  headers: {
-	// 			    Accept: 'application/json',
-	// 			    'Content-Type': 'application/json'
-	// 			  }
-	// 			})
-	// 	      .then((response) => response.json())
-	// 	      .then((json) => {store.dispatch(addJob(json));
- // })
+		// fetch('/jobs')
+		//       .then((response) => response.json())
+		//       .then((json) => {store.dispatch(addJob(json));
+		//  })
     }
 
 	deleteJob(e, id, i) {
@@ -95,7 +83,8 @@ class JobList extends Component {
 		        				<p className="description">{value.description}</p>
 		        				<p>{value.salary}</p>
 		        				<p>{this.getTimeDiff(value.created_at)}</p>
-					            <button className="delete" onClick={e => this.deleteJob(e, value.id, key)}>Delete</button>
+		        			    <Link to={`/jobs/${this.state.id}/edit`}>Edit</Link>&nbsp;&nbsp;
+					            <a href="" className="delete" onClick={e => this.deleteJob(e, value.id, key)}>Delete</a>
 		        			</div>
 	        				</span>
 	        			)

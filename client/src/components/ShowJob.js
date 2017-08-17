@@ -78,7 +78,6 @@ class ShowJob extends Component {
 		        				<p className="description">{this.state.description}</p>
 		        				<p>{this.state.salary}</p>
 		        				<p>{this.state.created_at}</p>
-		        				<Link to={`/jobs/${this.state.id}/edit`}>Edit</Link>&nbsp;&nbsp;
 		        			</div>
 		      	</div>
 

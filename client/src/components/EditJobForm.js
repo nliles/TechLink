@@ -41,7 +41,8 @@ class EditJobForm extends Component {
     };
   }
 
-  initialize(props){
+
+  getJob(props){
 	if (props.jobs.length>0){
 	  	let job = props.jobs.find((j)=>{
 	  		return j.id == this.props.match.params.id
@@ -57,7 +58,7 @@ class EditJobForm extends Component {
   }
 
   componentDidMount(){
-  	this.initialize(this.props)
+  	this.getJob(this.props)
   }
 
 
@@ -96,9 +97,9 @@ class EditJobForm extends Component {
 			if(e.keyCode === 13) e.preventDefault();
 		})
 	}
-	updateMap(data){
+	// updateMap =(data)=>{
 
-	}
+	// }
 
 	render() {
 		   if (this.state.redirectToNewPage) {
