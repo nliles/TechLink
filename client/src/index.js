@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route, Switch, browserHistory, HashRouter } from 'react-router-dom';
+import { Route, Switch, HashRouter } from 'react-router-dom';
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -14,7 +14,7 @@ import LoginForm from './components/LoginForm';
 import ShowJob from './components/ShowJob';
 import App from './App';
 import NavBar from './components/NavBar';
-import { addJob, removeJob } from './redux/jobs'
+import { addJob } from './redux/jobs'
 
 
 const preloadedState = {}
@@ -36,7 +36,6 @@ fetch('/jobs', {
 
 render(
   <Provider store={store}>
-
 	 <HashRouter>
 	 <div>
 	 <NavBar/>

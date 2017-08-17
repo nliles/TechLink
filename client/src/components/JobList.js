@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Link, history, params } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
-import {store} from '../index.js';
+
 
 
 const mapStateToProps = state => ({
@@ -42,6 +42,7 @@ class JobList extends Component {
     }
 
 	deleteJob(e, id, i) {
+		e.preventDefault();
 		const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
 		  method: 'DELETE'

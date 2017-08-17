@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router-dom'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
 
 const mapStateToProps = state => ({
@@ -43,7 +42,7 @@ class ShowJob extends Component {
 
 	  	let job = props.jobs.find((element)=>{
 	  		console.log(element.id, this.props.match.params.id)
-	  		return element.id == parseInt(this.props.match.params.id)
+	  		return element.id === parseInt(this.props.match.params.id)
 	  	})
 	  	
 	  	this.setState({
@@ -73,8 +72,7 @@ class ShowJob extends Component {
 	        <h2 className="activity">{this.state.position.toUpperCase()}</h2><br/>
 	        	<div className="jobs">
 	        				<div className="job">
-		        				<span>{this.state.company} - {this.state.location}</span>
-		        				<br/>
+		        				<p>{this.state.company} - {this.state.location}</p>
 		        				<p className="description">{this.state.description}</p>
 		        				<p>{this.state.salary}</p>
 		        				<p>{this.state.created_at}</p>

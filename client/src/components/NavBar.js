@@ -20,8 +20,6 @@ class NavBar extends Component {
            .catch(err => console.log(err))
 	}
 
-
-
 	render() {
 		return(
 		<nav className="navbar navbar-inverse">
@@ -35,7 +33,7 @@ class NavBar extends Component {
 		    <ul className="nav navbar-nav navbar-right">
 		      <li><Link to={'/users/new'}><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
 		      <li><Link to={'/login'}><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
-		      <li><a onClick={e => this.logout(e)} href="#"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
+		      <li><a onClick={e => this.logout(e)} href=""><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
 		    </ul>
 		  </div>
 		</nav>

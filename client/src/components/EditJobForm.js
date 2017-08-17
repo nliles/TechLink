@@ -5,8 +5,6 @@ import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import GoogleMaps from './GoogleMaps';
 
 const mapStateToProps = state => ({
   jobs: state.jobs.jobs
@@ -45,7 +43,7 @@ class EditJobForm extends Component {
   getJob(props){
 	if (props.jobs.length>0){
 	  	let job = props.jobs.find((j)=>{
-	  		return j.id == this.props.match.params.id
+	  		return j.id === this.props.match.params.id
 	})
 
 	this.setState({
@@ -66,7 +64,6 @@ class EditJobForm extends Component {
   	this.initialize(nextProps)
   }
 
-
 	editJob(e, id) {
 		e.preventDefault();
 
@@ -75,7 +72,6 @@ class EditJobForm extends Component {
 		var location = this.state.location;
 		var description = this.state.description;
 		var salary = this.state.salary;
-		var id = this.props.match.params.id
 
 		fetch(`/jobs/${id}`, {  
 		  method: 'PUT',
@@ -97,9 +93,6 @@ class EditJobForm extends Component {
 			if(e.keyCode === 13) e.preventDefault();
 		})
 	}
-	// updateMap =(data)=>{
-
-	// }
 
 	render() {
 		   if (this.state.redirectToNewPage) {

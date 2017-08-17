@@ -16,9 +16,14 @@ class RegisterForm extends Component {
 		var password = this.password.value;
 		var passwordConfirmation = this.passwordConfirmation.value;
 		
-		fetch('/auth', {  
+		fetch('/users', {  
 		  method: 'POST',
-		  body: JSON.stringify({ email, password, passwordConfirmation})
+		  credentials: 'same-origin',
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({user: { email, password }})
 		})
        .then(response => response.json(), this.setState({ redirectToNewPage: true }))
        .then(json => console.log(json))
