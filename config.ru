@@ -3,3 +3,5 @@
 require_relative 'config/environment'
 
 run Rails.application
+
+heroku config:set NPM_CONFIG_PRODUCTION=false
