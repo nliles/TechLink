@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Link, history, params } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
-import {store} from '../index.js';
+
 
 
 const mapStateToProps = state => ({
@@ -42,6 +42,7 @@ class JobList extends Component {
     }
 
 	deleteJob(e, id, i) {
+		e.preventDefault();
 		const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
 		  method: 'DELETE'
@@ -69,6 +70,8 @@ class JobList extends Component {
 	}
 
 	render() {
+		const user = window.localStorage.getItem("user_id");
+		console.log(user)
 		const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} ); 
 		return(
 	      <div className="jobList">
@@ -90,7 +93,6 @@ class JobList extends Component {
 	        			)
 	        		})}
 		      	</div>
-
 	      </div>
       ) 
 	}

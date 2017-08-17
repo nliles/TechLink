@@ -14,7 +14,7 @@ class LoginForm extends Component {
 		var email = this.email.value; 
 		var password = this.password.value;
 
-		fetch('/auth/sign_in', {  
+		fetch('/users/sign_in', {  
 		  method: 'POST',
 		  credentials: 'same-origin',
 		  headers: {
@@ -24,11 +24,12 @@ class LoginForm extends Component {
 		  body: JSON.stringify({ session: { email, password } })
 		})
 	       .then(response => response.json())
-	       .then(json => console.log(json),
-	       	this.setState({ redirectToNewPage: true }))
-		      // localStorage.setItem("token", token.auth_token)
-		      // localStorage.setItem("user_id", token.id)		
-	      .catch((err) => console.log(err))
+	       .then(function(token) {
+			      localStorage.setItem("token", token.auth_token)
+			      localStorage.setItem("user_id", token.id)	
+			})
+	       	this.setState({ redirectToNewPage: true })
+	      .catch(err => console.log(err))
 	}
 
 	render() {

@@ -35,24 +35,32 @@ class JobForm extends Component {
 
 	addJob(e) {
 		e.preventDefault();
+		var user_id = window.localStorage.getItem("user_id")
 		var position = this.state.position; 
 		var company = this.state.company;
-		var location = this.state.location;
+		var location = this.location.value;
 		var description = this.state.description;
 		var salary = this.state.salary;
 
-		fetch('/jobs', {  
-		  method: 'POST',
-		  credentials: 'same-origin',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({ job: {position, company, location, description, salary} })
-		})
-      .then(response => response.json())
-      .then(json => this.props.addJob(json),
-      	this.state = { position: '', company: '', location: '', description: '', salary: ''})
+		this.location.value =  '';
+
+		if(user_id) {
+			fetch('/jobs', {  
+			  method: 'POST',
+			  credentials: 'same-origin',
+			  headers: {
+			    Accept: 'application/json',
+			    'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify({ job: {user_id, position, company, location, description, salary} })
+			})
+	      .then(response => response.json())
+	      .then(json => this.props.addJob(json),
+	      	this.state = { position: '', company: '', description: '', salary: ''})		
+		} else {
+			alert("Please sign in to post a new job listing.")
+		}
+
 	  }
 
 	autocomplete(input) {
@@ -69,7 +77,7 @@ class JobForm extends Component {
 	        <h2>Post a Job</h2><br/>
 	        <input onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input" placeholder="Position" /><br/><br/>
 	        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" placeholder="Company"/><br/><br/>
-	        <input onClick={e => this.autocomplete(e.target)} onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" placeholder="Location"  /><br/><br/>
+	        <input ref={(input) => this.location= input} onClick={e => this.autocomplete(e.target)} onChange={e => this.setState({ location: e.target.value })} type="text" name="location" className="input" placeholder="Location"  /><br/><br/>
 	        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" placeholder="Description" ></textarea><br/><br/>
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
