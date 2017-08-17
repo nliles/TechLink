@@ -35,6 +35,7 @@ class JobForm extends Component {
 
 	addJob(e) {
 		e.preventDefault();
+		var user_id = window.localStorage.getItem("user_id")
 		var position = this.state.position; 
 		var company = this.state.company;
 		var location = this.location.value;
@@ -43,18 +44,22 @@ class JobForm extends Component {
 
 		this.location.value =  '';
 
-		fetch('/jobs', {  
-		  method: 'POST',
-		  credentials: 'same-origin',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({ job: {position, company, location, description, salary} })
-		})
-      .then(response => response.json())
-      .then(json => this.props.addJob(json),
-      	this.state = { position: '', company: '', description: '', salary: ''})
+		if(user_id) {
+			fetch('/jobs', {  
+			  method: 'POST',
+			  credentials: 'same-origin',
+			  headers: {
+			    Accept: 'application/json',
+			    'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify({ job: {user_id, position, company, location, description, salary} })
+			})
+	      .then(response => response.json())
+	      .then(json => this.props.addJob(json),
+	      	this.state = { position: '', company: '', description: '', salary: ''})		
+		} else {
+			alert("Please sign in to post a new job listing.")
+		}
 
 	  }
 

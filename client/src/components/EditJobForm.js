@@ -45,13 +45,15 @@ class EditJobForm extends Component {
 	  	let job = props.jobs.find((j)=>{
 	  		return j.id === this.props.match.params.id
 	})
-
+	if (job) {
 	this.setState({
 	    	position: job.position,
 	    	company: job.company,
 	    	location: job.location,
 	    	description: job.description
 	  	})
+
+	}
   	}  	
   }
 
@@ -102,30 +104,30 @@ class EditJobForm extends Component {
 		   }
 		return(
 			<div>
-					<form className="form" className="centerForm" onSubmit={(e) => this.editJob(e)}> 
-				        <h2>Edit Job </h2><br/>
-				        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input"/><br/><br/>
-				        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" /><br/><br/>
-				        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
-				        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
-				        <label>Salary:</label><br/>
-						<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
-					        <div className="radioDiv">
-							    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
-						    </div>
-						    <div className="radioDiv">
-							    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
-						    </div>
-						    <div className="radioDiv">
-							    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" /> "$61-$100k"
-						    </div>
-						    <div className="radioDiv">
-							    <input type="radio" name="salary" className="radio" value="$100,000+" /> "$100k+"
-						    </div><br/> 
-					    </div> 
+				<form className="form" className="centerForm" onSubmit={(e) => this.editJob(e)}> 
+			        <h2>Edit Job </h2><br/>
+			        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input"/><br/><br/>
+			        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" /><br/><br/>
+			        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
+			        <label>Salary:</label><br/>
+					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
+					    <div className="radioDiv">
+						    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
+					    </div>
+					    <div className="radioDiv">
+						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
+					    </div>
+					    <div className="radioDiv">
+						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" /> "$61-$100k"
+					    </div>
+					    <div className="radioDiv">
+						    <input type="radio" name="salary" className="radio" value="$100,000+" /> "$100k+"
+					    </div><br/> 
+				    </div> 
 
-				        <button type="submit" className="button">Submit → </button>
-				      </form>
+			        <button type="submit" className="button">Submit → </button>
+			      </form>
 			</div>
 	      
       ) 

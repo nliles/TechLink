@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 20170817173954) do
     t.string "location"
     t.string "description"
     t.string "salary"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|

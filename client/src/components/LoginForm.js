@@ -24,11 +24,12 @@ class LoginForm extends Component {
 		  body: JSON.stringify({ session: { email, password } })
 		})
 	       .then(response => response.json())
-	       .then(json => console.log(json),
-		      // localStorage.setItem("token", token.auth_token)
-		      // localStorage.setItem("user_id", token.id)		
-	       	this.setState({ redirectToNewPage: true }))
-	      .catch((err) => console.log(err))
+	       .then(function(token) {
+			      localStorage.setItem("token", token.auth_token)
+			      localStorage.setItem("user_id", token.id)	
+			})
+	       	this.setState({ redirectToNewPage: true })
+	      .catch(err => console.log(err))
 	}
 
 	render() {

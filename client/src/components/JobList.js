@@ -70,6 +70,8 @@ class JobList extends Component {
 	}
 
 	render() {
+		const user = window.localStorage.getItem("user_id");
+		console.log(user)
 		const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} ); 
 		return(
 	      <div className="jobList">
@@ -91,7 +93,6 @@ class JobList extends Component {
 	        			)
 	        		})}
 		      	</div>
-
 	      </div>
       ) 
 	}

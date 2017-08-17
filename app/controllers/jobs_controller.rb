@@ -1,7 +1,6 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy]
 
-  # GET /jobs
   def index
     @jobs = Job.all
 
@@ -12,19 +11,15 @@ class JobsController < ApplicationController
     render json: @job
   end
 
-
-  # POST /jobs
   def create
     @job = Job.new(job_params)
-
-      if @job.save
+    if @job.save 
         render json: @job, status: :created, location: @job
       else
         render json: @job.errors, status: :unprocessable_entity
       end
   end
 
-  # PATCH/PUT /jobs/1
   def update
     if @job.update(job_params)
       render json: @job
@@ -33,7 +28,6 @@ class JobsController < ApplicationController
     end
   end
 
-    # PATCH/PUT /jobs/1
   def update
     if @job.update(job_params)
       render json: @job
@@ -42,7 +36,7 @@ class JobsController < ApplicationController
     end
   end
 
-  # DELETE /jobs/1
+ 
   def destroy
     @job.destroy
   end
@@ -55,6 +49,6 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:position, :company, :location, :description, :salary)
+      params.require(:job).permit(:user_id, :position, :company, :location, :description, :salary)
     end
 end
