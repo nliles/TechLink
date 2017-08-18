@@ -42,26 +42,29 @@ class EditJobForm extends Component {
 
 	editJob(e, id) {
 		e.preventDefault();
+		const jobId = this.props.match.params.id
+		const position = this.state.position; 
+		const company = this.state.company;
+		const location = this.state.location;
+		const description = this.state.description;
+		const salary = this.state.salary;
+		const job = { job: {position, company, location, description, salary} }
+		this.apiEditJob(jobId, job)
+	}
 
-		var position = this.state.position; 
-		var company = this.state.company;
-		var location = this.state.location;
-		var description = this.state.description;
-		var salary = this.state.salary;
-		var jobId = this.props.match.params.id
-
+	apiEditJob(jobId, job) {
 		fetch(`/jobs/${jobId}`, {  
 		  method: 'PUT',
 		  headers: {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
 		  },
-		  body: JSON.stringify({ job: {position, company, location, description, salary} })
+		  body: JSON.stringify(job)
 		})
-      .then((response) => response.json())
-      .then((json) => this.props.editJob(json), this.setState({ redirectToNewPage: true }))
-      .catch((err) => console.log(err))
-	  }
+		.then((response) => response.json())
+		.then((json) => this.props.editJob(json), this.setState({ redirectToNewPage: true }))
+		.catch((err) => console.log(err))	
+	}
 
 	autocomplete(input) {
 		if(!input) return;
@@ -69,10 +72,6 @@ class EditJobForm extends Component {
 		input.addEventListener('keydown', (e) => {
 			if(e.keyCode === 13) e.preventDefault();
 		})
-	}
-
-	handleOptionChange(e) {
-	   e => this.setState({ salary: e.target.value})
 	}
 
 	render() {
@@ -90,21 +89,20 @@ class EditJobForm extends Component {
 			        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
 			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
 			        <label>Salary:</label><br/>
-					<div className="salaryOptions">
+					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"} onChange={e => {this.handleOptionChange(e)}}/> "0-$30k"
+						    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"} onChange={e => {this.handleOptionChange(e)}}/> "$31-$60k"
+						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"}/> "$31-$60k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"} onChange={e => {this.handleOptionChange(e)}}/> "$61-$100k"
+						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"}/> "$61-$100k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"} onChange={e => {this.handleOptionChange(e)}}/> "$100k+"
+						    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"}/> "$100k+"
 					    </div><br/> 
 				    </div> 
-
 			        <button type="submit" className="button">Submit → </button>
 			      </form>
 			</div>

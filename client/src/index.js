@@ -28,15 +28,15 @@ render(
   <Provider store={store}>
 	 <HashRouter>
 	 <div>
-	 <NavBar/>
+	   <NavBar/>
 		  <Switch>
 		    <Route exact path='/' component={App}/>
-		    <Route exact path='/jobs/:id/edit/:position/:company/:location/:description/:salary' component={EditJobForm}/>
+		    <Route exact path='/jobs/:id/edit' component={EditJobForm}/>
 		    <Route exact path='/login' component={LoginForm}/>
 		    <Route exact path='/users/new' component={RegisterForm}/>
 		    <Route exact path='/jobs/:id/:position/:company/:location/:description/:salary' component={ShowJob}/>
 		  </Switch>
-		   </div>
+	</div>
 	</HashRouter>
   </Provider>,
   document.getElementById('main')
