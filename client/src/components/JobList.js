@@ -51,7 +51,7 @@ class JobList extends Component {
 				}
 		        console.log("ok");
 				removeJob(id, i)
-		    }).catch((err) => console.log(err))
+		    })
 	}
 
 
@@ -68,15 +68,15 @@ class JobList extends Component {
 		}
 	}
 
-	getUserView(jobId, userId, key, position, company, location, description, salary) {
+	getUserView(jobId, userId, key) {
 		const user = window.localStorage.getItem("user_id");
 		if(user == userId) {
-		return (
-			<div>
-				<Link to={`/jobs/${jobId}/edit/${position}/${company}/${location}/${description}/${salary}`}>Edit</Link>&nbsp;&nbsp;
-		        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key)}>Delete</a>	         
-			</div>
-		)
+			return (
+				<p>
+					<Link to={`/jobs/${jobId}/edit`}>Edit</Link>&nbsp;&nbsp;
+			        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key)}>Delete</a>	         
+				</p>
+			)
 		} 
 	}
 
@@ -96,7 +96,7 @@ class JobList extends Component {
 			        				<p className="description">{value.description}</p>
 			        				<p>{value.salary}</p>
 			        				<p>{this.getTimeDiff(value.created_at)}</p>
-									<p>{this.getUserView(value.id, value.user_id, key, value.position, value.company, value.location, value.description, value.salary)}</p>
+									<div>{this.getUserView(value.id, value.user_id, key)}</div>
 			        			</div>
 	        				</span>
 	        			)
