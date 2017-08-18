@@ -14,25 +14,15 @@ import LoginForm from './components/LoginForm';
 import ShowJob from './components/ShowJob';
 import App from './App';
 import NavBar from './components/NavBar';
-import { addJob } from './redux/jobs'
+
 
 
 const preloadedState = {}
+
 const store = createStore(
   reducers,
   preloadedState
 )
-
-fetch('/jobs', {
-		  credentials: 'same-origin',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json'
-		  }
-		})
-      .then((response) => response.json())
-      .then((json) => {store.dispatch(addJob(json));
- })
 
 render(
   <Provider store={store}>
@@ -41,15 +31,17 @@ render(
 	 <NavBar/>
 		  <Switch>
 		    <Route exact path='/' component={App}/>
-		    <Route exact path='/jobs/:id/edit' component={EditJobForm}/>
-		    <Route exact  path='/login' component={LoginForm}/>
+		    <Route exact path='/jobs/:id/edit/:position/:company/:location/:description/:salary' component={EditJobForm}/>
+		    <Route exact path='/login' component={LoginForm}/>
 		    <Route exact path='/users/new' component={RegisterForm}/>
-		    <Route exact path='/jobs/:id' component={ShowJob}/>
+		    <Route exact path='/jobs/:id/:position/:company/:location/:description/:salary' component={ShowJob}/>
 		  </Switch>
 		   </div>
 	</HashRouter>
   </Provider>,
   document.getElementById('main')
 )
+
+export default store;
 
  

@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
 
+
 const mapStateToProps = state => ({
   jobs: state.jobs.jobs
 })
@@ -28,42 +29,15 @@ class EditJobForm extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props)
+
     this.state = {
-    	position: '',
-    	company: '',
-    	location: '',
-    	description: '',
-    	salary: '',
-    	redirectToNewPage: false
+    	position: this.props.match.params.position,
+    	company: this.props.match.params.company,
+    	location: this.props.match.params.location,
+    	description: this.props.match.params.description,
+    	salary: this.props.match.params.salary,
+    	redirectToNewPage: false		
     };
-  }
-
-
-  getJob(props){
-	if (props.jobs.length>0){
-	  	let job = props.jobs.find((j)=>{
-	  		return j.id === this.props.match.params.id
-	})
-	if (job) {
-	this.setState({
-	    	position: job.position,
-	    	company: job.company,
-	    	location: job.location,
-	    	description: job.description
-	  	})
-
-	}
-  	}  	
-  }
-
-  componentDidMount(){
-  	this.getJob(this.props)
-  }
-
-
-  componentWillReceiveProps(nextProps){	
-  	this.initialize(nextProps)
   }
 
 	editJob(e, id) {
@@ -74,8 +48,9 @@ class EditJobForm extends Component {
 		var location = this.state.location;
 		var description = this.state.description;
 		var salary = this.state.salary;
+		var jobId = this.props.match.params.id
 
-		fetch(`/jobs/${id}`, {  
+		fetch(`/jobs/${jobId}`, {  
 		  method: 'PUT',
 		  headers: {
 		    Accept: 'application/json',
@@ -96,6 +71,10 @@ class EditJobForm extends Component {
 		})
 	}
 
+	handleOptionChange(e) {
+	   e => this.setState({ salary: e.target.value})
+	}
+
 	render() {
 		   if (this.state.redirectToNewPage) {
 		     return (
@@ -111,18 +90,18 @@ class EditJobForm extends Component {
 			        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
 			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
 			        <label>Salary:</label><br/>
-					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
+					<div className="salaryOptions">
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
+						    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"} onChange={e => {this.handleOptionChange(e)}}/> "0-$30k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
+						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"} onChange={e => {this.handleOptionChange(e)}}/> "$31-$60k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" /> "$61-$100k"
+						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"} onChange={e => {this.handleOptionChange(e)}}/> "$61-$100k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$100,000+" /> "$100k+"
+						    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"} onChange={e => {this.handleOptionChange(e)}}/> "$100k+"
 					    </div><br/> 
 				    </div> 
 

@@ -30,15 +30,14 @@ class JobList extends Component {
 
 	constructor(props) {
 		super(props);
-
 		this.deleteJob = this.deleteJob.bind(this);
 	}
 
 	componentDidMount() {
-		// fetch('/jobs')
-		//       .then((response) => response.json())
-		//       .then((json) => {store.dispatch(addJob(json));
-		//  })
+		fetch('/jobs')
+		      .then((response) => response.json())
+		      .then((json) => {this.props.addJob(json);
+		 })
     }
 
 	deleteJob(e, id, i) {
@@ -69,9 +68,20 @@ class JobList extends Component {
 		}
 	}
 
-	render() {
+	getUserView(jobId, userId, key, position, company, location, description, salary) {
 		const user = window.localStorage.getItem("user_id");
-		console.log(user)
+		if(user == userId) {
+		return (
+			<div>
+				<Link to={`/jobs/${jobId}/edit/${position}/${company}/${location}/${description}/${salary}`}>Edit</Link>&nbsp;&nbsp;
+		        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key)}>Delete</a>	         
+			</div>
+		)
+		} 
+	}
+
+	render() {
+
 		const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} ); 
 		return(
 	      <div className="jobList">
@@ -80,15 +90,14 @@ class JobList extends Component {
 	        		{jobArray.map((value, key) => {
 	        			return (
 	        				<span key={key}>
-	        				<div className="job">
-	        				    <Link to={`/jobs/${value.id}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
-		        				<p>{value.company} - {value.location}</p>
-		        				<p className="description">{value.description}</p>
-		        				<p>{value.salary}</p>
-		        				<p>{this.getTimeDiff(value.created_at)}</p>
-		        			    <Link to={`/jobs/${this.state.id}/edit`}>Edit</Link>&nbsp;&nbsp;
-					            <a href="" className="delete" onClick={e => this.deleteJob(e, value.id, key)}>Delete</a>
-		        			</div>
+		        				<div className="job">
+		        				    <Link to={`/jobs/${value.id}/${value.position}/${value.company}/${value.location}/${value.description}/${value.salary}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
+			        				<p>{value.company} - {value.location}</p>
+			        				<p className="description">{value.description}</p>
+			        				<p>{value.salary}</p>
+			        				<p>{this.getTimeDiff(value.created_at)}</p>
+									<p>{this.getUserView(value.id, value.user_id, key, value.position, value.company, value.location, value.description, value.salary)}</p>
+			        			</div>
 	        				</span>
 	        			)
 	        		})}
