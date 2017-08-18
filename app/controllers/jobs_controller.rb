@@ -12,11 +12,11 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.new(job_params)
-    if @job.save 
-        render json: @job, status: :created, location: @job
+      @job = Job.new(job_params)
+      if @job.save 
+          render json: @job, status: :created, location: @job
       else
-        render json: @job.errors, status: :unprocessable_entity
+          render json: @job.errors, status: :unprocessable_entity
       end
   end
 

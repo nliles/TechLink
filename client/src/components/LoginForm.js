@@ -11,17 +11,18 @@ class LoginForm extends Component {
 	  }
 
 	createSession(e) {
+		e.preventDefault()
 		var email = this.email.value; 
 		var password = this.password.value;
 
-		fetch('/users/sign_in', {  
-		  method: 'POST',
-		  credentials: 'same-origin',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({ session: { email, password } })
+		fetch('/sessions', {  
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ session: { email, password } })
 		})
 	       .then(response => response.json())
 	       .then(function(token) {
@@ -29,25 +30,25 @@ class LoginForm extends Component {
 			      localStorage.setItem("user_id", token.id)	
 			})
 	       	this.setState({ redirectToNewPage: true })
-	      .catch(err => console.log(err))
 	}
 
 	render() {
-	   if (this.state.redirectToNewPage) {
-	     return (
-	     <Redirect to="/"/>
-	     )
-	   }
+		if (this.state.redirectToNewPage) {
+		 return (
+		 <Redirect to="/"/>
+		 )
+		} else {
 		return(
-		<div>
-	      <form className="form" className="centerForm" onSubmit={(e) => this.createSession(e)}> 
-	        <h2>Login</h2><br/>
-	        <input ref={(input) => this.email=input}  type="text" name="email" className="input" placeholder="Email" /><br/><br/>
-	        <input ref={(input) => this.password=input} type="password" name="password" className="input" placeholder="Password"/><br/><br/>
-	        <button type="submit" className="button">Login → </button>
-	      </form>
-	    </div>
-      ) 
+			<div>
+			  <form className="form" className="centerForm" onSubmit={(e) => this.createSession(e)}> 
+			    <h2>Login</h2><br/>
+			    <input ref={(input) => this.email=input}  type="text" name="email" className="input" placeholder="Email" /><br/><br/>
+			    <input ref={(input) => this.password=input} type="password" name="password" className="input" placeholder="Password"/><br/><br/>
+			    <button type="submit" className="button">Login → </button>
+			  </form>
+			</div>
+		) 
+	}
 	}
 }
 

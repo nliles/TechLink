@@ -22,16 +22,16 @@ class JobForm extends Component {
 	  removeJob: PropTypes.func.isRequired
 	}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    	position: '',
-    	company: '',
-    	location: '',
-    	description: '',
-    	salary: ''
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			position: '',
+			company: '',
+			location: '',
+			description: '',
+			salary: ''
+		};
+	}
 
 	addJob(e) {
 		e.preventDefault();
@@ -41,27 +41,29 @@ class JobForm extends Component {
 		var location = this.location.value;
 		var description = this.state.description;
 		var salary = this.state.salary;
-
+		const job = { job: {user_id, position, company, location, description, salary} }
 		this.location.value =  '';
+		if (user_id) {
+			this.apiAddJob(job)
+		} else {
+	      	this.setState({ position: '', company: '', description: '', salary: ''});
+			alert("Please sign in to post a new job listing.")
+		}
+	}
 
-		if(user_id) {
+	apiAddJob(job) {
 			fetch('/jobs', {  
 			  method: 'POST',
-			  credentials: 'same-origin',
 			  headers: {
 			    Accept: 'application/json',
 			    'Content-Type': 'application/json',
 			  },
-			  body: JSON.stringify({ job: {user_id, position, company, location, description, salary} })
+			  body: JSON.stringify(job)
 			})
 	      .then(response => response.json())
 	      .then(json => this.props.addJob(json),
-	      	this.state = { position: '', company: '', description: '', salary: ''})		
-		} else {
-			alert("Please sign in to post a new job listing.")
-		}
-
-	  }
+	       this.state = { position: '', company: '', description: '', salary: ''})		
+	}
 
 	autocomplete(input) {
 		if(!input) return;
@@ -82,16 +84,16 @@ class JobForm extends Component {
 	        <label>Salary:</label><br/>
 			<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
 		        <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
+				    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
+				    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"}/> "$31-$60k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="$61,000-$99,000"/> "$61-$100k"
+				    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"}/> "$61-$100k"
 			    </div>
 			    <div className="radioDiv">
-				    <input type="radio" name="salary" className="radio" value="$100,000+"/> "$100k+"
+				    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"}/> "$100k+"
 			    </div><br/> 
 		    </div> 
 

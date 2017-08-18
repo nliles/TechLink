@@ -36,7 +36,7 @@ class RegisterForm extends Component {
 	     return (
 	     <Redirect to="/"/>
 	     )
-	   } 
+	   } else {
 		return(
 	      <form className="form" className="centerForm" onSubmit={(e) => this.createUser(e)}> 
 	        <h2>Sign Up</h2><br/>
@@ -44,7 +44,8 @@ class RegisterForm extends Component {
 	        <input ref={(input) => this.password=input} type="password" name="password" className="input" placeholder="Password"/><br/><br/>
 	        <button type="submit" className="button">Register → </button>
 	      </form>
-        )    	
+        ) 
+    }   	
 	}
 }
 

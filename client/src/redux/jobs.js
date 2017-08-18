@@ -22,9 +22,8 @@ export function editJob(job){
   };
 }
 
-
 const initialState = {
-  jobs: []
+  jobs: [],
 }
 
 export default function reducer(state = initialState, action) {

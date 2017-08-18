@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import JobList  from './components/JobList';
 import JobForm from './components/JobForm';
 
-
 class App extends Component {
+
   render() {
     return (    
     <div>
