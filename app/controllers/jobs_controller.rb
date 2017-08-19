@@ -16,7 +16,7 @@ class JobsController < ApplicationController
       if @job.save 
           render json: @job, status: :created, location: @job
       else
-          render json: @job.errors, status: :unprocessable_entity
+          render :json => { :errors => @job.errors.full_messages }, :status => 422
       end
   end
 
@@ -24,7 +24,7 @@ class JobsController < ApplicationController
     if @job.update(job_params)
       render json: @job
     else
-      render json: @job.errors, status: :unprocessable_entity
+      render :json => { :errors => @job.errors.full_messages }, :status => 422
     end
   end
 
@@ -32,7 +32,7 @@ class JobsController < ApplicationController
     if @job.update(job_params)
       render json: @job
     else
-      render json: @job.errors, status: :unprocessable_entity
+      render :json => { :errors => @job.errors.full_messages }, :status => 422
     end
   end
 
