@@ -42,7 +42,6 @@ class JobList extends Component {
 		e.preventDefault();
 		var user_id = window.localStorage.getItem("user_id")
 		if (parseInt(user_id) === jobUserId ) {
-		// const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
 				method: 'DELETE'
 				}).then(response =>  { if(!response.ok) { alert('Something went wrong. Please try again.') }
