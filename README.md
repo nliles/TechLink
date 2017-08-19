@@ -1,24 +1,12 @@
-# README
+*TechLink
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+*A job board site for all things tech.
 
-Things you may want to cover:
+Techlink is a job board that allows users to post, edit, delete, and view job listings related to tech. Techlink is built with the Rails API, React.js, and Redux. 
 
-* Ruby version
+Check it out!
 
-* System dependencies
+To fire up TechLink, use the command bin/rake start. 
 
-* Configuration
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

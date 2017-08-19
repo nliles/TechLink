@@ -15,7 +15,7 @@ export function removeJob(id, i){
   };
 }
 
-export function editJob(job){
+export function editJob(job) {
   return {
     type: EDIT_JOB,
     job
@@ -40,8 +40,11 @@ export default function reducer(state = initialState, action) {
      }
     case EDIT_JOB:
       let editJobArray = state.jobs.slice();
+      console.log(editJobArray)
       let find = editJobArray.find(job => job.id === action.job.id)
+      console.log(find)
       editJobArray[editJobArray.indexOf(find)] = action.job
+      console.log(editJobArray)
      return {
       jobs: editJobArray
      }
