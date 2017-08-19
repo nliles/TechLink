@@ -45,6 +45,7 @@ class JobForm extends Component {
 	    const { position, company, description, salary } = this.state
 		const job = { job: {user_id, position, company, location, description, salary} }
 		this.location.value =  '';
+		console.log(user_id)
 		if (user_id) {
 			this.apiAddJob(job)
 		} else {
