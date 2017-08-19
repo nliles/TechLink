@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
 import { render } from 'react-dom';
-
 
 class ShowJob extends Component {
 
   constructor(props) {
     super(props);
+    console.log(this.props)
     this.state = {
     	id: this.props.match.params.id,
     	position: this.props.match.params.position,

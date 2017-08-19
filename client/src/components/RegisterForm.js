@@ -16,7 +16,6 @@ class RegisterForm extends Component {
 		
 		fetch('/users', {  
 			  method: 'POST',
-			  credentials: 'same-origin',
 			  headers: {
 			    Accept: 'application/json',
 			    'Content-Type': 'application/json',

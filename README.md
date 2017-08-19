@@ -4,5 +4,5 @@
 
 Techlink is a job board that allows users to post, edit, delete, and view job listings related to tech. Techlink is built with the Rails API, React.js, and Redux. 
 
-Check it out!
 
+[Check it out here!](https://techlink.herokuapp.com/#/)

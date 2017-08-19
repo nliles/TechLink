@@ -40,11 +40,8 @@ class JobForm extends Component {
 	addJob(e) {
 		e.preventDefault();
 		var user_id = window.localStorage.getItem("user_id")
-		var position = this.state.position; 
-		var company = this.state.company;
 		var location = this.location.value;
-		var description = this.state.description;
-		var salary = this.state.salary;
+	    const { position, company, description, salary } = this.state
 		const job = { job: {user_id, position, company, location, description, salary} }
 		this.location.value =  '';
 		if (user_id) {
