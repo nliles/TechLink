@@ -27,7 +27,6 @@ const initialState = {
 }
 
 export default function reducer(state = initialState, action) {
-  console.info('type', action.type);
   switch (action.type) {
     case ADD_JOB:
       return {

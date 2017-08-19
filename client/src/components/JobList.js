@@ -42,8 +42,10 @@ class JobList extends Component {
 		 })
     }
 
-	deleteJob(e, id, i) {
+	deleteJob(e, id, i, jobUserId) {
 		e.preventDefault();
+		var user_id = window.localStorage.getItem("user_id")
+		if (user_id == jobUserId ) {
 		const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
 		  method: 'DELETE'
@@ -54,6 +56,7 @@ class JobList extends Component {
 		        console.log("ok");
 				removeJob(id, i)
 		    })
+		} 
 	}
 
 
@@ -70,13 +73,13 @@ class JobList extends Component {
 		}
 	}
 
-	getUserView(jobId, userId, key) {
+	getUserView(jobId, userId, key, jobUserId) {
 		const user = window.localStorage.getItem("user_id");
 		if(user == userId) {
 			return (
 				<p>
 					<Link to={`/jobs/${jobId}/edit`}>Edit</Link>&nbsp;&nbsp;
-			        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key)}>Delete</a>	         
+			        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key, jobUserId)}>Delete</a>	         
 				</p>
 			)
 		} 
@@ -99,7 +102,7 @@ class JobList extends Component {
 			        				<p className="description">{value.description}</p>
 			        				<p>{value.salary}</p>
 			        				<p>{this.getTimeDiff(value.created_at)}</p>
-									<div>{this.getUserView(value.id, value.user_id, key)}</div>
+									<div>{this.getUserView(value.id, value.user_id, key, value.user_id)}</div>
 			        			</div>
 	        				</span>
 	        			)

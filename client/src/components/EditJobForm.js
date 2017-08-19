@@ -34,6 +34,7 @@ class EditJobForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+    	userId: '',
     	position: '',
     	company: '',
     	location: '',
@@ -46,7 +47,7 @@ class EditJobForm extends Component {
   componentDidMount() {
     fetch(`/jobs/${this.props.match.params.id}`)
           .then((response) => response.json())
-          .then((json) => this.setState({ position: json.position, company: json.company, location:json.location,
+          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, location:json.location,
             description: json.description, salary: json.salary})
           )
     }
@@ -56,7 +57,13 @@ class EditJobForm extends Component {
 		const { position, company, description, salary } = this.state
 		var location = this.location.value;
 		const job = { job: {position, company, location, description, salary} }
-		this.apiEditJob(job)
+		var user_id = window.localStorage.getItem("user_id")
+		if (user_id == this.state.userId ) {
+			this.apiEditJob(job)
+		} else {
+	      	this.setState({ position: '', company: '', description: '', salary: ''});
+			alert("Please sign in to post a new job listing.")
+		}	
 	}
 
 	apiEditJob(job) {
