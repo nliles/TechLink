@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Redirect } from 'react-router-dom'
 
+
 class LoginForm extends Component {
 	  constructor(props) {
 	    super(props);
@@ -19,15 +20,15 @@ class LoginForm extends Component {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ session: { email, password } })
 		})
 	       .then(response => response.json())
 	       .then(function(token) {
-			      localStorage.setItem("token", token.auth_token)
-			      localStorage.setItem("user_id", token.id)	
+			  localStorage.setItem("token", token.auth_token)
+			  localStorage.setItem("user_id", token.id)		
 			})
 	       	this.setState({ redirectToNewPage: true })
 	}

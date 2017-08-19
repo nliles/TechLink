@@ -5,13 +5,13 @@ class ShowJob extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    	position: '',
-    	company: '',
-    	location: '',
-    	description: '',
-    	salary: '',
-    };
+      this.state = {
+        	position: '',
+        	company: '',
+        	location: '',
+        	description: '',
+        	salary: ''
+      };
   }
 
   componentDidMount() {
