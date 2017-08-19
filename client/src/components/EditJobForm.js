@@ -54,15 +54,13 @@ class EditJobForm extends Component {
 
 	editJob(e) {
 		e.preventDefault();
-		const { position, company, description, salary } = this.state
-		var location = this.location.value;
+		const { position, company, location, description, salary } = this.state
 		const job = { job: {position, company, location, description, salary} }
 		var user_id = window.localStorage.getItem("user_id")
 		if (user_id == this.state.userId ) {
 			this.apiEditJob(job)
 		} else {
-	      	this.setState({ position: '', company: '', description: '', salary: ''});
-			alert("Please sign in to post a new job listing.")
+			alert("Not authorized to edit this job")
 		}	
 	}
 
@@ -101,7 +99,7 @@ class EditJobForm extends Component {
 			        <h2>Edit Job </h2><br/>
 			        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input"/><br/><br/>
 			        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" /><br/><br/>
-			        <input onChange={e => this.setState({ location: e.target.value})} ref={(input) => this.location= input} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+			        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
 			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
 			        <label>Salary:</label><br/>
 					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>

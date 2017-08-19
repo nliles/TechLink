@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_JOB:
       return {
-        jobs: state.jobs.concat(action.job)
+        jobs: (state.jobs.concat(action.job)).reverse()
       }
     case REMOVE_JOB:
      let removeJobArray = state.jobs.slice();
