@@ -3,13 +3,9 @@ import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import moment from 'moment';
 import { Link } from 'react-router-dom'
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
-
-const queryString = require('query-string');
-
 
 function mapStateToProps(state) {
   return {
@@ -45,20 +41,17 @@ class JobList extends Component {
 	deleteJob(e, id, i, jobUserId) {
 		e.preventDefault();
 		var user_id = window.localStorage.getItem("user_id")
-		if (user_id == jobUserId ) {
+		if (parseInt(user_id) === jobUserId ) {
+		//reference to this.props within the API call.
 		const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
-		  method: 'DELETE'
-			}).then((response) =>  {
-				if(!response.ok) {
-					console.log('server gave error response', response)
-				}
-		        console.log("ok");
-				removeJob(id, i)
-		    })
+				method: 'DELETE'
+				}).then(response =>  { if(!response.ok) { alert('Something went wrong. Please try again.') }
+				    console.log(response);
+					removeJob(id, i)
+				})
 		} 
 	}
-
 
 	getTimeDiff(time) {
 		var duration = moment.duration(moment(moment().format()).diff(time));
@@ -73,9 +66,11 @@ class JobList extends Component {
 		}
 	}
 
+	//users can only view the edit/delete links if they created the job post.
+
 	getUserView(jobId, userId, key, jobUserId) {
 		const user = window.localStorage.getItem("user_id");
-		if(user == userId) {
+		if(parseInt(user) === userId) {
 			return (
 				<p>
 					<Link to={`/jobs/${jobId}/edit`}>Edit</Link>&nbsp;&nbsp;
@@ -85,8 +80,13 @@ class JobList extends Component {
 		} 
 	}
 
+	// I tried to sort the job array so that the newest jobs were posted first. It led to a lot of strange behavior so I finally
+	// decided to take it out. I also tried creating a sort function but the same odd behavior(multiple postings of edited jobs was still happening)
+	// const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} );
+	
+
 	render() {
-		//const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} );
+
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>

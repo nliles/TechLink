@@ -4,29 +4,28 @@ import { Link } from 'react-router-dom'
 
 
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-    console.log(window.localStorage.getItem("user_id"))
-    this.state = {
-    	user: window.localStorage.getItem("user_id")
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			user: window.localStorage.getItem("user_id")
+		};
+	}
 
 	logout(e) {
 		e.preventDefault();
 		fetch(`/users/sign_out.json`, {
-		  method: 'DELETE',
-		  credentials: 'same-origin',
-            mode: 'cors'
-			})       
-		   .then(response => console.log(response),
-             window.localStorage.removeItem("user_id"),
-             window.localStorage.removeItem("token"),
-             this.setState({
-             	user: null
-             })
-		   	)		
+			method: 'DELETE',
+			credentials: 'same-origin',
+			mode: 'cors'
+		})       
+		.then(response => console.log(response),
+			 window.localStorage.removeItem("user_id"),
+			 window.localStorage.removeItem("token"),
+			 this.setState({ user: null })
+		)		
 	}
+//Nav bar login logic works and displays correctly but only works dynamically for logout. I was planning on using 
+//redux to solve this issue for login/sign up
 
 	render() {
 		let logInNav

@@ -5,8 +5,6 @@ import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
-const queryString = require('query-string');
-
 
 function mapStateToProps(state) {
   return {
@@ -57,10 +55,10 @@ class EditJobForm extends Component {
 		const { position, company, location, description, salary } = this.state
 		const job = { job: {position, company, location, description, salary} }
 		var user_id = window.localStorage.getItem("user_id")
-		if (user_id == this.state.userId ) {
+		if (parseInt(user_id) === this.state.userId ) {
 			this.apiEditJob(job)
 		} else {
-			alert("Not authorized to edit this job")
+			alert("You are not authorized to edit this job")
 		}	
 	}
 
@@ -74,9 +72,13 @@ class EditJobForm extends Component {
 		  },
 		  body: JSON.stringify(job)
 		})
-		.then(response => response.json()
-		.then((data) => {this.props.editJob(data) }));
-	    this.setState({ redirectToNewPage: true })
+		.then(response =>  {
+			if(!response.ok) { alert('Something went wrong. Please try again.')}
+			response => response.json()
+		    .then((data) => {this.props.editJob(data) })
+		    this.setState({ redirectToNewPage: true })
+	    })
+
 	}
 
 	autocomplete(input) {

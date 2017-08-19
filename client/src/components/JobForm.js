@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
 
+//The state that needs to be available to the component
 function mapStateToProps(state) {
   return {
     jobs: state.jobs.jobs
   };
 }
 
-
+//Binds actions to dispatch and makes acations available via props
 const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
   removeJob,
@@ -28,12 +29,12 @@ class JobForm extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			position: '',
-			company: '',
-			location: '',
-			description: '',
-			salary: ''
+			this.state = {
+				position: '',
+				company: '',
+				location: '',
+				description: '',
+				salary: ''
 		};
 	}
 
@@ -53,17 +54,18 @@ class JobForm extends Component {
 	}
 
 	apiAddJob(job) {
-			fetch('/jobs', {  
-			  method: 'POST',
-			  headers: {
+		fetch('/jobs', {  
+		  method: 'POST',
+		  headers: {
 			    Accept: 'application/json',
 			    'Content-Type': 'application/json',
-			  },
-			  body: JSON.stringify(job)
-			})
+		  },
+		  body: JSON.stringify(job)
+		})
 	      .then(response => response.json())
 	      .then(json => this.props.addJob(json),
-	       this.state = { position: '', company: '', description: '', salary: ''})		
+	       this.state = { position: '', company: '', description: '', salary: ''})	
+	      .catch(err => console.log(err));	
 	}
 
 	autocomplete(input) {
