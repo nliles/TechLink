@@ -34,14 +34,22 @@ class EditJobForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	position: this.props.match.params.position,
-    	company: this.props.match.params.company,
-    	location: this.props.match.params.location,
-    	description: this.props.match.params.description,
-    	salary: this.props.match.params.salary,
+    	position: '',
+    	company: '',
+    	location: '',
+    	description: '',
+    	salary: '',
     	redirectToNewPage: false		
     };
   }
+
+  componentDidMount() {
+    fetch(`/jobs/${this.props.match.params.id}`)
+          .then((response) => response.json())
+          .then((json) => this.setState({ position: json.position, company: json.company, location:json.location,
+            description: json.description, salary: json.salary})
+          )
+    }
 
 	editJob(e) {
 		e.preventDefault();
@@ -91,16 +99,16 @@ class EditJobForm extends Component {
 			        <label>Salary:</label><br/>
 					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="0-$30,000" /> "0-$30k"
+						    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" /> "$31-$60k"
+						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"}/> "$31-$60k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" /> "$61-$100k"
+						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"}/> "$61-$100k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$100,000+" /> "$100k+"
+						    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"}/> "$100k+"
 					    </div><br/> 
 				    </div> 
 			        <button type="submit" className="button">Submit → </button>

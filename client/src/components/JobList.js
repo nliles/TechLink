@@ -84,16 +84,17 @@ class JobList extends Component {
 
 	render() {
 
-		const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} ); 
+		//const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} );
+		console.log('array jobs after sort', this.props.jobs);
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>
 	        	<div className="jobs">
-	        		{jobArray.map((value, key) => {
+	        		{this.props.jobs.map((value, key) => {
 	        			return (
 	        				<span key={key}>
 		        				<div className="job">
-		        				    <Link to={`/jobs/${value.id}/${value.position}/${value.company}/${value.location}/${value.description}/${value.salary}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
+		        				    <Link to={`/jobs/${value.id}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
 			        				<p>{value.company} - {value.location}</p>
 			        				<p className="description">{value.description}</p>
 			        				<p>{value.salary}</p>
