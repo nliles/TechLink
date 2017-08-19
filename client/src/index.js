@@ -24,6 +24,7 @@ const store = createStore(
   preloadedState
 )
 
+
 render(
   <Provider store={store}>
 	 <HashRouter>

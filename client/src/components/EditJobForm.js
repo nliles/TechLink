@@ -7,10 +7,12 @@ import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
 
 
+function mapStateToProps(state) {
+  return {
+    jobs: state.jobs.jobs
+  };
+}
 
-const mapStateToProps = state => ({
-  jobs: state.jobs.jobs
-})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
@@ -42,7 +44,6 @@ class EditJobForm extends Component {
 
 	editJob(e) {
 		e.preventDefault();
-		console.log(this.props)
 		const position = this.state.position; 
 		const company = this.state.company;
 		var location = this.location.value;
@@ -79,11 +80,11 @@ class EditJobForm extends Component {
 	}
 
 	render() {
-		   if (this.state.redirectToNewPage) {
-		     return (
-		     <Redirect to="/"/>
-		     )
-		   }
+	   if (this.state.redirectToNewPage) {
+	     return (
+	     <Redirect to="/"/>
+	     )
+	   }
 		return(
 			<div>
 				<form className="form" className="centerForm" onSubmit={(e) => this.editJob(e)}> 
@@ -95,16 +96,16 @@ class EditJobForm extends Component {
 			        <label>Salary:</label><br/>
 					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="0-$30,000"/> "0-$30k"
+						    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "$31,000-$60,000"}/> "0-$30k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000"/> "$31-$60k"
+						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"}/> "$31-$60k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000"/> "$61-$100k"
+						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"}/> "$61-$100k"
 					    </div>
 					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$100,000+"/> "$100k+"
+						    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"}/> "$100k+"
 					    </div><br/> 
 				    </div> 
 			        <button type="submit" className="button">Submit → </button>

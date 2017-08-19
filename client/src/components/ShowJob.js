@@ -1,30 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { render } from 'react-dom';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { addJob, removeJob, editJob } from '../redux/jobs' 
-
-
-const mapStateToProps = state => ({
-  jobs: state.jobs.jobs
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  addJob, 
-  removeJob,
-  editJob
-}, dispatch)
 
 
 class ShowJob extends Component {
-
-	static propTypes = {
-	  jobs: PropTypes.array.isRequired,
-	  addJob: PropTypes.func.isRequired,
-	  removeJob: PropTypes.func.isRequired,
-	  editJob: PropTypes.func.isRequired
-	}
 
   constructor(props) {
     super(props);
@@ -57,7 +36,4 @@ class ShowJob extends Component {
 }
 
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShowJob)
+export default ShowJob;

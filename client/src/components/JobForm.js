@@ -5,15 +5,19 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../redux/jobs' 
 
-const mapStateToProps = state => ({
-  jobs: state.jobs.jobs
-})
+function mapStateToProps(state) {
+  return {
+    jobs: state.jobs.jobs
+  };
+}
+
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
   removeJob,
   editJob
 }, dispatch)
+
 
 class JobForm extends Component {
 	static propTypes = {

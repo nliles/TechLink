@@ -3,15 +3,19 @@ import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import moment from 'moment';
 import { Link } from 'react-router-dom'
+
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob } from '../redux/jobs' 
 
+const queryString = require('query-string');
 
 
-const mapStateToProps = state => ({
-  jobs: state.jobs.jobs
-})
+function mapStateToProps(state) {
+  return {
+    jobs: state.jobs.jobs
+  };
+}
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
@@ -25,8 +29,6 @@ class JobList extends Component {
 	  addJob: PropTypes.func.isRequired,
 	  removeJob: PropTypes.func.isRequired,
 	}
-
-	state = {}
 
 	constructor(props) {
 		super(props);
