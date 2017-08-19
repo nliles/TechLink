@@ -35,7 +35,7 @@ render(
 		    <Route exact path='/jobs/:id/edit' component={EditJobForm}/>
 		    <Route exact path='/login' component={LoginForm}/>
 		    <Route exact path='/users/new' component={RegisterForm}/>
-		    <Route exact path='/jobs/:id/:position/:company/:location/:description/:salary' component={ShowJob}/>
+		    <Route exact path='/jobs/:id' component={ShowJob}/>
 		  </Switch>
 	</div>
 	</HashRouter>

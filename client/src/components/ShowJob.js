@@ -5,16 +5,22 @@ class ShowJob extends Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props)
     this.state = {
-    	id: this.props.match.params.id,
-    	position: this.props.match.params.position,
-    	company: this.props.match.params.company,
-    	location: this.props.match.params.location,
-    	description: this.props.match.params.description,
-    	salary: this.props.match.params.salary,
+    	position: '',
+    	company: '',
+    	location: '',
+    	description: '',
+    	salary: '',
     };
   }
+
+  componentDidMount() {
+    fetch(`/jobs/${this.props.match.params.id}`)
+          .then((response) => response.json())
+          .then((json) => this.setState({ position: json.position, company: json.company, location:json.location,
+            description: json.description, salary: json.salary})
+          )
+    }
 
 	render() {
 		return(

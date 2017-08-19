@@ -42,8 +42,10 @@ class JobList extends Component {
 		 })
     }
 
-	deleteJob(e, id, i) {
+	deleteJob(e, id, i, jobUserId) {
 		e.preventDefault();
+		var user_id = window.localStorage.getItem("user_id")
+		if (user_id == jobUserId ) {
 		const { removeJob } = this.props;
 		fetch(`/jobs/${id}`, {
 		  method: 'DELETE'
@@ -54,6 +56,7 @@ class JobList extends Component {
 		        console.log("ok");
 				removeJob(id, i)
 		    })
+		} 
 	}
 
 
@@ -70,35 +73,34 @@ class JobList extends Component {
 		}
 	}
 
-	getUserView(jobId, userId, key) {
+	getUserView(jobId, userId, key, jobUserId) {
 		const user = window.localStorage.getItem("user_id");
 		if(user == userId) {
 			return (
 				<p>
 					<Link to={`/jobs/${jobId}/edit`}>Edit</Link>&nbsp;&nbsp;
-			        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key)}>Delete</a>	         
+			        <a href="" className="delete" onClick={e => this.deleteJob(e, jobId, key, jobUserId)}>Delete</a>	         
 				</p>
 			)
 		} 
 	}
 
 	render() {
-
-		const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} ); 
+		//const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} );
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>
 	        	<div className="jobs">
-	        		{jobArray.map((value, key) => {
+	        		{this.props.jobs.map((value, key) => {
 	        			return (
 	        				<span key={key}>
 		        				<div className="job">
-		        				    <Link to={`/jobs/${value.id}/${value.position}/${value.company}/${value.location}/${value.description}/${value.salary}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
+		        				    <Link to={`/jobs/${value.id}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
 			        				<p>{value.company} - {value.location}</p>
 			        				<p className="description">{value.description}</p>
 			        				<p>{value.salary}</p>
 			        				<p>{this.getTimeDiff(value.created_at)}</p>
-									<div>{this.getUserView(value.id, value.user_id, key)}</div>
+									<div>{this.getUserView(value.id, value.user_id, key, value.user_id)}</div>
 			        			</div>
 	        				</span>
 	        			)
