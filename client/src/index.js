@@ -14,7 +14,7 @@ import LoginForm from './components/LoginForm';
 import ShowJob from './components/ShowJob';
 import App from './App';
 import NavBar from './components/NavBar';
-import { setCurrentUser } from './redux/auth' 
+
 
 
 const preloadedState = {}

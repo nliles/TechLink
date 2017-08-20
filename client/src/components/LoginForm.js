@@ -30,7 +30,7 @@ class LoginForm extends Component {
 		e.preventDefault()
 		var email = this.email.value; 
 		var password = this.password.value;
-
+		const { setCurrentUser } = this.props;
 		fetch('/sessions', {  
 			method: 'POST',
 			credentials: 'same-origin',
@@ -45,8 +45,7 @@ class LoginForm extends Component {
 			  localStorage.setItem("token", token.auth_token)
 			  localStorage.setItem("user_id", token.id)	
 			  const user = window.localStorage.getItem("user_id")	
-			  console.log(user)
-			  this.props.setCurrentUser(user)
+			  setCurrentUser(user)
 			})
 	      this.setState({ redirectToNewPage: true })
 	}
