@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Redirect } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { setCurrentUser } from '../redux/auth' 
+
+
+function mapStateToProps(state) {
+  return {
+  	isAuthenticated: state.isAuthenticated,
+  };
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setCurrentUser
+}, dispatch)
 
 class RegisterForm extends Component {
 	  constructor(props) {
@@ -13,6 +27,7 @@ class RegisterForm extends Component {
 	createUser(e) {
 		var email = this.email.value; 
 		var password = this.password.value;
+		const { setCurrentUser } = this.props
 		
 		fetch('/users', {  
 			  method: 'POST',
@@ -26,6 +41,9 @@ class RegisterForm extends Component {
 		.then(function(token) {
 		      localStorage.setItem("token", token.auth_token)
 		      localStorage.setItem("user_id", token.id)	
+			  const user = window.localStorage.getItem("user_id")	
+			  console.log(user)
+			  setCurrentUser(user)
 		})	
 		.catch((err) => console.log(err))
 	}
@@ -48,5 +66,8 @@ class RegisterForm extends Component {
 	}
 }
 
-export default RegisterForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterForm)
 

@@ -23,7 +23,7 @@ class JobList extends Component {
 	static propTypes = {
 	  jobs: PropTypes.array.isRequired,
 	  addJob: PropTypes.func.isRequired,
-	  removeJob: PropTypes.func.isRequired,
+	  removeJob: PropTypes.func.isRequired
 	}
 
 	constructor(props) {
