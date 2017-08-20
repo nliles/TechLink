@@ -78,13 +78,17 @@ class JobList extends Component {
 		} 
 	}
 
+	// I tried to sort the job array so that the newest jobs were posted first. It led to a lot of strange behavior so I finally
+	// decided to take it out. I also tried creating a sort function but the same odd behavior(multiple postings of edited jobs was still happening)
+	// const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} );
+	
+
 	render() {
-	const jobArray = this.props.jobs.sort(function(a,b) {return (b.created_at > a.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);} );
 		return(
 	      <div className="jobList">
 	        <h2 className="activity">Job Activity</h2><br/>
 	        	<div className="jobs">
-	        		{jobArray.map((value, key) => {
+	        		{this.props.jobs.map((value, key) => {
 	        			return (
 	        				<span key={key}>
 		        				<div className="job">
