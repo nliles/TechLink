@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { setCurrentUser } from '../redux/auth' 
+
+
+function mapStateToProps(state) {
+  return {
+  	isAuthenticated: state.isAuthenticated,
+  };
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setCurrentUser
+}, dispatch)
 
 
 class LoginForm extends Component {
@@ -28,9 +43,12 @@ class LoginForm extends Component {
 	       .then(response => response.json())
 	       .then(function(token) {
 			  localStorage.setItem("token", token.auth_token)
-			  localStorage.setItem("user_id", token.id)		
+			  localStorage.setItem("user_id", token.id)	
+			  const user = window.localStorage.getItem("user_id")	
+			  console.log(user)
+			  this.props.setCurrentUser(user)
 			})
-	       	this.setState({ redirectToNewPage: true })
+	      this.setState({ redirectToNewPage: true })
 	}
 
 	render() {
@@ -53,4 +71,7 @@ class LoginForm extends Component {
 	}
 }
 
-export default LoginForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm)
