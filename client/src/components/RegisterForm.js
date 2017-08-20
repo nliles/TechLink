@@ -42,7 +42,6 @@ class RegisterForm extends Component {
 		      localStorage.setItem("token", token.auth_token)
 		      localStorage.setItem("user_id", token.id)	
 			  const user = window.localStorage.getItem("user_id")	
-			  console.log(user)
 			  setCurrentUser(user)
 		})	
 		.catch((err) => console.log(err))
