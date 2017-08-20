@@ -38,8 +38,6 @@ class NavBar extends Component {
 			 setCurrentUser(undefined)
 		)		
 	}
-//Nav bar login logic works and displays correctly but only works dynamically for logout. I was planning on using 
-//redux to solve this issue for login/sign up
 
 	render() {
 		const { isAuthenticated } = this.props.auth
