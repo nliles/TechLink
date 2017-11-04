@@ -1,9 +1,4 @@
-export const SET_CURRENT_USER = 'techlink/jobs/SET_CURRENT_USER'
-
-export const setCurrentUser = user => ({
-  type: SET_CURRENT_USER,
-  user
-})
+import { SET_CURRENT_USER } from '../actions/authActions'
 
 const initialState = {
   isAuthenticated: false
