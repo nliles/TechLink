@@ -4,7 +4,7 @@ import { Route, Switch, HashRouter } from 'react-router-dom';
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducers from './redux'
+import reducers from './reducers'
 
 import './index.css';
 

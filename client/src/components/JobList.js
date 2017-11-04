@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addJob, removeJob, setJobs } from '../redux/jobs' 
+import { addJob, removeJob, setJobs } from '../actions/jobActions' 
 
 function mapStateToProps(state) {
   return {

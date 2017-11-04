@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { addJob, removeJob, editJob } from '../redux/jobs' 
+import { addJob, removeJob, editJob } from '../actions/jobActions' 
 
 function mapStateToProps(state) {
   return {

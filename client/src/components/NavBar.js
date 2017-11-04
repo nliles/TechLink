@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { setCurrentUser } from '../redux/auth' 
-
+import { setCurrentUser } from '../actions/authActions' 
 
 function mapStateToProps(state) {
   return {

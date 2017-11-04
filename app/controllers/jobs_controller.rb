@@ -28,15 +28,6 @@ class JobsController < ApplicationController
     end
   end
 
-  def update
-    if @job.update(job_params)
-      render json: @job
-    else
-      render :json => { :errors => @job.errors.full_messages }, :status => 422
-    end
-  end
-
- 
   def destroy
     @job.destroy
   end

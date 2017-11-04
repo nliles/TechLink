@@ -3,8 +3,7 @@ import { render } from 'react-dom';
 import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { setCurrentUser } from '../redux/auth' 
-
+import { setCurrentUser } from '../actions/authActions' 
 
 function mapStateToProps(state) {
   return {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { render } from 'react-dom';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addJob, removeJob, editJob } from '../redux/jobs' 
+import { addJob, removeJob, editJob } from '../actions/jobActions' 
 
 //The state that needs to be available to the component
 function mapStateToProps(state) {
