@@ -5,6 +5,8 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../actions/jobActions' 
 import JobList  from './JobList';
+// import PlacesAutocomplete from 'react-places-autocomplete'
+// import { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete'
 
 function mapStateToProps(state) {
   return {
