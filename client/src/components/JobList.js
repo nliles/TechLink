@@ -91,6 +91,7 @@ class JobList extends Component {
 		        				<div className="job">
 		        				    <Link to={`/jobs/${value.id}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
 			        				<p>{value.company} - {value.location}</p>
+			        				<p>{Number(value.lng)} - {Number(value.lat)}</p>
 			        				<p className="description">{value.description}</p>
 			        				<p>{value.salary}</p>
 			        				<p>{this.getTimeDiff(value.created_at)}</p>

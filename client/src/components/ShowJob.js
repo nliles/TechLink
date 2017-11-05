@@ -34,7 +34,7 @@ class ShowJob extends Component {
   }
 
   render() {
-    console.log(this.state.lat)
+    console.log(Number(this.state.lat))
     console.log(this.state.lng)
     const MyMapComponent = compose(
       withProps({
@@ -48,10 +48,10 @@ class ShowJob extends Component {
     )((props) =>
       <GoogleMap
         defaultZoom={11}
-        defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
+        defaultCenter={{ lat: Number(this.state.lat), lng: Number(this.state.lng) }}
         defaultOptions={{ styles: demoFancyMapStyles }}
       >
-        <Marker position={{ lat: this.state.lat, lng: this.state.lng }}
+        <Marker position={{ lat: Number(this.state.lat), lng: Number(this.state.lng) }}
         options={{ icon: marker }} />
       </GoogleMap>
     )
