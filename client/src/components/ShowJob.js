@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { MyMapComponent } from "./GoogleMap"
+
 
 class ShowJob extends Component {
   constructor(props) {
@@ -26,6 +28,7 @@ class ShowJob extends Component {
 
   render() {
     return (
+    <div>
       <div className="jobList">
         <h2 className="activity">{this.state.position.toUpperCase()}</h2><br />
         <div className="jobs">
@@ -37,6 +40,10 @@ class ShowJob extends Component {
           </div>
         </div>
       </div>
+        <div className="map">
+            <MyMapComponent />
+        </div>
+    </div>
     );
   }
 }
