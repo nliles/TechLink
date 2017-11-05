@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { MyMapComponent } from "./GoogleMap"
+import { compose, withProps } from "recompose"
+import marker from "../marker.svg"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+const demoFancyMapStyles = require("../MapStyles.json");
 
 
 class ShowJob extends Component {
@@ -9,6 +12,8 @@ class ShowJob extends Component {
       position: '',
       company: '',
       location: '',
+      lat: '',
+      lng: '',
       description: '',
       salary: '',
     };
@@ -21,12 +26,35 @@ class ShowJob extends Component {
         position: json.position,
         company: json.company,
         location: json.location,
+        lat: json.lat,
+        lng: json.lng,
         description: json.description,
         salary: json.salary,
       }));
   }
 
   render() {
+    console.log(this.state.lat)
+    console.log(this.state.lng)
+    const MyMapComponent = compose(
+      withProps({
+        googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
+        loadingElement: <div style={{ height: `100%` }} />,
+        containerElement: <div style={{ height: `400px` }} />,
+        mapElement: <div style={{ height: `100%` }} />,
+      }),
+      withScriptjs,
+      withGoogleMap
+    )((props) =>
+      <GoogleMap
+        defaultZoom={11}
+        defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
+        defaultOptions={{ styles: demoFancyMapStyles }}
+      >
+        <Marker position={{ lat: this.state.lat, lng: this.state.lng }}
+        options={{ icon: marker }} />
+      </GoogleMap>
+    )
     return (
     <div>
       <div className="jobList">
