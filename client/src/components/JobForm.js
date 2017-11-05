@@ -39,8 +39,6 @@ class EditJobForm extends Component {
     	position: '',
     	company: '',
     	location: '',
-    	lat: '',
-    	lng: '',
     	description: '',
     	salary: '',
     	redirectToNewPage: false,	
@@ -52,8 +50,8 @@ class EditJobForm extends Component {
 	  	if (this.state.isEditing) {
 	    fetch(`/jobs/${this.props.match.params.id}`)
 	          .then((response) => response.json())
-	          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, location:json.location,
-	            lat: json.lat, lng: json.lng, description: json.description, salary: json.salary})
+	          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, 
+	          	location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary})
 	          )
 	  	} 
     }
@@ -69,16 +67,16 @@ class EditJobForm extends Component {
 		this.location.value =  '';
 		this.lat.value =  '';
 		this.lng.value =  '';
-		if (this.props.match) {
+		if (this.state.isEditing) {
 			if (parseInt(user_id) === this.state.userId ) {
-				this.apiSubmitJob(job)
+				this.apiEditJob(job)
 			} else {
 				alert("You are not authorized to edit this job")
 			}	
 		} 
 		else  {
 			if (user_id) {
-				this.apiSubmitJob(job)
+				this.apiAddJob(job)
 			} else {
 		      	this.setState({ position: '', company: '', description: '', salary: ''});
 				alert("Please sign in to post a new job listing.")
@@ -86,9 +84,9 @@ class EditJobForm extends Component {
 		}
 	}
 
-	apiSubmitJob(job) {
-		fetch(this.state.isEditing ? `/jobs/${this.props.match.params.id}` : '/jobs', {  
-		  method: this.state.isEditing ? 'PUT' : 'POST',
+	apiAddJob(job) {
+		fetch('/jobs', {  
+		  method: 'POST',
 		  headers: {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
@@ -97,9 +95,24 @@ class EditJobForm extends Component {
 		})
 		  .then(response => response.json())
 	      .then(json => this.props.addJob(json),
-	       this.state = { position: '', company: '', lat: '', lng: '', description: '', salary: ''},
-	       this.props.match ? this.setState({ redirectToNewPage: true }) : "")	
+	       this.state = { position: '', company: '', description: '', salary: ''})
 	      .catch(err => console.log(err));	
+	}
+
+   apiEditJob(job) {
+		fetch(`/jobs/${this.props.match.params.id}`, {  
+		  method: 'PUT',
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify(job)
+		})
+		  .then(response => response.json())
+	      .then(json => this.props.editJob(json),
+		    this.setState({ redirectToNewPage: true })
+	    )
+
 	}
 
 	render() {

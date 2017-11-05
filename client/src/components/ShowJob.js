@@ -34,8 +34,6 @@ class ShowJob extends Component {
   }
 
   render() {
-    console.log(Number(this.state.lat))
-    console.log(this.state.lng)
     const MyMapComponent = compose(
       withProps({
         googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
