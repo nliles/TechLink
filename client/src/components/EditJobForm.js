@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../actions/jobActions' 
+import JobList  from './JobList';
 
 function mapStateToProps(state) {
   return {
@@ -111,6 +112,8 @@ class EditJobForm extends Component {
 	   } else {
 		return(
 			<div>
+				<div className='rowC'>
+				<div className="jobForm">
 				<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
 			        <h2>{heading} </h2><br/>
 			        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
@@ -134,8 +137,10 @@ class EditJobForm extends Component {
 				    </div> 
 			        <button type="submit" className="button">Submit → </button>
 			      </form>
+			     </div>
+		          <JobList jobs={[]}/>
 			</div>
-	      
+	    </div>  
 	      )}
 	}
 }

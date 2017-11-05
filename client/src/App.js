@@ -8,12 +8,7 @@ class App extends Component {
   render() {
     return (    
     <div>
-	      <div className='rowC'>
-	        <div className="jobForm">
-            <EditJobForm/>
-          </div>
-          <JobList jobs={[]}/>
-	      </div>
+        <EditJobForm/>
     </div>
     )
   }
