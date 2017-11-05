@@ -45,10 +45,10 @@ class LoginForm extends Component {
     })
 	       .then(response => response.json())
 	       .then((token) => {
-			  localStorage.setItem('token', token.auth_token);
-			  localStorage.setItem('user_id', token.id);
-			  const user = window.localStorage.getItem('user_id');
-			  setCurrentUser(user);
+  			  localStorage.setItem('token', token.auth_token);
+  			  localStorage.setItem('user_id', token.id);
+  			  const user = window.localStorage.getItem('user_id');
+  			  setCurrentUser(user);
       });
 	      this.setState({ redirectToNewPage: true });
   }

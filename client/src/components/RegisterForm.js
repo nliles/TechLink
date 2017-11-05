@@ -22,7 +22,7 @@ class RegisterForm extends Component {
     };
   }
 
-  createUser() {
+  createUser(e) {
     const email = this.email.value;
     const password = this.password.value;
     const { setCurrentUser } = this.props;
@@ -52,7 +52,7 @@ class RegisterForm extends Component {
       );
     }
     return (
-      <form className="form" className="centerForm" onSubmit={this.createUser()}>
+      <form className="form" className="centerForm" onSubmit={e => this.createUser(e)}>
         <h2>Sign Up</h2><br />
         <input ref={input => this.email = input} type="text" name="email" className="input" placeholder="Email" /><br /><br />
         <input ref={input => this.password = input} type="password" name="password" className="input" placeholder="Password" /><br /><br />

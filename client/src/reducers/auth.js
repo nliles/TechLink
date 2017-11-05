@@ -7,7 +7,10 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
-      const value = action.user && action.user.length > 0;
+      let value;
+      Number.isInteger(parseInt(action.user)) ? value = true : value = false;
+      console.log(value)
+      console.log(action.user)
       return {
         isAuthenticated: value,
       };
