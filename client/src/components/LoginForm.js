@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -18,12 +17,17 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 
 class LoginForm extends Component {
-	  constructor(props) {
-	    super(props);
-	    this.state = {
-	    	redirectToNewPage: false,
-	    };
-	  }
+
+  static propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    	redirectToNewPage: false,
+    };
+  }
 
   createSession(e) {
     e.preventDefault();

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 
 class ShowJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        	position: '',
-        	company: '',
-        	location: '',
-        	description: '',
-        	salary: '',
+      position: '',
+      company: '',
+      location: '',
+      description: '',
+      salary: '',
     };
   }
 
@@ -37,7 +36,6 @@ class ShowJob extends Component {
             <p>{this.state.created_at}</p>
           </div>
         </div>
-
       </div>
     );
   }

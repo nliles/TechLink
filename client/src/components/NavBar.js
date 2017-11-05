@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -18,6 +17,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 
 class NavBar extends Component {
+
+  static propTypes = {
+    auth: PropTypes.bool.isRequired
+  }
+
   constructor(props) {
     super(props);
   }
