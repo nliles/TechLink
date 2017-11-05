@@ -18,13 +18,14 @@ export const MyMapComponent = compose(
     defaultCenter={{ lat: 40.730610, lng: -73.935242 }}
     defaultOptions={{ styles: demoFancyMapStyles }}
   >
-    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} onClick={props.onMarkerClick} />}
+    {props.isMarkerShown && <Marker position={{ lat: 40.730610, lng: -73.935242 }} onClick={props.onMarkerClick} />}
+    <Marker position={{ lat: 40.730610, lng: -73.935242 }}/>
   </GoogleMap>
 )
 
 class MyFancyComponent extends React.PureComponent {
   state = {
-    isMarkerShown: false,
+    isMarkerShown: true,
   }
 
   componentDidMount() {
