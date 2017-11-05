@@ -16,6 +16,8 @@ User.create(email: "Bob@gmail.com", password: "helloworld")
 	  position: profession.sample,
 	  company: Faker::Company.name,
 	  location: Faker::Address.city,
+	  lat: "40.741355",
+	  lng: "-74.003203",
 	  description: Faker::Lorem.paragraph(5),
 	  salary: salary.sample
 	)
@@ -27,6 +29,8 @@ end
 	  position: profession.sample,
 	  company: Faker::Company.name,
 	  location: Faker::Address.city,
+	  lat: "40.741355",
+	  lng: "-74.003203",
 	  description: Faker::Lorem.paragraph(3),
 	  salary: salary.sample
 	)

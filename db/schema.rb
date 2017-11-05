@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 20170817173954) do
     t.string "position"
     t.string "company"
     t.string "location"
+    t.string "lat"
+    t.string "lng"
     t.string "description"
     t.string "salary"
     t.integer "user_id"
