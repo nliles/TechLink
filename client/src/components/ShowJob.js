@@ -9,6 +9,8 @@ class ShowJob extends Component {
       position: '',
       company: '',
       location: '',
+      lat: '',
+      lng: '',
       description: '',
       salary: '',
     };
@@ -21,6 +23,8 @@ class ShowJob extends Component {
         position: json.position,
         company: json.company,
         location: json.location,
+        lat: json.lat,
+        lng: json.lng,
         description: json.description,
         salary: json.salary,
       }));

@@ -1,8 +1,8 @@
 import React from "react"
 import { compose, withProps } from "recompose"
-import marker from "./marker.png"
+import marker from "../marker.svg"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-const demoFancyMapStyles = require("../demoFancyMapStyles.json");
+const demoFancyMapStyles = require("../MapStyles.json");
 
 export const MyMapComponent = compose(
   withProps({
@@ -16,12 +16,12 @@ export const MyMapComponent = compose(
 )((props) =>
   <GoogleMap
     defaultZoom={11}
-    defaultCenter={{ lat: 40.730610, lng: -73.935242 }}
+    defaultCenter={{ lat: 40.741355, lng: -74.003203 }}
     defaultOptions={{ styles: demoFancyMapStyles }}
   >
-    {props.isMarkerShown && <Marker position={{ lat: 40.730610, lng: -73.935242 }} onClick={props.onMarkerClick} />}
-    <Marker position={{ lat: 40.730610, lng: -73.935242 }}
-    icon: {{ marker }}/>
+    {props.isMarkerShown && <Marker position={{ lat: 40.741355, lng: -74.003203 }} onClick={props.onMarkerClick} />}
+    <Marker position={{ lat: 40.741355, lng: -74.003203 }}
+    options={{ icon: marker }} />
   </GoogleMap>
 )
 
