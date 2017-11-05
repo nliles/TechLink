@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import JobList  from './components/JobList';
-import EditJobForm from './components/EditJobForm';
-
+import JobForm from './components/JobForm';
 
 class App extends Component {
-
   render() {
-    return (    
-    <div>
-        <EditJobForm/>
-    </div>
-    )
+    return (
+      <div>
+        <JobForm />
+      </div>
+    );
   }
 }
 
