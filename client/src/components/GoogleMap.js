@@ -1,5 +1,6 @@
 import React from "react"
 import { compose, withProps } from "recompose"
+import marker from "./marker.png"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 const demoFancyMapStyles = require("../demoFancyMapStyles.json");
 
@@ -19,7 +20,8 @@ export const MyMapComponent = compose(
     defaultOptions={{ styles: demoFancyMapStyles }}
   >
     {props.isMarkerShown && <Marker position={{ lat: 40.730610, lng: -73.935242 }} onClick={props.onMarkerClick} />}
-    <Marker position={{ lat: 40.730610, lng: -73.935242 }}/>
+    <Marker position={{ lat: 40.730610, lng: -73.935242 }}
+    icon: {{ marker }}/>
   </GoogleMap>
 )
 
