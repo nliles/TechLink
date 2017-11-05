@@ -113,34 +113,34 @@ class EditJobForm extends Component {
 		return(
 			<div>
 				<div className='rowC'>
-				<div className="jobForm">
-				<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
-			        <h2>{heading} </h2><br/>
-			        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
-			        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
-			        <input ref={(input) => this.location= input} onChange={e => this.setState({ location: e.target.value})} value={this.state.location} placeholder="Location" type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
-			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
-			        <label>Salary:</label><br/>
-					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
-					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
-					    </div>
-					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"}/> "$31-$60k"
-					    </div>
-					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"}/> "$61-$100k"
-					    </div>
-					    <div className="radioDiv">
-						    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"}/> "$100k+"
-					    </div><br/> 
-				    </div> 
-			        <button type="submit" className="button">Submit → </button>
-			      </form>
-			     </div>
+					<div className="jobForm">
+						<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
+					        <h2>{heading} </h2><br/>
+					        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
+					        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
+					        <input ref={(input) => this.location= input} onChange={e => this.setState({ location: e.target.value})} value={this.state.location} placeholder="Location" type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+					        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
+					        <label>Salary:</label><br/>
+							<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
+							    <div className="radioDiv">
+								    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
+							    </div>
+							    <div className="radioDiv">
+								    <input type="radio" name="salary" className="radio" value="$31,000-$60,000" checked={this.state.salary === "$31,000-$60,000"}/> "$31-$60k"
+							    </div>
+							    <div className="radioDiv">
+								    <input type="radio" name="salary" className="radio" value="$61,000-$99,000" checked={this.state.salary === "$61,000-$99,000"}/> "$61-$100k"
+							    </div>
+							    <div className="radioDiv">
+								    <input type="radio" name="salary" className="radio" value="$100,000+" checked={this.state.salary === "$100,000+"}/> "$100k+"
+							    </div><br/> 
+						    </div> 
+					        <button type="submit" className="button">Submit → </button>
+					      </form>
+				     </div>
 		          <JobList jobs={[]}/>
-			</div>
-	    </div>  
+				</div>
+		    </div>  
 	      )}
 	}
 }
