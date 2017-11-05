@@ -65,8 +65,6 @@ class JobList extends Component {
 		}
 	}
 
-	//users can only view the edit/delete links if they created the job post.
-
 	getUserView(jobId, userId, key, jobUserId) {
 		const user = window.localStorage.getItem("user_id");
 		if(parseInt(user) === userId) {
@@ -91,7 +89,6 @@ class JobList extends Component {
 		        				<div className="job">
 		        				    <Link to={`/jobs/${value.id}`}><h3>{value.position.toUpperCase()}</h3></Link>&nbsp;&nbsp;
 			        				<p>{value.company} - {value.location}</p>
-			        				<p>{Number(value.lng)} - {Number(value.lat)}</p>
 			        				<p className="description">{value.description}</p>
 			        				<p>{value.salary}</p>
 			        				<p>{this.getTimeDiff(value.created_at)}</p>
