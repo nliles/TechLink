@@ -1,17 +1,17 @@
-import { SET_CURRENT_USER } from '../actions/authActions'
+import { SET_CURRENT_USER } from '../actions/authActions';
 
 const initialState = {
-  isAuthenticated: false
-}
+  isAuthenticated: false,
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
-    const value = action.user && action.user.length > 0;
+      const value = action.user && action.user.length > 0;
       return {
-        isAuthenticated: value
-      }
+        isAuthenticated: value,
+      };
     default:
-      return state
+      return state;
   }
 }

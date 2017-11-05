@@ -105,11 +105,7 @@ class EditJobForm extends Component {
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
-	   if (this.state.redirectToNewPage) {
-	     return (
-	     <Redirect to="/"/>
-	     )
-	   } else {
+        let redirect = this.state.submitted ? <Redirect to='/jobs' /> : ""
 		return(
 			<div>
 				<div className='rowC'>
@@ -136,6 +132,7 @@ class EditJobForm extends Component {
 							    </div><br/> 
 						    </div> 
 					        <button type="submit" className="button">Submit → </button>
+					        {redirect}
 					      </form>
 				     </div>
 		          <JobList jobs={[]}/>
@@ -143,7 +140,6 @@ class EditJobForm extends Component {
 		    </div>  
 	      )}
 	}
-}
 
 export default connect(
   mapStateToProps,
