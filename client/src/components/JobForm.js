@@ -5,8 +5,8 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../actions/jobActions' 
 import JobList  from './JobList';
-// import PlacesAutocomplete from 'react-places-autocomplete'
-// import { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete'
+import autocomplete  from './Autocomplete';
+
 
 function mapStateToProps(state) {
   return {
@@ -39,6 +39,8 @@ class EditJobForm extends Component {
     	position: '',
     	company: '',
     	location: '',
+    	lat: '',
+    	lng: '',
     	description: '',
     	salary: '',
     	redirectToNewPage: false,	
@@ -51,7 +53,7 @@ class EditJobForm extends Component {
 	    fetch(`/jobs/${this.props.match.params.id}`)
 	          .then((response) => response.json())
 	          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, location:json.location,
-	            description: json.description, salary: json.salary})
+	            lat: json.lat, lng: json.lng, description: json.description, salary: json.salary})
 	          )
 	  	} 
     }
@@ -61,7 +63,9 @@ class EditJobForm extends Component {
 		var user_id = window.localStorage.getItem("user_id")
 	    const { position, company, description, salary } = this.state
 	    var location = this.location.value;
-		const job = { job: {user_id, position, company, location, description, salary} }
+	    var lat = this.lat.value;
+	    var lng = this.lng.value;
+		const job = { job: {user_id, position, company, location, lat, lng, description, salary} }
 		this.location.value =  '';
 		if (this.props.match) {
 			if (parseInt(user_id) === this.state.userId ) {
@@ -91,22 +95,16 @@ class EditJobForm extends Component {
 		})
 		  .then(response => response.json())
 	      .then(json => this.props.addJob(json),
-	       this.state = { position: '', company: '', description: '', salary: ''},
+	       this.state = { position: '', company: '', lat: '', lng: '', description: '', salary: ''},
 	       this.props.match ? this.setState({ redirectToNewPage: true }) : "")	
 	      .catch(err => console.log(err));	
-	}
-
-	autocomplete(input) {
-		if(!input) return;
-		new window.google.maps.places.Autocomplete(input);
-		input.addEventListener('keydown', (e) => {
-			if(e.keyCode === 13) e.preventDefault();
-		})
 	}
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
         let redirect = this.state.submitted ? <Redirect to='/jobs' /> : ""
+        const lat = document.getElementById("latInput");
+        const lng = document.getElementById("lngInput");
 		return(
 			<div>
 				<div className='rowC'>
@@ -115,7 +113,9 @@ class EditJobForm extends Component {
 					        <h2>{heading} </h2><br/>
 					        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
 					        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
-					        <input ref={(input) => this.location= input} onChange={e => this.setState({ location: e.target.value})} value={this.state.location} placeholder="Location" type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+					        <input ref={(input) => this.location = input} placeholder="Location" type="text" name="location" className="input" onClick={e => autocomplete(e.target, lat, lng )} /><br/><br/>
+					        <input ref={(input) => this.lat = input} placeholder="Latitude" type="text" name="lat" className="input" id="latInput" /><br/><br/>
+					        <input ref={(input) => this.lng = input} placeholder="Longitude" type="text" name="lng" className="input" id="lngInput" /><br/><br/>
 					        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
 					        <label>Salary:</label><br/>
 							<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
