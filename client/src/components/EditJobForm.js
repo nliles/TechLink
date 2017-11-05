@@ -32,53 +32,66 @@ class EditJobForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+    	id: this.props.id,
     	userId: '',
     	position: '',
     	company: '',
     	location: '',
     	description: '',
     	salary: '',
-    	redirectToNewPage: false		
-    };
+    	redirectToNewPage: false,	
+    	isEditing: this.props.match ? true : false
+    };                         
   }
 
   componentDidMount() {
-    fetch(`/jobs/${this.props.match.params.id}`)
-          .then((response) => response.json())
-          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, location:json.location,
-            description: json.description, salary: json.salary})
-          )
+	  	if (this.state.isEditing) {
+	    fetch(`/jobs/${this.props.match.params.id}`)
+	          .then((response) => response.json())
+	          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, location:json.location,
+	            description: json.description, salary: json.salary})
+	          )
+	  	} 
     }
 
-	editJob(e) {
+	handleSubmit(e) {
 		e.preventDefault();
-		const { position, company, location, description, salary } = this.state
-		const job = { job: {position, company, location, description, salary} }
 		var user_id = window.localStorage.getItem("user_id")
-		if (parseInt(user_id) === this.state.userId ) {
-			this.apiEditJob(job)
-		} else {
-			alert("You are not authorized to edit this job")
-		}	
+	    const { position, company, description, salary } = this.state
+	    var location = this.location.value;
+		const job = { job: {user_id, position, company, location, description, salary} }
+		this.location.value =  '';
+		if (this.props.match) {
+			if (parseInt(user_id) === this.state.userId ) {
+				this.apiSubmitJob(job)
+			} else {
+				alert("You are not authorized to edit this job")
+			}	
+		} 
+		else  {
+			if (user_id) {
+				this.apiSubmitJob(job)
+			} else {
+		      	this.setState({ position: '', company: '', description: '', salary: ''});
+				alert("Please sign in to post a new job listing.")
+			}
+		}
 	}
 
-	apiEditJob(job) {
-	const jobId = this.props.match.params.id
-		fetch(`/jobs/${jobId}`, {  
-		  method: 'PUT',
+	apiSubmitJob(job) {
+		fetch(this.state.isEditing ? `/jobs/${this.props.match.params.id}` : '/jobs', {  
+		  method: this.state.isEditing ? 'PUT' : 'POST',
 		  headers: {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
 		  },
 		  body: JSON.stringify(job)
 		})
-		.then(response =>  {
-			if(!response.ok) { alert('Something went wrong. Please try again.')}
-			response => response.json()
-		    .then((data) => {this.props.editJob(data) })
-		    this.setState({ redirectToNewPage: true })
-	    })
-
+		  .then(response => response.json())
+	      .then(json => this.props.addJob(json),
+	       this.state = { position: '', company: '', description: '', salary: ''},
+	       this.props.match ? this.setState({ redirectToNewPage: true }) : "")	
+	      .catch(err => console.log(err));	
 	}
 
 	autocomplete(input) {
@@ -90,6 +103,7 @@ class EditJobForm extends Component {
 	}
 
 	render() {
+        let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
 	   if (this.state.redirectToNewPage) {
 	     return (
 	     <Redirect to="/"/>
@@ -97,12 +111,12 @@ class EditJobForm extends Component {
 	   } else {
 		return(
 			<div>
-				<form className="form" className="centerForm" onSubmit={(e) => this.editJob(e)}> 
-			        <h2>Edit Job </h2><br/>
-			        <input ref="details" onChange={e => this.setState({ position: e.target.value})} value={this.state.position} type="text" name="position" className="input"/><br/><br/>
-			        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} type="text" name="company" className="input" /><br/><br/>
-			        <input onChange={e => this.setState({ location: e.target.value})} value={this.state.location} type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
-			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} name="description" className="input textarea" ></textarea><br/><br/>
+				<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
+			        <h2>{heading} </h2><br/>
+			        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
+			        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
+			        <input ref={(input) => this.location= input} onChange={e => this.setState({ location: e.target.value})} value={this.state.location} placeholder="Location" type="text" name="location" className="input" onClick={e => this.autocomplete(e.target)} /><br/><br/>
+			        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
 			        <label>Salary:</label><br/>
 					<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
 					    <div className="radioDiv">
