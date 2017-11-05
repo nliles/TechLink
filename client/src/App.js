@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import JobList  from './components/JobList';
-import JobForm from './components/JobForm';
+import EditJobForm from './components/EditJobForm';
 
 
 class App extends Component {
@@ -8,12 +8,7 @@ class App extends Component {
   render() {
     return (    
     <div>
-	      <div className='rowC'>
-	        <div className="jobForm">
-            <JobForm/>
-          </div>
-          <JobList jobs={[]}/>
-	      </div>
+        <EditJobForm/>
     </div>
     )
   }
