@@ -99,8 +99,9 @@ class EditJobForm extends Component {
 	      .catch(err => console.log(err));	
 	}
 
-   apiEditJob(job) {
-		fetch(`/jobs/${this.props.match.params.id}`, {  
+	apiEditJob(job) {
+	const jobId = this.props.match.params.id
+		fetch(`/jobs/${jobId}`, {  
 		  method: 'PUT',
 		  headers: {
 		    Accept: 'application/json',
@@ -108,18 +109,28 @@ class EditJobForm extends Component {
 		  },
 		  body: JSON.stringify(job)
 		})
-		  .then(response => response.json())
-	      .then(json => this.props.editJob(json),
-		    this.setState({ redirectToNewPage: true })
-	    )
+		.then(response =>  response.json())
+		.then(data => this.props.editJob(data),
+		 this.setState({ redirectToNewPage: true }))
+		// {
+		// 	if(!response.ok) { alert('Something went wrong. Please try again.')}
+		// 	response => response.json()
+		//     .then((data) => {this.props.editJob(data) })
+		//     this.setState({ redirectToNewPage: true })
+	 //    }
+	    // )
 
 	}
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
-        let redirect = this.state.submitted ? <Redirect to='/jobs' /> : ""
         const lat = document.getElementById("latInput");
         const lng = document.getElementById("lngInput");
+	   if (this.state.redirectToNewPage) {
+	     return (
+	     <Redirect to="/"/>
+	     )
+	   } else {
 		return(
 			<div>
 				<div className='rowC'>
@@ -148,7 +159,6 @@ class EditJobForm extends Component {
 							    </div><br/> 
 						    </div> 
 					        <button type="submit" className="button">Submit → </button>
-					        {redirect}
 					      </form>
 				     </div>
 		          <JobList jobs={[]}/>
@@ -156,6 +166,7 @@ class EditJobForm extends Component {
 		    </div>  
 	      )}
 	}
+}
 
 export default connect(
   mapStateToProps,

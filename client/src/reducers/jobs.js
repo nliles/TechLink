@@ -26,7 +26,7 @@ export default function reducer(state = initialState, action) {
       const find = editJobArray.find(job => job.id === action.job.id);
       editJobArray[editJobArray.indexOf(find)] = action.job;
       return {
-        jobs: find,
+        jobs: editJobArray,
       };
     default:
       return state;
