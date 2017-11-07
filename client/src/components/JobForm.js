@@ -64,9 +64,6 @@ class EditJobForm extends Component {
 	    var lat = this.lat.value;
 	    var lng = this.lng.value;
 		const job = { job: {user_id, position, company, location, lat, lng, description, salary} }
-		this.location.value =  '';
-		this.lat.value =  '';
-		this.lng.value =  '';
 		if (this.state.isEditing) {
 			if (parseInt(user_id) === this.state.userId ) {
 				this.apiEditJob(job)
@@ -78,7 +75,7 @@ class EditJobForm extends Component {
 			if (user_id) {
 				this.apiAddJob(job)
 			} else {
-		      	this.setState({ position: '', company: '', description: '', salary: ''});
+		      	this.setState({ position: '', company: '', description: '', location: '', lat: '', lng: '', salary: ''});
 				alert("Please sign in to post a new job listing.")
 			}
 		}
@@ -132,7 +129,7 @@ class EditJobForm extends Component {
 					<div className="jobForm">
 						<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
 					        <h2>{heading} </h2><br/>
-					        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
+					        <input ref="details" onChange={e => this.handleChange({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
 					        <input onChange={e => this.handleChange({ company: e.target.value})} 
 					         value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
 					        <input ref={(input) => this.location = input} 
@@ -143,9 +140,9 @@ class EditJobForm extends Component {
 					         onFocus={e => autocomplete(e.target, lat, lng ,this.handleChange)} /><br/><br/>
 					        <input ref={(input) => this.lat = input} type="hidden" name="lat" id="latInput" />
 					        <input ref={(input) => this.lng = input} type="hidden" name="lng" id="lngInput" />
-					        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
+					        <textarea onChange={e => this.handleChange({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
 					        <label>Salary:</label><br/>
-							<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
+							<div className="salaryOptions" onClick={e => this.handleChange({ salary: e.target.value})}>
 							    <div className="radioDiv">
 								    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
 							    </div>
