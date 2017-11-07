@@ -32,6 +32,7 @@ class RegisterForm extends Component {
     const password = this.password.value;
     const { setCurrentUser } = this.props;
 
+
     fetch('/users', {
       method: 'POST',
       headers: {

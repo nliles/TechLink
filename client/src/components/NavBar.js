@@ -27,6 +27,13 @@ class NavBar extends Component {
     console.log(this.props.auth)
   }
 
+  componentDidMount(){
+      const user = window.localStorage.getItem('user_id');
+      console.log(user)
+      const { setCurrentUser } = this.props;
+      setCurrentUser(user);
+  }
+
   logout(e) {
     e.preventDefault();
     const { setCurrentUser } = this.props;

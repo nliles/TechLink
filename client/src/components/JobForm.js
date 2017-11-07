@@ -54,12 +54,6 @@ class EditJobForm extends Component {
 	          	location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary})
 	          )
 	  	} 
-
-	  	var that = this;
-	  	setInterval(() => {
-	  		console.log(that.state.location)
-		},2000)
-
     }
 
 	handleSubmit(e) {
@@ -118,8 +112,8 @@ class EditJobForm extends Component {
 		.then(data => this.props.editJob(data),
 		 this.setState({ redirectToNewPage: true }))
 	}
+
 	handleChange = (arg)=>{
-		console.log(arg)
 		this.setState(arg)
 		//console.log(this.state)
 	}
