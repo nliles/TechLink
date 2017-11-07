@@ -54,6 +54,12 @@ class EditJobForm extends Component {
 	          	location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary})
 	          )
 	  	} 
+
+	  	var that = this;
+	  	setInterval(() => {
+	  		console.log(that.state.location)
+		},2000)
+
     }
 
 	handleSubmit(e) {
@@ -100,8 +106,7 @@ class EditJobForm extends Component {
 	}
 
 	apiEditJob(job) {
-	const jobId = this.props.match.params.id
-		fetch(`/jobs/${jobId}`, {  
+		fetch(`/jobs/${this.props.match.params.id}`, {  
 		  method: 'PUT',
 		  headers: {
 		    Accept: 'application/json',
@@ -112,15 +117,13 @@ class EditJobForm extends Component {
 		.then(response =>  response.json())
 		.then(data => this.props.editJob(data),
 		 this.setState({ redirectToNewPage: true }))
-		// {
-		// 	if(!response.ok) { alert('Something went wrong. Please try again.')}
-		// 	response => response.json()
-		//     .then((data) => {this.props.editJob(data) })
-		//     this.setState({ redirectToNewPage: true })
-	 //    }
-	    // )
-
 	}
+	handleChange = (arg)=>{
+		console.log(arg)
+		this.setState(arg)
+		//console.log(this.state)
+	}
+
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
@@ -138,8 +141,14 @@ class EditJobForm extends Component {
 						<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
 					        <h2>{heading} </h2><br/>
 					        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
-					        <input onChange={e => this.setState({ company: e.target.value})} value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
-					        <input ref={(input) => this.location = input} placeholder="Location" type="text" name="location" className="input" id="location" onClick={e => autocomplete(e.target, lat, lng )} /><br/><br/>
+					        <input onChange={e => this.handleChange({ company: e.target.value})} 
+					         value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
+					        <input ref={(input) => this.location = input} 
+					         onChange={e => this.handleChange({ location: e.target.value})} 
+					         value={this.state.location} 
+					         placeholder="Location" 
+					         type="text" name="location" className="input" id="location" 
+					         onFocus={e => autocomplete(e.target, lat, lng ,this.handleChange)} /><br/><br/>
 					        <input ref={(input) => this.lat = input} type="hidden" name="lat" id="latInput" />
 					        <input ref={(input) => this.lng = input} type="hidden" name="lng" id="lngInput" />
 					        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>

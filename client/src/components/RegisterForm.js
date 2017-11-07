@@ -6,7 +6,7 @@ import { setCurrentUser } from '../actions/authActions';
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.isAuthenticated,
+    auth: state.auth,
   };
 }
 
@@ -15,6 +15,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 class RegisterForm extends Component {
+
+  // static propTypes = {
+  //   isAuthenticated: PropTypes.bool.isRequired
+  // }
+  
   constructor(props) {
     super(props);
     this.state = {

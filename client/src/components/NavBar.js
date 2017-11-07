@@ -18,12 +18,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class NavBar extends Component {
 
-  static propTypes = {
-    auth: PropTypes.bool.isRequired
-  }
+  // static propTypes = {
+  //   auth: PropTypes.bool.isRequired
+  // }
 
   constructor(props) {
     super(props);
+    console.log(this.props.auth)
   }
 
   logout(e) {
@@ -44,6 +45,8 @@ class NavBar extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
+    console.log(isAuthenticated)
+    console.log(this.props.auth)
     const logOutNav =
       (<ul className="nav navbar-nav navbar-right">
         <li><a onClick={e => this.logout(e)} href=""><span className="glyphicon glyphicon-log-out" /> Logout</a></li>
