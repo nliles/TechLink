@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../actions/authActions';
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
   };

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../actions/authActions';
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
   	auth: state.auth,
   };
@@ -29,7 +29,6 @@ class NavBar extends Component {
 
   componentDidMount(){
       const user = window.localStorage.getItem('user_id');
-      console.log(user)
       const { setCurrentUser } = this.props;
       setCurrentUser(user);
   }
@@ -52,8 +51,6 @@ class NavBar extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
-    console.log(isAuthenticated)
-    console.log(this.props.auth)
     const logOutNav =
       (<ul className="nav navbar-nav navbar-right">
         <li><a onClick={e => this.logout(e)} href=""><span className="glyphicon glyphicon-log-out" /> Logout</a></li>

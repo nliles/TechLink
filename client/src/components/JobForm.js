@@ -8,7 +8,7 @@ import JobList  from './JobList';
 import autocomplete  from './Autocomplete';
 
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     jobs: state.jobs.jobs
   };
@@ -113,11 +113,9 @@ class EditJobForm extends Component {
 		 this.setState({ redirectToNewPage: true }))
 	}
 
-	handleChange = (arg)=>{
+	handleChange = (arg) => {
 		this.setState(arg)
-		//console.log(this.state)
 	}
-
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
