@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../actions/authActions';
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
   	auth: state.auth,
   };
@@ -18,12 +18,19 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class NavBar extends Component {
 
-  static propTypes = {
-    auth: PropTypes.bool.isRequired
-  }
+  // static propTypes = {
+  //   auth: PropTypes.bool.isRequired
+  // }
 
   constructor(props) {
     super(props);
+    console.log(this.props.auth)
+  }
+
+  componentDidMount(){
+      const user = window.localStorage.getItem('user_id');
+      const { setCurrentUser } = this.props;
+      setCurrentUser(user);
   }
 
   logout(e) {

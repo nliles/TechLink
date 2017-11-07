@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addJob, removeJob, setJobs } from '../actions/jobActions' 
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     jobs: state.jobs.jobs
   };
