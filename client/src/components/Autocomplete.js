@@ -4,9 +4,11 @@ export default (input, latInput, lngInput, cb) => {
 
     dropdown.addListener('place_changed', () => {
         const place = dropdown.getPlace();
-        latInput.value = place.geometry.location.lat();
-        lngInput.value = place.geometry.location.lng();
-        cb({location:place.formatted_address});
+        latInput = place.geometry.location.lat();
+        lngInput = place.geometry.location.lng();
+        cb({location: place.formatted_address});
+        cb({lat: latInput})
+        cb({lng: lngInput})
     });
 
 

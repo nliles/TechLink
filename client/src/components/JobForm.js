@@ -50,23 +50,20 @@ class EditJobForm extends Component {
 	  	if (this.state.isEditing) {
 	    fetch(`/jobs/${this.props.match.params.id}`)
 	          .then((response) => response.json())
-	          .then((json) => this.setState({ userId: json.user_id, position: json.position, company: json.company, 
-	          	location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary})
-	          )
+	          .then((json) =>  {
+                let newState = Object.assign({}, this.state);
+                newState = { userId: json.user_id, position: json.position, company: json.company, 
+	                         location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary};
+                this.setState(newState);
+            })
 	  	} 
     }
 
 	handleSubmit(e) {
 		e.preventDefault();
 		var user_id = window.localStorage.getItem("user_id")
-	    const { position, company, description, salary } = this.state
-	    var location = this.location.value;
-	    var lat = this.lat.value;
-	    var lng = this.lng.value;
+	    const { position, company, location, lat, lng, description, salary } = this.state
 		const job = { job: {user_id, position, company, location, lat, lng, description, salary} }
-		this.location.value =  '';
-		this.lat.value =  '';
-		this.lng.value =  '';
 		if (this.state.isEditing) {
 			if (parseInt(user_id) === this.state.userId ) {
 				this.apiEditJob(job)
@@ -78,7 +75,9 @@ class EditJobForm extends Component {
 			if (user_id) {
 				this.apiAddJob(job)
 			} else {
-		      	this.setState({ position: '', company: '', description: '', salary: ''});
+				let newState = Object.assign({}, this.state);
+                newState = { position: '', company: '', description: '', location: '', lat: '', lng: '', salary: ''};
+                this.setState(newState);
 				alert("Please sign in to post a new job listing.")
 			}
 		}
@@ -94,9 +93,13 @@ class EditJobForm extends Component {
 		  body: JSON.stringify(job)
 		})
 		  .then(response => response.json())
-	      .then(json => this.props.addJob(json),
-	       this.state = { position: '', company: '', description: '', salary: ''})
-	      .catch(err => console.log(err));	
+	      .then((json) =>  {
+                let newState = Object.assign({}, this.state);
+                newState = { position: '', company: '', location: '', description: '', salary: ''}
+                this.setState(newState),
+                this.props.addJob(json);
+            })
+	      	.catch(err => console.log(err));	
 	}
 
 	apiEditJob(job) {
@@ -110,42 +113,36 @@ class EditJobForm extends Component {
 		})
 		.then(response =>  response.json())
 		.then(data => this.props.editJob(data),
-		 this.setState({ redirectToNewPage: true }))
+		this.setState({ redirectToNewPage: true }))
+	    .catch(err => console.log(err));	
 	}
 
 	handleChange = (arg) => {
-		this.setState(arg)
+        let newState = Object.assign({}, this.state);
+        newState[Object.keys(arg)[0]] = Object.values(arg)[0];
+        this.setState(newState);
 	}
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
-        const lat = document.getElementById("latInput");
-        const lng = document.getElementById("lngInput");
-	   if (this.state.redirectToNewPage) {
-	     return (
-	     <Redirect to="/"/>
-	     )
-	   } else {
+	     if (this.state.redirectToNewPage) {
+	     return (<Redirect to="/"/>)
+	  	} else {
 		return(
 			<div>
 				<div className='rowC'>
 					<div className="jobForm">
 						<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
 					        <h2>{heading} </h2><br/>
-					        <input ref="details" onChange={e => this.setState({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
+					        <input ref="details" onChange={e => this.handleChange({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
 					        <input onChange={e => this.handleChange({ company: e.target.value})} 
 					         value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
-					        <input ref={(input) => this.location = input} 
-					         onChange={e => this.handleChange({ location: e.target.value})} 
-					         value={this.state.location} 
-					         placeholder="Location" 
-					         type="text" name="location" className="input" id="location" 
-					         onFocus={e => autocomplete(e.target, lat, lng ,this.handleChange)} /><br/><br/>
-					        <input ref={(input) => this.lat = input} type="hidden" name="lat" id="latInput" />
-					        <input ref={(input) => this.lng = input} type="hidden" name="lng" id="lngInput" />
-					        <textarea onChange={e => this.setState({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
+					        <input onChange={e => this.handleChange({ location: e.target.value})} value={this.state.location} 
+					         placeholder="Location" type="text" name="location" className="input"
+					         onFocus={e => autocomplete(e.target, this.state.lat, this.state.lng ,this.handleChange)} /><br/><br/>
+					        <textarea onChange={e => this.handleChange({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
 					        <label>Salary:</label><br/>
-							<div className="salaryOptions" onClick={e => this.setState({ salary: e.target.value})}>
+							<div className="salaryOptions" onClick={e => this.handleChange({ salary: e.target.value})}>
 							    <div className="radioDiv">
 								    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
 							    </div>
