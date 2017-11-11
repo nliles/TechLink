@@ -10,15 +10,11 @@ render() {
       width: '86%',
       height: '400px'
     }
-    const mapOptions = {
-        styles: demoFancyMapStyles
-    };
+
     return (
       <Map 
         google={this.props.google} 
         style={style}
-        defaultStyle={demoFancyMapStyles}
-        options={ mapOptions }
         zoom={12}
         styles={demoFancyMapStyles}
         center={{ lat: this.props.lat , lng: this.props.lng }}
