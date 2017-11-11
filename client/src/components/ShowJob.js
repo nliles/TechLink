@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { compose, withProps } from "recompose"
 import marker from "../marker.svg"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { MapContainer } from "./MapContainer"
 const demoFancyMapStyles = require("../MapStyles.json");
 
 
@@ -34,25 +35,7 @@ class ShowJob extends Component {
   }
 
   render() {
-    const MyMapComponent = compose(
-      withProps({
-        googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
-        loadingElement: <div style={{ height: `100%` }} />,
-        containerElement: <div style={{ height: `400px` }} />,
-        mapElement: <div style={{ height: `100%` }} />,
-      }),
-      withScriptjs,
-      withGoogleMap
-    )((props) =>
-      <GoogleMap
-        defaultZoom={11}
-        defaultCenter={{ lat: Number(this.state.lat), lng: Number(this.state.lng) }}
-        defaultOptions={{ styles: demoFancyMapStyles }}
-      >
-        <Marker position={{ lat: Number(this.state.lat), lng: Number(this.state.lng) }}
-        options={{ icon: marker }} />
-      </GoogleMap>
-    )
+
     return (
     <div>
       <div className="jobList">
@@ -67,7 +50,9 @@ class ShowJob extends Component {
         </div>
       </div>
         <div className="map">
-            <MyMapComponent />
+            <MapContainer google={window.google}
+            {...this.state}
+            />
         </div>
     </div>
     );
