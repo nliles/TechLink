@@ -25,7 +25,7 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	redirectToNewPage: false,
+    	redirectToNewPage: false
     };
   }
 
@@ -54,11 +54,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    if (this.state.redirectToNewPage) {
-		 return (
-  <Redirect to="/" />
-		 );
-    }
+    let redirect = this.state.redirectToNewPage ? <Redirect to='/' /> : ""
     return (
       <div>
         <form className="form" className="centerForm" onSubmit={e => this.createSession(e)}>
@@ -66,6 +62,7 @@ class LoginForm extends Component {
           <input ref={input => this.email = input} type="text" name="email" className="input" placeholder="Email" /><br /><br />
           <input ref={input => this.password = input} type="password" name="password" className="input" placeholder="Password" /><br /><br />
           <button type="submit" className="button">Login → </button>
+          {redirect}
         </form>
       </div>
     );

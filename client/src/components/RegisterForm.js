@@ -23,7 +23,7 @@ class RegisterForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectToNewPage: false,
+      redirectToNewPage: false
     };
   }
 
@@ -41,7 +41,8 @@ class RegisterForm extends Component {
       },
       body: JSON.stringify({ user: { email, password } }),
     })
-      .then(response => response.json(), this.setState({ redirectToNewPage: true }))
+      .then(response => response.json(), 
+      this.setState({ redirectToNewPage: true }))
       .then((token) => {
         localStorage.setItem('token', token.auth_token);
         localStorage.setItem('user_id', token.id);
@@ -52,17 +53,14 @@ class RegisterForm extends Component {
   }
 
   render() {
-    if (this.state.redirectToNewPage) {
-      return (
-        <Redirect to="/" />
-      );
-    }
+    let redirect = this.state.redirectToNewPage ? <Redirect to='/' /> : ""
     return (
       <form className="form" className="centerForm" onSubmit={e => this.createUser(e)}>
         <h2>Sign Up</h2><br />
         <input ref={input => this.email = input} type="text" name="email" className="input" placeholder="Email" /><br /><br />
         <input ref={input => this.password = input} type="password" name="password" className="input" placeholder="Password" /><br /><br />
         <button type="submit" className="button">Register → </button>
+        {redirect}
       </form>
     );
   }

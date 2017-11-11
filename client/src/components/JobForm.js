@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../actions/jobActions' 
 import JobList  from './JobList';
-import autocomplete  from './Autocomplete';
+import autocomplete  from './helpers/Autocomplete';
 
 
 const mapStateToProps = (state) => {
@@ -112,8 +112,12 @@ class EditJobForm extends Component {
 		  body: JSON.stringify(job)
 		})
 		.then(response =>  response.json())
-		.then(data => this.props.editJob(data),
-		this.setState({ redirectToNewPage: true }))
+		.then(data => {
+			let newState = Object.assign({}, this.state);
+			this.props.editJob(data),
+	        newState = { redirectToNewPage: true }
+	        this.setState(newState)
+		})
 	    .catch(err => console.log(err));	
 	}
 
@@ -125,9 +129,7 @@ class EditJobForm extends Component {
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
-	     if (this.state.redirectToNewPage) {
-	     return (<Redirect to="/"/>)
-	  	} else {
+        let redirect = this.state.redirectToNewPage ? <Redirect to='/' /> : ""
 		return(
 			<div>
 				<div className='rowC'>
@@ -157,12 +159,13 @@ class EditJobForm extends Component {
 							    </div><br/> 
 						    </div> 
 					        <button type="submit" className="button">Submit → </button>
+					        { redirect }
 					      </form>
 				     </div>
 		          <JobList jobs={[]}/>
 				</div>
 		    </div>  
-	      )}
+	      )
 	}
 }
 
