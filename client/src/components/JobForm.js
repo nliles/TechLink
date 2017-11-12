@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { addJob, removeJob, editJob } from '../actions/jobActions' 
 import JobList  from './JobList';
 import autocomplete  from './helpers/Autocomplete';
+import validateField from "./helpers/formValidation"
 
 
 const mapStateToProps = (state) => {
@@ -13,7 +14,6 @@ const mapStateToProps = (state) => {
     jobs: state.jobs.jobs
   };
 }
-
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addJob, 
@@ -42,8 +42,18 @@ class EditJobForm extends Component {
     	description: '',
     	salary: '',
     	redirectToNewPage: false,	
-    	isEditing: this.props.match ? true : false
-    };                         
+    	isEditing: this.props.match ? true : false,
+    	formErrors: {position: '', company: '', location: '', description: ''},
+        positionValid: false,
+        companyValid: false,
+        locationValid: false,
+        descriptionValid: false,
+        salaryValid: false,
+        formValid: false,
+        showErrors: false
+    };     
+     this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);                    
   }
 
   componentDidMount() {
@@ -121,30 +131,55 @@ class EditJobForm extends Component {
 	    .catch(err => console.log(err));	
 	}
 
-	handleChange = (arg) => {
-        let newState = Object.assign({}, this.state);
-        newState[Object.keys(arg)[0]] = Object.values(arg)[0];
-        this.setState(newState);
+	handleJobChange(e) {
+	    const name = e.target.name;
+	    const value = e.target.value;
+	    this.setState({[name]: value},
+	    () => { validateField(name, value, this.state, this.handleChange) });
 	}
+
+	handleChange = (arg) => {
+        this.setState(arg);
+        this.validateForm();
+	}
+
+  validateForm() {
+    this.setState({formValid: this.state.positionValid && this.state.companyValid && 
+    	this.state.locationValid && this.state.descriptionValid });
+  }
+
+  handleInvalidSubmit(e) {
+    e.preventDefault();
+    this.setState({showErrors: true});
+  }
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";
-        let redirect = this.state.redirectToNewPage ? <Redirect to='/' /> : ""
+        let redirect = this.state.redirectToNewPage ? <Redirect to='/' /> : "";
+        let submitHandler = this.state.formValid ? this.handleSubmit : this.handleInvalidSubmit;
+        let positionError = this.state.showErrors && !this.state.positionValid ? "errorBorder" : "";
+        let companyError = this.state.showErrors && !this.state.companyValid ? "errorBorder" : "";
+        let locationError = this.state.showErrors && !this.state.locationValid ? "errorBorder" : "";
+        let descriptionError = this.state.showErrors && !this.state.descriptionValid ? "errorBorder" : "";
+        let salaryError = this.state.showErrors && !this.state.salaryValid ? "labelError" : "";
 		return(
 			<div>
 				<div className='rowC'>
 					<div className="jobForm">
-						<form className="form" onSubmit={(e) => this.handleSubmit(e)}> 
+						<form className="form" onSubmit={ submitHandler }> 
 					        <h2>{heading} </h2><br/>
-					        <input ref="details" onChange={e => this.handleChange({ position: e.target.value})} placeholder="Position" value={this.state.position} type="text" name="position" className="input"/><br/><br/>
-					        <input onChange={e => this.handleChange({ company: e.target.value})} 
-					         value={this.state.company} placeholder="Company" type="text" name="company" className="input" /><br/><br/>
-					        <input onChange={e => this.handleChange({ location: e.target.value})} value={this.state.location} 
-					         placeholder="Location" type="text" name="location" className="input"
+					        <input ref="details" onChange={e => this.handleJobChange(e)} placeholder="Position" value={this.state.position} 
+					        type="text" name="position" className={`${positionError} + input`}/><br/><br/>
+					        <input onChange={e => this.handleJobChange(e)} 
+					         value={this.state.company} placeholder="Company" type="text" name="company" 
+					         className={`${companyError} + input`} /><br/><br/>
+					        <input onChange={e => this.handleJobChange(e)} value={this.state.location} 
+					         placeholder="Location" type="text" name="location" className={`${locationError} + input`}
 					         onFocus={e => autocomplete(e.target, this.state.lat, this.state.lng ,this.handleChange)} /><br/><br/>
-					        <textarea onChange={e => this.handleChange({ description: e.target.value})} value={this.state.description} placeholder="Description" name="description" className="input textarea" ></textarea><br/><br/>
-					        <label>Salary:</label><br/>
-							<div className="salaryOptions" onClick={e => this.handleChange({ salary: e.target.value})}>
+					        <textarea onChange={e => this.handleJobChange(e)} value={this.state.description} placeholder="Description" name="description" 
+					        className={`${descriptionError} + input + textarea`} ></textarea><br/><br/>
+					        <label className={`${salaryError}`}>Salary:</label><br/>
+							<div className="salaryOptions" onClick={e => this.handleJobChange(e)}>
 							    <div className="radioDiv">
 								    <input type="radio" name="salary" className="radio" value="0-$30,000" checked={this.state.salary === "0-$30,000"}/> "0-$30k"
 							    </div>

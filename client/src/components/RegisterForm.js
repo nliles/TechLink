@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../actions/authActions';
+import validateField from "./helpers/formValidation"
 
 const mapStateToProps = (state) => {
   return {
@@ -40,31 +42,13 @@ class RegisterForm extends Component {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({[name]: value},
-    () => { this.validateField(name, value) });
+    () => { validateField(name, value, this.state, this.handleChange) });
   }
 
-  validateField(fieldName, value) {
-    let fieldValidationErrors = this.state.formErrors;
-    let emailValid = this.state.emailValid;
-    let passwordValid = this.state.passwordValid;
-
-    switch(fieldName) {
-      case 'email':
-        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.email = emailValid ? '' : 'You must provide a valid email';
-        break;
-      case 'password':
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid ? '': 'Password must be at least 6 characters.';
-        break;
-      default:
-        break;
+  handleChange = (arg) => {
+        this.setState(arg);
+        this.validateForm();
   }
-  this.setState({formErrors: fieldValidationErrors,
-                  emailValid: emailValid,
-                  passwordValid: passwordValid
-                }, this.validateForm);
-}
 
   validateForm() {
     this.setState({formValid: this.state.emailValid && this.state.passwordValid});
@@ -76,8 +60,8 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(e) {
-    const email = this.email.value;
-    const password = this.password.value;
+    const email = this.state.email;
+    const password = this.state.password;
     const { setCurrentUser } = this.props;
 
     fetch('/users', {
@@ -108,14 +92,9 @@ class RegisterForm extends Component {
     <div>
       <form className="userFrom" className="centerForm" onSubmit={submitHandler}>
         <h2>Sign Up</h2><br />
-        
-        <input ref={input => this.email = input} type="text" name="email" placeholder="Email" 
-         className={`${emailError} + input`}
+        <input type="text" name="email" placeholder="Email" className={`${emailError} + input`}
          onChange={(e) => this.handleUserInput(e)}  value={this.state.email}/><br /><br />
-
-
-        <input ref={input => this.password = input} type="password" name="password"
-        className={`${passwordError} + input`} placeholder="Password" 
+        <input type="password" name="password" className={`${passwordError} + input`} placeholder="Password" 
          onChange={(e) => this.handleUserInput(e)} value={this.state.password}/><br /><br />
         <button type="submit" className="button">Register → </button>
         {redirect}
