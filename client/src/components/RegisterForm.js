@@ -60,9 +60,11 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
     const { setCurrentUser } = this.props;
+    console.log("handle submit")
 
     fetch('/users', {
       method: 'POST',
@@ -72,15 +74,18 @@ class RegisterForm extends Component {
       },
       body: JSON.stringify({ user: { email, password } }),
     })
-      .then(response => response.json(), 
-      this.setState({ redirectToNewPage: true }))
+      .then(response => response.json())
       .then((token) => {
-        localStorage.setItem('token', token.auth_token);
-        localStorage.setItem('user_id', token.id);
-        const user = window.localStorage.getItem('user_id');
-        setCurrentUser(user);
+        if (token.errors) {
+          console.log(token.errors)
+          // Add general error message here
+        } else {
+          localStorage.setItem('user_id', token.id);
+          const user = window.localStorage.getItem('user_id');
+          setCurrentUser(user);
+          user ? this.setState({ redirectToNewPage: true }) : "";
+        }
       })
-      .catch(err => console.log(err));
   }
 
   render() {
@@ -89,17 +94,20 @@ class RegisterForm extends Component {
     let passwordError = this.state.showErrors && !this.state.passwordValid ? "errorBorder" : "";
     let emailError = this.state.showErrors && !this.state.emailValid ? "errorBorder" : "";
     return (
-    <div>
-      <form className="userFrom" className="centerForm" onSubmit={submitHandler}>
-        <h2>Sign Up</h2><br />
-        <input type="text" name="email" placeholder="Email" className={`${emailError} + input`}
-         onChange={(e) => this.handleUserInput(e)}  value={this.state.email}/><br /><br />
-        <input type="password" name="password" className={`${passwordError} + input`} placeholder="Password" 
-         onChange={(e) => this.handleUserInput(e)} value={this.state.password}/><br /><br />
-        <button type="submit" className="button">Register → </button>
-        {redirect}
-      </form>
-    </div>
+      <div>
+        <form className="userFrom" className="centerForm" onSubmit={submitHandler}>
+          <h2>Sign Up</h2><br />
+
+          <input type="text" name="email" placeholder="Email" className={`${emailError} + input`}
+           onChange={(e) => this.handleUserInput(e)}  value={this.state.email}/><br /><br />
+
+          <input type="password" name="password" className={`${passwordError} + input`} placeholder="Password" 
+           onChange={(e) => this.handleUserInput(e)} value={this.state.password}/><br /><br />
+
+          <button type="submit" className="button">Register → </button>
+          {redirect}
+        </form>
+      </div>
     );
   }
 }

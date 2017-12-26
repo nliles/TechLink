@@ -7,6 +7,7 @@ import { addJob, removeJob, editJob } from '../actions/jobActions'
 import JobList  from './JobList';
 import autocomplete  from './helpers/Autocomplete';
 import validateField from "./helpers/formValidation"
+import jobFetch from "./helpers/fetch"
 
 
 const mapStateToProps = (state) => {
@@ -34,7 +35,7 @@ class EditJobForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	id: this.props.id,
+    	id: '',
     	userId: '',
     	position: '',
     	company: '',
@@ -53,18 +54,25 @@ class EditJobForm extends Component {
         showErrors: false
     };     
      this.handleSubmit = this.handleSubmit.bind(this);
-     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);                    
+     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);                 
   }
 
   componentDidMount() {
+  		console.log("edit")
 	  	if (this.state.isEditing) {
 	    fetch(`/jobs/${this.props.match.params.id}`)
 	          .then((response) => response.json())
 	          .then((json) =>  {
                 let newState = Object.assign({}, this.state);
-                newState = { userId: json.user_id, position: json.position, company: json.company, 
+                newState = { userId: json.user_id, id: this.props.match.params.id, position: json.position, company: json.company, 
 	                         location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary};
                 this.setState(newState);
+                // validateField("position", json.position, this.state, this.handleChange)
+                // validateField("company", json.company, this.state, this.handleChange)
+                // validateField("location", json.location, this.state, this.handleChange)
+                // validateField("description", json.description, this.state, this.handleChange)
+                // validateField("salary", json.salary, this.state, this.handleChange)
+                // console.log(Object.keys(newState));
             })
 	  	} 
     }
@@ -76,14 +84,14 @@ class EditJobForm extends Component {
 		const job = { job: {user_id, position, company, location, lat, lng, description, salary} }
 		if (this.state.isEditing) {
 			if (parseInt(user_id) === this.state.userId ) {
-				this.apiEditJob(job)
+				jobFetch(this.state, job, this.handleRedux, this.handleChange);
 			} else {
 				alert("You are not authorized to edit this job")
 			}	
 		} 
 		else  {
 			if (user_id) {
-				this.apiAddJob(job)
+				jobFetch(this.state, job, this.handleRedux, this.handleChange);
 			} else {
 				let newState = Object.assign({}, this.state);
                 newState = { position: '', company: '', description: '', location: '', lat: '', lng: '', salary: ''};
@@ -93,42 +101,8 @@ class EditJobForm extends Component {
 		}
 	}
 
-	apiAddJob(job) {
-		fetch('/jobs', {  
-		  method: 'POST',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify(job)
-		})
-		  .then(response => response.json())
-	      .then((json) =>  {
-                let newState = Object.assign({}, this.state);
-                newState = { position: '', company: '', location: '', description: '', salary: ''}
-                this.setState(newState),
-                this.props.addJob(json);
-            })
-	      	.catch(err => console.log(err));	
-	}
-
-	apiEditJob(job) {
-		fetch(`/jobs/${this.props.match.params.id}`, {  
-		  method: 'PUT',
-		  headers: {
-		    Accept: 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify(job)
-		})
-		.then(response =>  response.json())
-		.then(data => {
-			let newState = Object.assign({}, this.state);
-			this.props.editJob(data),
-	        newState = { redirectToNewPage: true }
-	        this.setState(newState)
-		})
-	    .catch(err => console.log(err));	
+	handleRedux = (response) => {
+		this.state.isEditing ? this.props.editJob(response) : this.props.addJob(response);
 	}
 
 	handleJobChange(e) {
@@ -143,15 +117,15 @@ class EditJobForm extends Component {
         this.validateForm();
 	}
 
-  validateForm() {
-    this.setState({formValid: this.state.positionValid && this.state.companyValid && 
-    	this.state.locationValid && this.state.descriptionValid });
-  }
+	 validateForm() {
+	    this.setState({formValid: this.state.positionValid && this.state.companyValid && 
+	    this.state.locationValid && this.state.descriptionValid });
+	}
 
-  handleInvalidSubmit(e) {
-    e.preventDefault();
-    this.setState({showErrors: true});
-  }
+	handleInvalidSubmit(e) {
+	    e.preventDefault();
+	    this.setState({showErrors: true});
+	}
 
 	render() {
         let heading = this.state.isEditing ? `Edit Job` : "Post a New Job";

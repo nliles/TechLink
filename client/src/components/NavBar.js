@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../actions/authActions';
@@ -44,7 +44,6 @@ class NavBar extends Component {
       .then(
         response => console.log(response),
 			 window.localStorage.removeItem('user_id'),
-			 window.localStorage.removeItem('token'),
 			 setCurrentUser(undefined),
       );
   }
