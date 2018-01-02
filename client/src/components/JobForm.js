@@ -58,7 +58,6 @@ class EditJobForm extends Component {
   }
 
   componentDidMount() {
-  		console.log("edit")
 	  	if (this.state.isEditing) {
 	    fetch(`/jobs/${this.props.match.params.id}`)
 	          .then((response) => response.json())
@@ -67,14 +66,15 @@ class EditJobForm extends Component {
                 newState = { userId: json.user_id, id: this.props.match.params.id, position: json.position, company: json.company, 
 	                         location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary};
                 this.setState(newState);
-                // validateField("position", json.position, this.state, this.handleChange)
-                // validateField("company", json.company, this.state, this.handleChange)
-                // validateField("location", json.location, this.state, this.handleChange)
-                // validateField("description", json.description, this.state, this.handleChange)
-                // validateField("salary", json.salary, this.state, this.handleChange)
-                // console.log(Object.keys(newState));
+
             })
 	  	} 
+    }
+
+    editValid() {
+        Object.keys(this.state).map((key, index) => {
+		   validateField(key, `${this.state + "." + key}`, this.state, this.handleChange)
+		});
     }
 
 	handleSubmit(e) {

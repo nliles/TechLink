@@ -164,13 +164,25 @@ textarea {
 
 }
 
-
 .labelError {
   color: #990000;
 }
 
 .errorBorder {
   border: 1px solid  #990000;
+}
+
+.loginError {
+  margin-top: 25px;
+  color: #990000;
+  padding: 1rem;
+  display:table;
+  margin: auto;
+  font-size: 15px;
+  border: 1px solid #990000;
+  width: 330px;
+  height: 50px;
+  text-align: center;
 }
 
 

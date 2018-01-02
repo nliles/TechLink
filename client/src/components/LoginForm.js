@@ -33,7 +33,8 @@ class LoginForm extends Component {
       emailValid: false,
       passwordValid: false,
       formValid: false,
-      showErrors: false
+      showErrors: false,
+      loginErrorMessage: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
@@ -77,7 +78,7 @@ class LoginForm extends Component {
 	       .then(response => response.json())
 	       .then((token) => {
           if (token.errors) {
-             console.log("Email or password is invalid")
+              this.setState({loginErrorMessage: "Invalid email or password."});
           } else {
             localStorage.setItem('user_id', token.id);
             const user = window.localStorage.getItem('user_id');
@@ -95,8 +96,13 @@ class LoginForm extends Component {
     let submitHandler = this.state.formValid ? this.handleSubmit : this.handleInvalidSubmit;
     let passwordError = this.state.showErrors && !this.state.passwordValid ? "errorBorder" : "";
     let emailError = this.state.showErrors && !this.state.emailValid ? "errorBorder" : "";
+    let message;
+    if (this.state.loginErrorMessage) {
+      message = (<div className="loginError">{this.state.loginErrorMessage}</div>)  
+    }
     return (
       <div>
+        {message}
         <form className="form" className="centerForm" onSubmit={submitHandler}>
           <h2>Login</h2><br />
 

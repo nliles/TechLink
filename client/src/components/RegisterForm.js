@@ -32,7 +32,8 @@ class RegisterForm extends Component {
       emailValid: false,
       passwordValid: false,
       formValid: false,
-      showErrors: false
+      showErrors: false,
+      registerErrorMessage: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
@@ -64,7 +65,6 @@ class RegisterForm extends Component {
     const email = this.state.email;
     const password = this.state.password;
     const { setCurrentUser } = this.props;
-    console.log("handle submit")
 
     fetch('/users', {
       method: 'POST',
@@ -77,8 +77,7 @@ class RegisterForm extends Component {
       .then(response => response.json())
       .then((token) => {
         if (token.errors) {
-          console.log(token.errors)
-          // Add general error message here
+          this.setState({registerErrorMessage: "There is an account associated with that email."});
         } else {
           localStorage.setItem('user_id', token.id);
           const user = window.localStorage.getItem('user_id');
@@ -93,8 +92,13 @@ class RegisterForm extends Component {
     let submitHandler = this.state.formValid ? this.handleSubmit : this.handleInvalidSubmit
     let passwordError = this.state.showErrors && !this.state.passwordValid ? "errorBorder" : "";
     let emailError = this.state.showErrors && !this.state.emailValid ? "errorBorder" : "";
+    let message;
+    if (this.state.registerErrorMessage) {
+      message = (<div className="loginError">{this.state.registerErrorMessage}</div>)  
+    }
     return (
       <div>
+        {message}
         <form className="userFrom" className="centerForm" onSubmit={submitHandler}>
           <h2>Sign Up</h2><br />
 
