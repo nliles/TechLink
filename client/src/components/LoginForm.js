@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../actions/authActions';
@@ -33,7 +33,8 @@ class LoginForm extends Component {
       emailValid: false,
       passwordValid: false,
       formValid: false,
-      showErrors: false
+      showErrors: false,
+      loginErrorMessage: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
@@ -76,21 +77,32 @@ class LoginForm extends Component {
     })
 	       .then(response => response.json())
 	       .then((token) => {
-  			  localStorage.setItem('token', token.auth_token);
-  			  localStorage.setItem('user_id', token.id);
-  			  const user = window.localStorage.getItem('token');
-  			  setCurrentUser(user);
-          this.setState({ redirectToNewPage: true });
-      });
+          if (token.errors) {
+              this.setState({loginErrorMessage: "Invalid email or password."});
+          } else {
+            localStorage.setItem('user_id', token.id);
+            const user = window.localStorage.getItem('user_id');
+            setCurrentUser(user);
+            if (user) {
+              this.setState({ redirectToNewPage: true });
+            }
+          }
+      })
   }
 
   render() {
     let redirect = this.state.redirectToNewPage ? <Redirect to='/' /> : "";
+    console.log(this.state.redirectToNewPage)
     let submitHandler = this.state.formValid ? this.handleSubmit : this.handleInvalidSubmit;
     let passwordError = this.state.showErrors && !this.state.passwordValid ? "errorBorder" : "";
     let emailError = this.state.showErrors && !this.state.emailValid ? "errorBorder" : "";
+    let message;
+    if (this.state.loginErrorMessage) {
+      message = (<div className="loginError">{this.state.loginErrorMessage}</div>)  
+    }
     return (
       <div>
+        {message}
         <form className="form" className="centerForm" onSubmit={submitHandler}>
           <h2>Login</h2><br />
 

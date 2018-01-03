@@ -33,13 +33,13 @@ export default (fieldName, value, state, cb) => {
       default:
         break;
   }
-  cb({formErrors: fieldValidationErrors}),
-  cb({emailValid: emailValid}),
-  cb({passwordValid: passwordValid}),
-  cb({positionValid: positionValid}), 
-  cb({companyValid: companyValid}),
-  cb({locationValid: locationValid}),  
-  cb({descriptionValid: descriptionValid})
-  cb({salaryValid: salaryValid})
+    cb({formErrors: fieldValidationErrors}),
+    cb({emailValid: emailValid}),
+    cb({passwordValid: passwordValid}),
+    cb({positionValid: positionValid}), 
+    cb({companyValid: companyValid}),
+    cb({locationValid: locationValid}),  
+    cb({descriptionValid: descriptionValid})
+    cb({salaryValid: salaryValid})
 }
 

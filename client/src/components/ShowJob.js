@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import { compose, withProps } from "recompose"
-import marker from "../marker.svg"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MapContainer } from "./MapContainer"
-const demoFancyMapStyles = require("../MapStyles.json");
-
 
 class ShowJob extends Component {
   constructor(props) {
