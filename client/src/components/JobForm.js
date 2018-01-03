@@ -54,6 +54,7 @@ class EditJobForm extends Component {
         showErrors: false
     };     
      this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleChange = this.handleChange.bind(this);
      this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);                 
   }
 
@@ -66,9 +67,14 @@ class EditJobForm extends Component {
                 newState = { userId: json.user_id, id: this.props.match.params.id, position: json.position, company: json.company, 
 	                         location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary};
                 this.setState(newState);
-
             })
 	  	} 
+    }
+
+    componentWillMount() {
+        Object.keys(this.state).map((key, index) => {
+		   validateField(key, `${this.state + "." + key}`, this.state, this.handleChange)
+		});
     }
 
     editValid() {
@@ -119,7 +125,8 @@ class EditJobForm extends Component {
 
 	 validateForm() {
 	    this.setState({formValid: this.state.positionValid && this.state.companyValid && 
-	    this.state.locationValid && this.state.descriptionValid });
+	    this.state.locationValid && this.state.descriptionValid && this.state.salaryValid });
+	    return this.state.formValid;
 	}
 
 	handleInvalidSubmit(e) {
@@ -136,6 +143,7 @@ class EditJobForm extends Component {
         let locationError = this.state.showErrors && !this.state.locationValid ? "errorBorder" : "";
         let descriptionError = this.state.showErrors && !this.state.descriptionValid ? "errorBorder" : "";
         let salaryError = this.state.showErrors && !this.state.salaryValid ? "labelError" : "";
+
 		return(
 			<div>
 				<div className='rowC'>
