@@ -67,7 +67,7 @@ class EditJobForm extends Component {
                 newState = { userId: json.user_id, id: this.props.match.params.id, position: json.position, company: json.company, 
 	                         location:json.location,lat: json.lat, lng: json.lng, description: json.description, salary: json.salary};
                 this.setState(newState);
-                // this.editValid();
+                this.editValid();
             })
 	  	} 
     }
@@ -113,11 +113,18 @@ class EditJobForm extends Component {
 	    () => { validateField(name, value, this.state, this.handleChange) });
 	}
 
+	// handleChange = (arg) => {
+	// 	console.log(arg);
+ //        this.setState(arg);
+ //        this.validateForm();
+	// }
+
+	
 	handleChange = (arg) => {
-		console.log(arg);
-        this.setState(arg);
-        this.validateForm();
-	}
+	        this.setState(arg, () => {
+	        	this.validateForm();	
+	        });
+		}
 
 	 validateForm() {
 	    this.setState({formValid: this.state.positionValid && this.state.companyValid && 
