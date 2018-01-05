@@ -30,10 +30,10 @@ render(
         <NavBar />
         <Switch>
           <Route exact path="/" component={App} />
-          <Route exact path="/jobs/:id/edit" component={JobForm} replace/>
+          <Route exact path="/jobs/:id/edit" component={JobForm}/>
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/users/new" component={RegisterForm} />
-          <Route exact path="/jobs/:id" component={ShowJob} replace/>
+          <Route exact path="/jobs/:id" component={ShowJob}/>
         </Switch>
       </div>
     </HashRouter>

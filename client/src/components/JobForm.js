@@ -113,13 +113,6 @@ class EditJobForm extends Component {
 	    () => { validateField(name, value, this.state, this.handleChange) });
 	}
 
-	// handleChange = (arg) => {
-	// 	console.log(arg);
- //        this.setState(arg);
- //        this.validateForm();
-	// }
-
-	
 	handleChange = (arg) => {
 	        this.setState(arg, () => {
 	        	this.validateForm();	
@@ -132,7 +125,6 @@ class EditJobForm extends Component {
 	}
 
 	handleInvalidSubmit(e) {
-		console.log("invalid submit")
 	    e.preventDefault();
 	    this.setState({showErrors: true});
 	}
